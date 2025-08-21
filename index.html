@@ -1,157 +1,145 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sunny Sugar Art | 糖霜餅乾</title>
-  <meta name="description" content="Sunny 的糖霜餅乾｜客製禮盒、節慶限定、教學課程。線上填單下單，訂單自動進入 Google 試算表。" />
-  <style>
-    :root {
-      --brand: #f8b500;
-      --brand-2: #ffd89b;
-      --bg: #fff8f0;
-      --text: #333;
-      --muted: #666;
-      --card: #fff;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, "Hiragino Sans", "Microsoft JhengHei", sans-serif;
-      background: var(--bg); color: var(--text);
-    }
-    header.hero {
-      padding: 72px 20px; text-align: center; color: #fff;
-      background: linear-gradient(135deg, var(--brand-2), var(--brand));
-    }
-    header.hero h1 { margin: 0 0 12px; font-size: 40px; }
-    header.hero p { margin: 0; font-size: 18px; opacity: .95; }
-
-    nav {
-      position: sticky; top: 0; z-index: 20; background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-    nav ul { display:flex; align-items:center; justify-content:center; margin:0; padding:10px; list-style:none; }
-    nav a { color: var(--brand); font-weight: 700; text-decoration:none; padding: 8px 12px; border-radius: 10px; }
-    nav a:hover { background: #fff3e0; }
-
-    .container { max-width: 1060px; margin: 36px auto; padding: 0 20px; }
-    section { margin: 56px 0; }
-    h2 { display:inline-block; margin:0 0 18px; padding-bottom:6px; font-size:28px; color: var(--brand); border-bottom: 3px solid var(--brand-2); }
-    p.lead { font-size: 18px; color: var(--muted); }
-
-    .grid { display:grid; gap: 22px; }
-    .grid.products { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-    .grid.gallery { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-
-    .card { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 18px rgba(0,0,0,.08); transition: transform .18s ease; }
-    .card:hover { transform: translateY(-4px); }
-    .card img { width: 100%; height: 200px; object-fit: cover; display: block; }
-    .card .content { padding: 14px 16px 18px; }
-    .card h3 { margin: 0 0 6px; font-size: 20px; }
-    .card p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
-
-    .btn { display:inline-block; margin-top:12px; padding:10px 16px; background: var(--brand); color:#fff; text-decoration:none; border-radius: 10px; font-weight:700; }
-    .btn:hover { filter: brightness(.94); }
-    .btn.secondary { background: #111; }
-
-    .about, .art { background:#fff; padding: 26px; border-radius: 16px; box-shadow: 0 8px 18px rgba(0,0,0,.08); }
-
-    .contact a { color: var(--brand); text-decoration: none; }
-    .contact a:hover { text-decoration: underline; }
-
-    footer { background: #fff3e0; padding: 16px; text-align:center; font-size: 14px; }
-
-    .notice {
-      margin: 12px 0 0; padding: 8px 10px; font-size: 13px; color:#664400; background: #fff7e6; border: 1px dashed #ffd58a; border-radius: 10px;
-    }
-  </style>
+  <title>Sunny Sugar Art | Royal Icing Cookies in Melbourne</title>
+  <meta name="description" content="Royal icing cookies handcrafted in Melbourne, Australia — Halloween, Christmas, custom cookies, baby shower cookies, meringue kisses, and decorating classes including family workshops and masterclasses." />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Hero -->
   <header class="hero">
     <h1>Sunny Sugar Art</h1>
-    <p>用糖霜餅乾，打造最甜的藝術 ✨｜客製禮盒・節慶限定・教學課程</p>
-    <p style="margin-top:18px"><a class="btn" href="#products">立即訂購</a> <a class="btn secondary" href="#contact">聯絡我</a></p>
+    <p>Royal Icing Cookie Artist — Seasonal Collections • Custom Cookies • Baby Shower Favors • Classes</p>
+    <p style="margin-top:18px"><a class="btn" href="#products">Shop Now</a> <a class="btn secondary" href="#contact">Contact</a></p>
   </header>
 
-  <!-- Nav -->
+  <!-- Navigation -->
   <nav>
     <ul>
-      <li><a href="#about">關於我</a></li>
-      <li><a href="#products">販售產品</a></li>
-      <li><a href="#art">餅乾藝術</a></li>
-      <li><a href="#gallery">作品展示</a></li>
-      <li><a href="#contact">聯絡</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#products">Shop</a></li>
+      <li><a href="#classes">Classes</a></li>
+      <li><a href="#art">Cookie Art</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
   <main class="container">
     <!-- About -->
     <section id="about" class="about">
-      <h2>關於我</h2>
-      <p class="lead">嗨！我是 Sunny，來自台灣，目前在墨爾本發展。我專長於糖霜餅乾設計與教學，將甜點結合藝術，創造獨一無二的作品。我相信每一片餅乾，都能帶來幸福與驚喜。</p>
+      <h2>About</h2>
+      <p class="lead">Hi, I’m Sunny — a Taiwanese sugar artist currently based in Melbourne. I design and hand‑pipe royal icing cookies that turn celebrations into keepsakes. I also teach beginner‑friendly decorating classes. Pickup available in CBD; shipping across Australia.</p>
     </section>
 
     <!-- Products -->
     <section id="products">
-      <h2>販售產品</h2>
-      <p class="lead">點選下方商品即可填單下單（表單回覆會自動進到 Google 試算表，方便後續用 Excel 管理）。</p>
+      <h2>Shop Cookies</h2>
+      <p class="lead">Our signature cookies and sweets are available to order. Click a product to purchase through Google Forms.</p>
       <div class="grid products">
         <article class="card">
-          <img src="images/christmas.jpg" alt="聖誕餅乾禮盒" />
+          <img src="images/halloween.jpg" alt="Halloween cookies with spooky designs" />
           <div class="content">
-            <h3>🎄 聖誕限定禮盒</h3>
-            <p>精緻節慶設計，最適合送禮（6~12片可選）。</p>
-            <a class="btn" href="https://forms.gle/xxxx" target="_blank" rel="noopener">購買</a>
+            <h3>🎃 Halloween Cookies</h3>
+            <p>Spooky and fun designs perfect for Halloween parties.</p>
+            <a class="btn" href="https://forms.gle/halloween" target="_blank" rel="noopener">Order</a>
           </div>
         </article>
         <article class="card">
-          <img src="images/custom.jpg" alt="客製化糖霜餅乾" />
+          <img src="images/christmas.jpg" alt="Christmas cookie gift box with festive designs" />
           <div class="content">
-            <h3>✨ 客製化餅乾</h3>
-            <p>婚禮、生日、企業禮品專屬設計；提供草圖確認。</p>
-            <a class="btn" href="https://forms.gle/yyyy" target="_blank" rel="noopener">訂製</a>
+            <h3>🎄 Christmas Gift Box</h3>
+            <p>Festive, elegant cookies ideal for holiday gifting.</p>
+            <a class="btn" href="https://forms.gle/christmas" target="_blank" rel="noopener">Order</a>
           </div>
         </article>
         <article class="card">
-          <img src="images/class.jpg" alt="糖霜餅乾課程" />
+          <img src="images/custom.jpg" alt="Custom designed cookies" />
           <div class="content">
-            <h3>👩‍🍳 餅乾課程</h3>
-            <p>手把手教學，從打發、調色到細節線條一應俱全。</p>
-            <a class="btn" href="https://instagram.com/sunny_sugar.art" target="_blank" rel="noopener">報名</a>
+            <h3>✨ Custom Cookies</h3>
+            <p>Personalized designs for weddings, birthdays, and corporate gifts.</p>
+            <a class="btn" href="https://forms.gle/custom" target="_blank" rel="noopener">Custom Order</a>
+          </div>
+        </article>
+        <article class="card">
+          <img src="images/baby.jpg" alt="Baby shower cookies" />
+          <div class="content">
+            <h3>👶 Baby Shower Cookies</h3>
+            <p>Adorable cookies for baby showers and new arrivals.</p>
+            <a class="btn" href="https://forms.gle/baby" target="_blank" rel="noopener">Order</a>
+          </div>
+        </article>
+        <article class="card">
+          <img src="images/meringue.jpg" alt="Custom meringue kisses" />
+          <div class="content">
+            <h3>🍬 Custom Meringue Kisses</h3>
+            <p>Light, airy meringue kisses in customizable colors and packaging.</p>
+            <a class="btn" href="https://forms.gle/meringue" target="_blank" rel="noopener">Order</a>
           </div>
         </article>
       </div>
-      <p class="notice">想把每個商品按鈕連到「預先帶入商品名稱」的 Google 表單嗎？建立表單後，使用「取得預先填入的連結」功能，把連結換到上方按鈕即可。</p>
     </section>
 
-    <!-- Art philosophy -->
+    <!-- Classes -->
+    <section id="classes" class="about">
+      <h2>Classes & Workshops</h2>
+      <div class="grid products">
+        <article class="card">
+          <img src="images/class-family.jpg" alt="Family cookie decorating class" />
+          <div class="content">
+            <h3>👩‍👩‍👧 Family/Parent‑Child Classes</h3>
+            <p>Fun, hands‑on cookie decorating sessions for families and kids.</p>
+            <a class="btn" href="https://forms.gle/familyclass" target="_blank" rel="noopener">Enroll</a>
+          </div>
+        </article>
+        <article class="card">
+          <img src="images/class-beginner.jpg" alt="Beginner cookie decorating class" />
+          <div class="content">
+            <h3>🎨 Beginner Workshop</h3>
+            <p>Learn piping, flooding, and basic decorating techniques.</p>
+            <a class="btn" href="https://forms.gle/beginner" target="_blank" rel="noopener">Enroll</a>
+          </div>
+        </article>
+        <article class="card">
+          <img src="images/class-master.jpg" alt="Masterclass advanced cookie decorating" />
+          <div class="content">
+            <h3>🌟 Masterclass</h3>
+            <p>Advanced decorating focused on fine lines, shading, and showpiece design.</p>
+            <a class="btn" href="https://forms.gle/masterclass" target="_blank" rel="noopener">Enroll</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Cookie Art Philosophy -->
     <section id="art" class="art">
-      <h2>我的餅乾藝術</h2>
-      <p class="lead">我將餅乾視為畫布，用糖霜描繪細膩的線條與色彩。每一片餅乾不僅能吃，更能收藏與欣賞。藝術不是只能掛在牆上的畫，它也能在你的掌心、在你的味蕾。</p>
+      <h2>Cookie Art</h2>
+      <p class="lead">I see cookies as canvases, decorating with royal icing lines and colors like a painter. Each cookie is edible art — not only delicious but also collectible. Art should be felt in your hands and tasted on your palate.</p>
     </section>
 
     <!-- Gallery -->
     <section id="gallery">
-      <h2>作品展示</h2>
+      <h2>Gallery</h2>
       <div class="grid gallery">
-        <div class="card"><img src="images/art1.jpg" alt="藝術餅乾 1" /></div>
-        <div class="card"><img src="images/art2.jpg" alt="藝術餅乾 2" /></div>
-        <div class="card"><img src="images/art3.jpg" alt="藝術餅乾 3" /></div>
-        <div class="card"><img src="images/art4.jpg" alt="藝術餅乾 4" /></div>
+        <div class="card"><img src="images/art1.jpg" alt="Decorated cookie art piece 1" /></div>
+        <div class="card"><img src="images/art2.jpg" alt="Decorated cookie art piece 2" /></div>
+        <div class="card"><img src="images/art3.jpg" alt="Decorated cookie art piece 3" /></div>
+        <div class="card"><img src="images/art4.jpg" alt="Decorated cookie art piece 4" /></div>
       </div>
     </section>
 
     <!-- Contact -->
     <section id="contact" class="contact">
-      <h2>聯絡我</h2>
-      <p>Email：<a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
-      <p>Instagram：<a href="https://www.instagram.com/sunny_sugar.art" target="_blank" rel="noopener">@sunny_sugar.art</a></p>
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
+      <p>Instagram: <a href="https://www.instagram.com/sunny_sugar.art" target="_blank" rel="noopener">@sunny_sugar.art</a></p>
     </section>
   </main>
 
   <footer>
-    © 2025 Sunny Sugar Art｜All rights reserved.
+    © 2025 Sunny Sugar Art | Melbourne, Australia
   </footer>
 </body>
 </html>
