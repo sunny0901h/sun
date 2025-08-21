@@ -4,19 +4,85 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sunny Sugar Art | Royal Icing Cookies in Melbourne</title>
-  <meta name="description" content="Royal icing cookies handcrafted in Melbourne, Australia — Halloween, Christmas, custom cookies, baby shower cookies, meringue kisses, and decorating classes including family workshops and masterclasses." />
+  <meta name="description" content="Royal icing cookies handcrafted in Melbourne, Australia — Halloween, Christmas, custom cookies, baby shower cookies, custom meringue kisses, and classes from family workshops to masterclasses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* --- Palette & Typography overrides for a premium/artistic feel --- */
+    :root{
+      --bg:#FAF6EF;          /* cream */
+      --text:#1F2937;        /* deep grey */
+      --muted:#6B7280;       /* cool grey */
+      --brand:#C89B3C;       /* gold */
+      --brand-2:#EFD8A0;     /* soft warm accent */
+      --card:#FFFFFF;
+    }
+    body{font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", Arial, "Microsoft JhengHei", sans-serif;}
+    h1,h2,h3{font-family: "Playfair Display", serif; letter-spacing:.2px;}
+
+    /* Nav: larger, premium spacing */
+    nav{border-bottom:1px solid rgba(0,0,0,.06);}
+    nav a{font-size:1.15em; font-weight:700;}
+
+    /* Hero: full-bleed image with soft overlay */
+    .hero{
+      color:#111;
+      background: none;
+      padding: 0;
+    }
+    .hero .hero-wrap{
+      position:relative; min-height: 56vh; display:grid; place-items:center; text-align:center; overflow:hidden;
+      background: url('images/hero.jpg') center/cover no-repeat;
+    }
+    .hero .hero-wrap::after{
+      content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(250,246,239,.30), rgba(250,246,239,.90));
+    }
+    .hero .hero-content{position:relative; z-index:1; padding:64px 20px 72px;}
+    .hero h1{font-size: clamp(40px, 6vw, 64px); margin:0 0 10px; color:#1F2937;}
+    .hero p.lead{font-size: clamp(16px, 2.4vw, 20px); color:#374151; margin:0 auto; max-width: 720px;}
+    .hero .cta{margin-top:22px;}
+
+    /* Buttons: gold accent */
+    .btn{border:1px solid transparent;}
+    .btn:hover{box-shadow: 0 6px 14px rgba(200,155,60,.25);} 
+    .btn.secondary{background:#111;}
+
+    /* Section headings: subtle rule */
+    h2{border-bottom:2px solid var(--brand-2);}
+
+    /* Cards & product imagery larger */
+    .card{border:1px solid rgba(0,0,0,.05);} 
+    .card img{height:320px;}
+
+    /* Notice text tone */
+    .notice{background:#FFF8E8; border-color:#F1D9A5; color:#7A5A1A;}
+
+    /* Masonry gallery for artistic feel */
+    .masonry{column-count:3; column-gap:18px;}
+    @media (max-width: 960px){ .masonry{column-count:2;} }
+    @media (max-width: 560px){ .masonry{column-count:1;} }
+    .tile{break-inside: avoid; margin: 0 0 18px; border-radius:14px; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,.08); background:#fff;}
+    .tile img{display:block; width:100%; height:auto;}
+
+    footer{border-top:1px solid rgba(0,0,0,.06);} 
+  </style>
 </head>
 <body>
-  <!-- Hero -->
-  <header class="hero">
-    <h1>Sunny Sugar Art</h1>
-    <p>Royal Icing Cookie Artist — Seasonal Collections • Custom Cookies • Baby Shower Favors • Classes</p>
-    <p style="margin-top:18px"><a class="btn" href="#products">Shop Now</a> <a class="btn secondary" href="#contact">Contact</a></p>
+  <!-- Hero with image -->
+  <header class="hero" role="banner">
+    <div class="hero-wrap">
+      <div class="hero-content">
+        <h1>Sunny Sugar Art</h1>
+        <p class="lead">Royal icing cookies handcrafted in Melbourne — premium seasonal collections, custom designs and creative classes.</p>
+        <div class="cta"><a class="btn" href="#products">Shop Cookies</a> <a class="btn secondary" href="#classes">View Classes</a></div>
+      </div>
+    </div>
   </header>
 
   <!-- Navigation -->
-  <nav>
+  <nav aria-label="Primary">
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#products">Shop</a></li>
@@ -27,55 +93,55 @@
     </ul>
   </nav>
 
-  <main class="container">
+  <main class="container" role="main">
     <!-- About -->
     <section id="about" class="about">
       <h2>About</h2>
-      <p class="lead">Hi, I’m Sunny — a Taiwanese sugar artist currently based in Melbourne. I design and hand‑pipe royal icing cookies that turn celebrations into keepsakes. I also teach beginner‑friendly decorating classes. Pickup available in CBD; shipping across Australia.</p>
+      <p class="lead">Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand‑pipe royal icing cookies that turn celebrations into keepsakes. Pickup in CBD by arrangement; shipping Australia‑wide. Prices in AUD.</p>
     </section>
 
     <!-- Products -->
     <section id="products">
       <h2>Shop Cookies</h2>
-      <p class="lead">Our signature cookies and sweets are available to order. Click a product to purchase through Google Forms.</p>
+      <p class="lead">Click a product to order. Orders go through Google Forms and sync to Google Sheets for easy management.</p>
       <div class="grid products">
         <article class="card">
-          <img src="images/halloween.jpg" alt="Halloween cookies with spooky designs" />
+          <img src="images/halloween.jpg" alt="Halloween cookie set with elegant spooky designs" />
           <div class="content">
             <h3>🎃 Halloween Cookies</h3>
-            <p>Spooky and fun designs perfect for Halloween parties.</p>
+            <p>Moody, stylish designs for your October events.</p>
             <a class="btn" href="https://forms.gle/halloween" target="_blank" rel="noopener">Order</a>
           </div>
         </article>
         <article class="card">
-          <img src="images/christmas.jpg" alt="Christmas cookie gift box with festive designs" />
+          <img src="images/christmas.jpg" alt="Christmas gift box with refined festive cookies" />
           <div class="content">
             <h3>🎄 Christmas Gift Box</h3>
-            <p>Festive, elegant cookies ideal for holiday gifting.</p>
+            <p>Elegant gifting options in luxe packaging.</p>
             <a class="btn" href="https://forms.gle/christmas" target="_blank" rel="noopener">Order</a>
           </div>
         </article>
         <article class="card">
-          <img src="images/custom.jpg" alt="Custom designed cookies" />
+          <img src="images/custom.jpg" alt="Custom designed royal icing cookies" />
           <div class="content">
             <h3>✨ Custom Cookies</h3>
-            <p>Personalized designs for weddings, birthdays, and corporate gifts.</p>
+            <p>Personalised designs for weddings, birthdays and corporate branding.</p>
             <a class="btn" href="https://forms.gle/custom" target="_blank" rel="noopener">Custom Order</a>
           </div>
         </article>
         <article class="card">
-          <img src="images/baby.jpg" alt="Baby shower cookies" />
+          <img src="images/baby.jpg" alt="Baby shower themed cookies" />
           <div class="content">
             <h3>👶 Baby Shower Cookies</h3>
-            <p>Adorable cookies for baby showers and new arrivals.</p>
+            <p>Adorable favours to welcome little ones.</p>
             <a class="btn" href="https://forms.gle/baby" target="_blank" rel="noopener">Order</a>
           </div>
         </article>
         <article class="card">
-          <img src="images/meringue.jpg" alt="Custom meringue kisses" />
+          <img src="images/meringue.jpg" alt="Custom meringue kisses in soft colours" />
           <div class="content">
             <h3>🍬 Custom Meringue Kisses</h3>
-            <p>Light, airy meringue kisses in customizable colors and packaging.</p>
+            <p>Light, airy and colour‑matched to your event.</p>
             <a class="btn" href="https://forms.gle/meringue" target="_blank" rel="noopener">Order</a>
           </div>
         </article>
@@ -87,26 +153,26 @@
       <h2>Classes & Workshops</h2>
       <div class="grid products">
         <article class="card">
-          <img src="images/class-family.jpg" alt="Family cookie decorating class" />
+          <img src="images/class-family.jpg" alt="Family cookie decorating class in Melbourne" />
           <div class="content">
-            <h3>👩‍👩‍👧 Family/Parent‑Child Classes</h3>
-            <p>Fun, hands‑on cookie decorating sessions for families and kids.</p>
+            <h3>👩‍👩‍👧 Family / Parent‑Child</h3>
+            <p>Fun, hands‑on sessions suitable for kids and families.</p>
             <a class="btn" href="https://forms.gle/familyclass" target="_blank" rel="noopener">Enroll</a>
           </div>
         </article>
         <article class="card">
-          <img src="images/class-beginner.jpg" alt="Beginner cookie decorating class" />
+          <img src="images/class-beginner.jpg" alt="Beginner cookie decorating workshop" />
           <div class="content">
             <h3>🎨 Beginner Workshop</h3>
-            <p>Learn piping, flooding, and basic decorating techniques.</p>
+            <p>Learn piping, flooding and essential decorating skills.</p>
             <a class="btn" href="https://forms.gle/beginner" target="_blank" rel="noopener">Enroll</a>
           </div>
         </article>
         <article class="card">
-          <img src="images/class-master.jpg" alt="Masterclass advanced cookie decorating" />
+          <img src="images/class-master.jpg" alt="Advanced masterclass in royal icing techniques" />
           <div class="content">
             <h3>🌟 Masterclass</h3>
-            <p>Advanced decorating focused on fine lines, shading, and showpiece design.</p>
+            <p>Advanced techniques: fine lines, shading and showpiece design.</p>
             <a class="btn" href="https://forms.gle/masterclass" target="_blank" rel="noopener">Enroll</a>
           </div>
         </article>
@@ -116,17 +182,18 @@
     <!-- Cookie Art Philosophy -->
     <section id="art" class="art">
       <h2>Cookie Art</h2>
-      <p class="lead">I see cookies as canvases, decorating with royal icing lines and colors like a painter. Each cookie is edible art — not only delicious but also collectible. Art should be felt in your hands and tasted on your palate.</p>
+      <p class="lead">I see cookies as canvases, decorating with royal icing lines and colours like a painter. Each cookie is edible art — not only delicious but also collectible. Art should be felt in your hands and tasted on your palate.</p>
     </section>
 
-    <!-- Gallery -->
+    <!-- Gallery: Masonry layout -->
     <section id="gallery">
       <h2>Gallery</h2>
-      <div class="grid gallery">
-        <div class="card"><img src="images/art1.jpg" alt="Decorated cookie art piece 1" /></div>
-        <div class="card"><img src="images/art2.jpg" alt="Decorated cookie art piece 2" /></div>
-        <div class="card"><img src="images/art3.jpg" alt="Decorated cookie art piece 3" /></div>
-        <div class="card"><img src="images/art4.jpg" alt="Decorated cookie art piece 4" /></div>
+      <div class="masonry">
+        <div class="tile"><img src="images/art1.jpg" alt="Decorated cookie art piece 1"></div>
+        <div class="tile"><img src="images/art2.jpg" alt="Decorated cookie art piece 2"></div>
+        <div class="tile"><img src="images/art3.jpg" alt="Decorated cookie art piece 3"></div>
+        <div class="tile"><img src="images/art4.jpg" alt="Decorated cookie art piece 4"></div>
+        <div class="tile"><img src="images/art5.jpg" alt="Decorated cookie art piece 5"></div>
       </div>
     </section>
 
