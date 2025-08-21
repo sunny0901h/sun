@@ -10,11 +10,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
+    /* Section headings */
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-family: 'Playfair Display', serif;
+    }
+
     /* Gallery grid with uniform image sizes */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
+      gap: 28px;
+      padding: 3rem 0;
     }
     .gallery-item {
       background: #fff;
@@ -24,12 +33,17 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
       display: flex;
       flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
     }
     .gallery-item img {
       width: 100%;
-      height: 220px; /* set a fixed height */
-      object-fit: cover; /* crop images uniformly */
+      height: 260px;
+      object-fit: cover;
       display: block;
+      transition: transform 0.3s ease;
     }
     .gallery-info {
       padding: 1rem;
@@ -39,7 +53,8 @@
       justify-content: space-between;
     }
     .gallery-info h3 {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
       margin: 0 0 0.5rem;
     }
     .gallery-info p {
@@ -57,10 +72,10 @@
       font-size: 0.9rem;
     }
 
-    /* Product & Class cards uniform image sizes */
-    .card img {
+    /* Products & Classes grid image uniform size */
+    .products .card img {
       width: 100%;
-      height: 260px; /* unify product image height */
+      height: 260px;
       object-fit: cover;
       display: block;
     }
@@ -94,7 +109,7 @@
     <!-- About -->
     <section id="about" class="about">
       <h2>About</h2>
-      <p class="lead">Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand‑pipe royal icing cookies that turn celebrations into keepsakes. Pickup in CBD by arrangement; shipping Australia‑wide. Prices in AUD.</p>
+      <p class="lead">Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand-pipe royal icing cookies that turn celebrations into keepsakes. Pickup in CBD by arrangement; shipping Australia-wide. Prices in AUD.</p>
     </section>
 
     <!-- Products -->
@@ -105,8 +120,8 @@
         <article class="card"><img src="images/christmas.jpg" alt="Christmas gift box"><div class="content"><h3>🎄 Christmas Gift Box</h3><p>Elegant gifting options in luxe packaging.</p><a class="btn" href="#">Order</a></div></article>
         <article class="card"><img src="images/custom.jpg" alt="Custom designed cookies"><div class="content"><h3>✨ Custom Cookies</h3><p>Personalised designs for weddings, birthdays and branding.</p><a class="btn" href="#">Order</a></div></article>
         <article class="card"><img src="images/baby.jpg" alt="Baby shower cookies"><div class="content"><h3>👶 Baby Shower Cookies</h3><p>Adorable favours to welcome little ones.</p><a class="btn" href="#">Order</a></div></article>
-        <article class="card"><img src="images/meringue.jpg" alt="Custom meringue kisses"><div class="content"><h3>🍬 Custom Meringue Kisses</h3><p>Light, airy and colour‑matched to your event.</p><a class="btn" href="#">Order</a></div></article>
-        <article class="card"><img src="images/cake.jpg" alt="Decorated cake"><div class="content"><h3>🍰 Decorated Cakes</h3><p>Hand‑decorated cakes with artistic royal icing details.</p><a class="btn" href="#">Order</a></div></article>
+        <article class="card"><img src="images/meringue.jpg" alt="Custom meringue kisses"><div class="content"><h3>🍬 Custom Meringue Kisses</h3><p>Light, airy and colour-matched to your event.</p><a class="btn" href="#">Order</a></div></article>
+        <article class="card"><img src="images/cake.jpg" alt="Decorated cake"><div class="content"><h3>🍰 Decorated Cakes</h3><p>Hand-decorated cakes with artistic royal icing details.</p><a class="btn" href="#">Order</a></div></article>
       </div>
     </section>
 
@@ -114,7 +129,7 @@
     <section id="classes">
       <h2>Classes & Workshops</h2>
       <div class="grid products">
-        <article class="card"><img src="images/class-family.jpg" alt="Family class"><div class="content"><h3>👩‍👩‍👧 Family / Parent‑Child</h3><p>Fun, hands‑on sessions suitable for kids and families.</p><a class="btn" href="#">Enroll</a></div></article>
+        <article class="card"><img src="images/class-family.jpg" alt="Family class"><div class="content"><h3>👩‍👩‍👧 Family / Parent-Child</h3><p>Fun, hands-on sessions suitable for kids and families.</p><a class="btn" href="#">Enroll</a></div></article>
         <article class="card"><img src="images/class-beginner.jpg" alt="Beginner workshop"><div class="content"><h3>🎨 Beginner Workshop</h3><p>Learn piping, flooding and essential decorating skills.</p><a class="btn" href="#">Enroll</a></div></article>
         <article class="card"><img src="images/class-master.jpg" alt="Masterclass"><div class="content"><h3>🌟 Masterclass</h3><p>Advanced techniques: fine lines, shading and showpiece design.</p><a class="btn" href="#">Enroll</a></div></article>
       </div>
@@ -126,7 +141,7 @@
       <p class="lead">I see cookies as canvases, decorating with royal icing lines and colours like a painter. Each cookie is edible art — not only delicious but also collectible. Art should be felt in your hands and tasted on your palate.</p>
     </section>
 
-    <!-- Gallery: Prada-like grid -->
+    <!-- Gallery -->
     <section id="gallery">
       <h2>Gallery</h2>
       <div class="gallery-grid">
