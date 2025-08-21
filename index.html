@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Gallery Prada-like grid */
+    /* Gallery grid with uniform image sizes */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -27,6 +27,8 @@
     }
     .gallery-item img {
       width: 100%;
+      height: 220px; /* set a fixed height */
+      object-fit: cover; /* crop images uniformly */
       display: block;
     }
     .gallery-info {
@@ -53,6 +55,14 @@
       border-radius: 4px;
       text-decoration: none;
       font-size: 0.9rem;
+    }
+
+    /* Product & Class cards uniform image sizes */
+    .card img {
+      width: 100%;
+      height: 260px; /* unify product image height */
+      object-fit: cover;
+      display: block;
     }
   </style>
 </head>
@@ -160,11 +170,11 @@
             <a class="btn" href="gallery/art5.html">More Information</a>
           </div>
         </div>
-              <div class="gallery-item">
+        <div class="gallery-item">
           <img src="images/art6.jpg" alt="Decorated cookie art 6">
           <div class="gallery-info">
             <h3>Art Piece 6</h3>
-            <p>Signature fine‑line piping with premium finish.</p>
+            <p>Refined monochrome set with modern details.</p>
             <a class="btn" href="gallery/art6.html">More Information</a>
           </div>
         </div>
