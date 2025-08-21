@@ -9,6 +9,52 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Gallery Prada-like grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .gallery-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+    }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+    }
+    .gallery-info {
+      padding: 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .gallery-info h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.5rem;
+    }
+    .gallery-info p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .gallery-info .btn {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+      background: #d4a373;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
   <!-- Hero with image -->
@@ -44,106 +90,84 @@
     <!-- Products -->
     <section id="products">
       <h2>Shop Cookies</h2>
-      <p class="lead">Click a product to order. Orders go through Google Forms and sync to Google Sheets for easy management.</p>
       <div class="grid products">
-        <article class="card">
-          <img src="images/halloween.jpg" alt="Halloween cookie set with elegant spooky designs" />
-          <div class="content">
-            <h3>🎃 Halloween Cookies</h3>
-            <p>Moody, stylish designs for your October events.</p>
-            <a class="btn" href="https://forms.gle/halloween" target="_blank" rel="noopener">Order</a>
-          </div>
-        </article>
-        <article class="card">
-          <img src="images/christmas.jpg" alt="Christmas gift box with refined festive cookies" />
-          <div class="content">
-            <h3>🎄 Christmas Gift Box</h3>
-            <p>Elegant gifting options in luxe packaging.</p>
-            <a class="btn" href="https://forms.gle/christmas" target="_blank" rel="noopener">Order</a>
-          </div>
-        </article>
-        <article class="card">
-          <img src="images/custom.jpg" alt="Custom designed royal icing cookies" />
-          <div class="content">
-            <h3>✨ Custom Cookies</h3>
-            <p>Personalised designs for weddings, birthdays and corporate branding.</p>
-            <a class="btn" href="https://forms.gle/custom" target="_blank" rel="noopener">Custom Order</a>
-          </div>
-        </article>
-        <article class="card">
-          <img src="images/baby.jpg" alt="Baby shower themed cookies" />
-          <div class="content">
-            <h3>👶 Baby Shower Cookies</h3>
-            <p>Adorable favours to welcome little ones.</p>
-            <a class="btn" href="https://forms.gle/baby" target="_blank" rel="noopener">Order</a>
-          </div>
-        </article>
-        <article class="card">
-          <img src="images/meringue.jpg" alt="Custom meringue kisses in soft colours" />
-          <div class="content">
-            <h3>🍬 Custom Meringue Kisses</h3>
-            <p>Light, airy and colour‑matched to your event.</p>
-            <a class="btn" href="https://forms.gle/meringue" target="_blank" rel="noopener">Order</a>
-          </div>
-        </article>
-        <article class="card">
-          <img src="images/cake.jpg" alt="Decorated cake with royal icing flowers" />
-          <div class="content">
-            <h3>🍰 Decorated Cakes</h3>
-            <p>Hand‑decorated cakes with artistic royal icing details, perfect for special occasions.</p>
-            <a class="btn" href="https://forms.gle/cake" target="_blank" rel="noopener">Order</a>
-          </div>
-        </article>
+        <article class="card"><img src="images/halloween.jpg" alt="Halloween cookie set"><div class="content"><h3>🎃 Halloween Cookies</h3><p>Moody, stylish designs for your October events.</p><a class="btn" href="#">Order</a></div></article>
+        <article class="card"><img src="images/christmas.jpg" alt="Christmas gift box"><div class="content"><h3>🎄 Christmas Gift Box</h3><p>Elegant gifting options in luxe packaging.</p><a class="btn" href="#">Order</a></div></article>
+        <article class="card"><img src="images/custom.jpg" alt="Custom designed cookies"><div class="content"><h3>✨ Custom Cookies</h3><p>Personalised designs for weddings, birthdays and branding.</p><a class="btn" href="#">Order</a></div></article>
+        <article class="card"><img src="images/baby.jpg" alt="Baby shower cookies"><div class="content"><h3>👶 Baby Shower Cookies</h3><p>Adorable favours to welcome little ones.</p><a class="btn" href="#">Order</a></div></article>
+        <article class="card"><img src="images/meringue.jpg" alt="Custom meringue kisses"><div class="content"><h3>🍬 Custom Meringue Kisses</h3><p>Light, airy and colour‑matched to your event.</p><a class="btn" href="#">Order</a></div></article>
+        <article class="card"><img src="images/cake.jpg" alt="Decorated cake"><div class="content"><h3>🍰 Decorated Cakes</h3><p>Hand‑decorated cakes with artistic royal icing details.</p><a class="btn" href="#">Order</a></div></article>
       </div>
     </section>
 
     <!-- Classes -->
-    <section id="classes" class="about">
+    <section id="classes">
       <h2>Classes & Workshops</h2>
       <div class="grid products">
-        <article class="card">
-          <img src="images/class-family.jpg" alt="Family cookie decorating class in Melbourne" />
-          <div class="content">
-            <h3>👩‍👩‍👧 Family / Parent‑Child</h3>
-            <p>Fun, hands‑on sessions suitable for kids and families.</p>
-            <a class="btn" href="https://forms.gle/familyclass" target="_blank" rel="noopener">Enroll</a>
-          </div>
-        </article>
-        <article class="card">
-          <img src="images/class-beginner.jpg" alt="Beginner cookie decorating workshop" />
-          <div class="content">
-            <h3>🎨 Beginner Workshop</h3>
-            <p>Learn piping, flooding and essential decorating skills.</p>
-            <a class="btn" href="https://forms.gle/beginner" target="_blank" rel="noopener">Enroll</a>
-          </div>
-        </article>
-        <article class="card">
-          <img src="images/class-master.jpg" alt="Advanced masterclass in royal icing techniques" />
-          <div class="content">
-            <h3>🌟 Masterclass</h3>
-            <p>Advanced techniques: fine lines, shading and showpiece design.</p>
-            <a class="btn" href="https://forms.gle/masterclass" target="_blank" rel="noopener">Enroll</a>
-          </div>
-        </article>
+        <article class="card"><img src="images/class-family.jpg" alt="Family class"><div class="content"><h3>👩‍👩‍👧 Family / Parent‑Child</h3><p>Fun, hands‑on sessions suitable for kids and families.</p><a class="btn" href="#">Enroll</a></div></article>
+        <article class="card"><img src="images/class-beginner.jpg" alt="Beginner workshop"><div class="content"><h3>🎨 Beginner Workshop</h3><p>Learn piping, flooding and essential decorating skills.</p><a class="btn" href="#">Enroll</a></div></article>
+        <article class="card"><img src="images/class-master.jpg" alt="Masterclass"><div class="content"><h3>🌟 Masterclass</h3><p>Advanced techniques: fine lines, shading and showpiece design.</p><a class="btn" href="#">Enroll</a></div></article>
       </div>
     </section>
 
     <!-- Cookie Art Philosophy -->
-    <section id="art" class="art">
+    <section id="art">
       <h2>Cookie Art</h2>
       <p class="lead">I see cookies as canvases, decorating with royal icing lines and colours like a painter. Each cookie is edible art — not only delicious but also collectible. Art should be felt in your hands and tasted on your palate.</p>
     </section>
 
-    <!-- Gallery: Masonry layout -->
+    <!-- Gallery: Prada-like grid -->
     <section id="gallery">
       <h2>Gallery</h2>
-      <div class="masonry">
-        <div class="tile"><img src="images/art1.jpg" alt="Decorated cookie art piece 1"></div>
-        <div class="tile"><img src="images/art2.jpg" alt="Decorated cookie art piece 2"></div>
-        <div class="tile"><img src="images/art3.jpg" alt="Decorated cookie art piece 3"></div>
-        <div class="tile"><img src="images/art4.jpg" alt="Decorated cookie art piece 4"></div>
-        <div class="tile"><img src="images/art5.jpg" alt="Decorated cookie art piece 5"></div>
-        <div class="tile"><img src="images/art6.jpg" alt="Decorated cookie art piece 6"></div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="images/art1.jpg" alt="Decorated cookie art 1">
+          <div class="gallery-info">
+            <h3>Art Piece 1</h3>
+            <p>Royal icing piece with intricate floral patterns.</p>
+            <a class="btn" href="gallery/art1.html">More Information</a>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/art2.jpg" alt="Decorated cookie art 2">
+          <div class="gallery-info">
+            <h3>Art Piece 2</h3>
+            <p>Minimalist cookie design with gold accents.</p>
+            <a class="btn" href="gallery/art2.html">More Information</a>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/art3.jpg" alt="Decorated cookie art 3">
+          <div class="gallery-info">
+            <h3>Art Piece 3</h3>
+            <p>Playful pastel colours for spring collection.</p>
+            <a class="btn" href="gallery/art3.html">More Information</a>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/art4.jpg" alt="Decorated cookie art 4">
+          <div class="gallery-info">
+            <h3>Art Piece 4</h3>
+            <p>Classic piping inspired by baroque details.</p>
+            <a class="btn" href="gallery/art4.html">More Information</a>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/art5.jpg" alt="Decorated cookie art 5">
+          <div class="gallery-info">
+            <h3>Art Piece 5</h3>
+            <p>Bright, festive theme with holiday touches.</p>
+            <a class="btn" href="gallery/art5.html">More Information</a>
+          </div>
+        </div>
+              <div class="gallery-item">
+          <img src="images/art6.jpg" alt="Decorated cookie art 6">
+          <div class="gallery-info">
+            <h3>Art Piece 6</h3>
+            <p>Signature fine‑line piping with premium finish.</p>
+            <a class="btn" href="gallery/art6.html">More Information</a>
+          </div>
+        </div>
       </div>
     </section>
 
