@@ -1,0 +1,93 @@
+/* 🎨 Sunny Sugar Art 網站樣式 */
+
+:root {
+  --brand: #f8b500;
+  --brand-2: #ffd89b;
+  --bg: #fff8f0;
+  --text: #333;
+  --muted: #666;
+  --card: #fff;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, "Microsoft JhengHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Hero 區塊 */
+header.hero {
+  padding: 72px 20px;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--brand-2), var(--brand));
+}
+header.hero h1 { margin: 0 0 12px; font-size: 40px; }
+header.hero p { margin: 0; font-size: 18px; opacity: .95; }
+
+/* 導覽列 */
+nav {
+  position: sticky; top: 0; z-index: 20; background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+nav ul { display:flex; align-items:center; justify-content:center; margin:0; padding:10px; list-style:none; }
+nav a {
+  color: var(--brand);
+  font-weight: 700;
+  text-decoration:none;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+nav a:hover { background: #fff3e0; }
+
+/* 內容區塊 */
+.container { max-width: 1060px; margin: 36px auto; padding: 0 20px; }
+section { margin: 56px 0; }
+h2 { display:inline-block; margin:0 0 18px; padding-bottom:6px; font-size:28px; color: var(--brand); border-bottom: 3px solid var(--brand-2); }
+p.lead { font-size: 18px; color: var(--muted); }
+
+/* 卡片格線 */
+.grid { display:grid; gap: 22px; }
+.grid.products { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid.gallery { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+  transition: transform .18s ease;
+}
+.card:hover { transform: translateY(-4px); }
+.card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.card .content { padding: 14px 16px 18px; }
+.card h3 { margin: 0 0 6px; font-size: 20px; }
+.card p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
+
+/* 按鈕 */
+.btn {
+  display:inline-block;
+  margin-top:12px;
+  padding:10px 16px;
+  background: var(--brand);
+  color:#fff;
+  text-decoration:none;
+  border-radius: 10px;
+  font-weight:700;
+}
+.btn:hover { filter: brightness(.94); }
+.btn.secondary { background: #111; }
+
+/* 特殊區塊 */
+.about, .art {
+  background:#fff;
+  padding: 26px;
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+}
+
+.contact a { color: var(--brand); text-decoration: none; }
+.contact a:hover { text-decoration: underline; }
+
+footer { background: #fff3e0; padding: 16px; text-align:center; font-size: 14px; }
