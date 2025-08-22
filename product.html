@@ -1,57 +1,58 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sunny Sugar Art｜Product</title>
+  <title>Sunny Sugar Art | Product</title>
   <style>
     :root{
-      --bg:#fff7e1; --bg-2:#fff2c2;
-      --ink:#1d1a16; --muted:#6b5f4a; --line:#ead9a6;
-      --card:#fff; --shadow:0 10px 30px rgba(107,73,0,.1); --radius:18px;
-      --brand:#f4b400; --brand-dark:#c89700; --brand-soft:#fff0a6;
+      /* brighter yellow scheme */
+      --bg:#fffaf2; --bg-2:#fff5cc;
+      --ink:#1f1b14; --muted:#6b5f4a; --line:#f0e2a0;
+      --card:#ffffff; --shadow:0 10px 30px rgba(120,85,0,.1); --radius:18px;
+      --brand:#fbc02d; --brand-dark:#d6a400; --brand-soft:#fff0a6;
     }
     *{box-sizing:border-box}
     body{margin:0;font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:var(--bg)}
     a{color:inherit}
 
-    .accent-bar{height:8px;background:linear-gradient(90deg,#f4b400,#ffd35c,#f7c23a)}
+    .accent-bar{height:8px;background:linear-gradient(90deg,#fbc02d,#ffd54f,#ffecb3)}
 
     .wrap{max-width:1100px;margin:auto;padding:24px}
     .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px}
     @media(max-width:900px){.grid{grid-template-columns:1fr}}
 
-    /* 左：圖片輪播 */
+    /* Left: Carousel */
     .gallery{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
-    .slider{position:relative;overflow:hidden;border-radius:14px;height:540px;background:#fdf8e7}
+    .slider{position:relative;overflow:hidden;border-radius:14px;height:520px;background:#fffbea}
     .slides{display:flex;transition:transform .5s ease;height:100%}
-    .slides img{flex:0 0 100%;width:100%;height:540px;object-fit:cover;display:block}
-    .nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.9);width:44px;height:44px;border-radius:50%;box-shadow:var(--shadow);cursor:pointer;font-size:1.2rem}
+    .slides img{flex:0 0 100%;width:100%;height:520px;object-fit:cover;display:block}
+    .nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.95);width:44px;height:44px;border-radius:50%;box-shadow:var(--shadow);cursor:pointer;font-size:1.2rem}
     .prev{left:10px}.next{right:10px}
     .dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
-    .dots button{width:9px;height:9px;border-radius:50%;border:0;background:#e0c94f;cursor:pointer}
+    .dots button{width:9px;height:9px;border-radius:50%;border:0;background:#f5d35c;cursor:pointer}
     .dots button[aria-current="true"]{background:#000}
 
-    /* 右：資訊 */
+    /* Right: Info */
     .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
-    .badge{display:inline-block;background:#fff7bf;border:1px solid #f4b400;padding:4px 10px;border-radius:999px;color:#5a4200;font-size:.85rem;font-weight:700}
+    .badge{display:inline-block;background:#fff7bf;border:1px solid #fbc02d;padding:4px 10px;border-radius:999px;color:#5a4200;font-size:.85rem;font-weight:700}
     h1{margin:.4rem 0 0;font-size:1.9rem;font-weight:900}
     .price{font-weight:800;font-size:1.4rem;margin:6px 0 18px;color:#5a4200}
 
-    details.acc{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff8d6}
+    details.acc{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fffdf0}
     details.acc+details.acc{margin-top:12px}
     details.acc>summary{cursor:pointer;font-weight:800}
 
-    /* Segmented 選項 */
+    /* Options */
     .group{margin-top:8px;display:flex;flex-wrap:wrap;gap:10px}
     .opt{padding:10px 14px;border:2px solid #d6b546;border-radius:12px;background:#fff;cursor:pointer;font-weight:700}
-    .opt[aria-pressed="true"]{border-color:#8a6f00;background:#fff6cc}
+    .opt[aria-pressed="true"]{border-color:#8a6f00;background:#fff7cc}
 
     /* Buttons */
     .actions{display:flex;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
     .btn{border:2px solid #5a4200;border-radius:999px;padding:12px 24px;font-weight:800;background:#fff;color:#5a4200;cursor:pointer}
-    .btn.primary{background:#f4b400;color:#2a2100;border-color:#d6a400}
-    .btn.primary:hover{background:#ffd54a}
+    .btn.primary{background:#fbc02d;color:#2a2100;border-color:#d6a400}
+    .btn.primary:hover{background:#ffd54f}
 
     small.help{color:var(--muted)}
 
@@ -66,17 +67,17 @@
 
   <div class="wrap">
     <div class="grid">
-      <!-- 左：輪播 -->
-      <section class="gallery" aria-label="product images">
+      <!-- Left: Carousel -->
+      <section class="gallery" aria-label="Product images">
         <div class="slider" id="slider" aria-roledescription="carousel">
           <div class="slides" id="slides"></div>
-          <button class="nav prev" aria-label="Prev" id="prev">‹</button>
-          <button class="nav next" aria-label="Next" id="next">›</button>
+          <button class="nav prev" aria-label="Previous image" id="prev">‹</button>
+          <button class="nav next" aria-label="Next image" id="next">›</button>
         </div>
         <div class="dots" id="dots" aria-hidden="true"></div>
       </section>
 
-      <!-- 右：資訊 -->
+      <!-- Right: Info -->
       <aside class="panel">
         <span class="badge">Sunny Sugar Art</span>
         <h1 id="p-title">Product</h1>
@@ -97,13 +98,13 @@
         <div class="actions">
           <button class="btn primary" id="add">Add to Cart</button>
           <button class="btn" id="ask">Send Enquiry</button>
-          <small class="help">We’ll confirm details and lead time via email/phone.</small>
+          <small class="help">We’ll confirm lead time and details via email/phone.</small>
         </div>
 
         <div class="notes">
           <h3>Notes</h3>
           <ul>
-            <li>Please order at least 30 days in advance.</li>
+            <li>Please place your order at least 30 days in advance.</li>
             <li>Handmade items may vary slightly in colour.</li>
           </ul>
         </div>
@@ -114,121 +115,80 @@
   <footer>© 2025 Sunny Sugar Art | Melbourne, Australia</footer>
 
   <script>
-    // 你的最新商品資料（已依照你提供內容整合）
     const PRODUCTS = {
-      halloween: {
-        title: 'Halloween Cookies',
-        price: 'A$ 70 — 330.00',
-        images: ['images/halloween.jpg','images/halloween-2.jpg','images/halloween-3.jpg'],
-        flavours: ['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
-        packs: ['6 PACK','10 PACK','12 PACK','15 PACK','30 PACK']
-      },
-      christmas: {
-        title: 'Christmas Gift Box',
-        price: 'A$ 70 — 330.00',
-        images: ['images/christmas.jpg','images/christmas-2.jpg'],
-        flavours: ['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
-        packs: ['6 PACK','10 PACK','12 PACK','15 PACK','30 PACK']
-      },
-      custom: {
-        title: 'Custom Cookies',
-        price: 'A$ — (quote)',
-        images: ['images/custom.jpg','images/custom-2.jpg'],
-        flavours: ['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
-        packs: ['6 PACK','10 PACK','12 PACK','15 PACK','30 PACK']
-      },
-      baby: {
-        title: 'Baby Shower Cookies',
-        price: 'A$ 90.00 — 280.00',
-        images: ['images/baby.jpg','images/baby-2.jpg','images/baby-3.jpg'],
-        flavours: ['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
-        packs: ['6 PACK','12 PACK','18 PACK','20 PACK']
-      },
-      meringue: {
-        title: 'Custom Meringue Kisses',
-        price: 'A$ —',
-        images: ['images/meringue.jpg','images/meringue-2.jpg'],
-        flavours: ['Mixture of Original & Light Lemon','Original ','Light Lemon'],
-        packs: ['10 PACK','20 PACK','30 PACK']
-      },
-      cake: {
-        title: 'Decorated Cakes',
-        price: 'A$ — (quote)',
-        images: ['images/cake.jpg','images/cake-2.jpg'],
-        flavours: ['Vanilla Shortbread'],
-        packs: ['6-inch','8-inch']
-      }
+      halloween:{ title:'Halloween Cookies', price:'A$ 70 — 330.00',
+        images:['images/halloween.jpg','images/halloween-2.jpg','images/halloween-3.jpg'],
+        flavours:['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
+        packs:['6 PACK','10 PACK','12 PACK','15 PACK','30 PACK'] },
+      christmas:{ title:'Christmas Gift Box', price:'A$ 70 — 330.00',
+        images:['images/christmas.jpg','images/christmas-2.jpg'],
+        flavours:['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
+        packs:['6 PACK','10 PACK','12 PACK','15 PACK','30 PACK'] },
+      custom:{ title:'Custom Cookies', price:'A$ — (quote)',
+        images:['images/custom.jpg','images/custom-2.jpg'],
+        flavours:['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
+        packs:['6 PACK','10 PACK','12 PACK','15 PACK','30 PACK'] },
+      baby:{ title:'Baby Shower Cookies', price:'A$ 90.00 — 280.00',
+        images:['images/baby.jpg','images/baby-2.jpg','images/baby-3.jpg'],
+        flavours:['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
+        packs:['6 PACK','12 PACK','18 PACK','20 PACK'] },
+      meringue:{ title:'Custom Meringue Kisses', price:'A$ —',
+        images:['images/meringue.jpg','images/meringue-2.jpg'],
+        flavours:['Mixture of Original & Light Lemon','Original','Light Lemon'],
+        packs:['10 PACK','20 PACK','30 PACK'] },
+      cake:{ title:'Decorated Cakes', price:'A$ — (quote)',
+        images:['images/cake.jpg','images/cake-2.jpg'],
+        flavours:['Vanilla Shortbread'],
+        packs:['6-inch','8-inch'] }
     };
 
-    // 解析 slug（例：product.html#slug=baby）
     function getSlug(){
       const m = location.hash.match(/slug=([^&]+)/i);
       return m ? decodeURIComponent(m[1]).trim().toLowerCase() : '';
     }
     const slug = getSlug();
     const data = PRODUCTS[slug];
-
-    // 找不到就顯示提示頁
     if(!data){
-      document.body.innerHTML = `
-        <div style="max-width:720px;margin:80px auto;font:16px/1.6 system-ui">
-          <h1>Product not found</h1>
-          <p>We couldn’t find this item. Please go back to the <a href="index.html">Shop</a>.</p>
-        </div>`;
-      throw new Error('Unknown slug: ' + slug);
+      document.body.innerHTML=`<div style="max-width:720px;margin:80px auto;font:16px/1.6 system-ui"><h1>Product not found</h1><p>Please go back to the <a href="index.html">Shop</a>.</p></div>`;
+      throw new Error('Unknown slug: '+slug);
     }
 
-    // 標題與價格
-    document.title = 'Sunny Sugar Art｜' + data.title;
-    document.getElementById('p-title').textContent = data.title;
-    document.getElementById('p-price').textContent = data.price;
+    document.title='Sunny Sugar Art | '+data.title;
+    document.getElementById('p-title').textContent=data.title;
+    document.getElementById('p-price').textContent=data.price;
 
-    // 圖片輪播
-    const slidesEl=document.getElementById('slides');
-    const dotsEl=document.getElementById('dots');
-    const prev=document.getElementById('prev');
-    const next=document.getElementById('next');
+    const slidesEl=document.getElementById('slides'), dotsEl=document.getElementById('dots');
+    const prev=document.getElementById('prev'), next=document.getElementById('next');
     let idx=0, imgs=data.images||[];
-
     function render(){
-      slidesEl.innerHTML = imgs.map(src=>`<img src="${src}" alt="${data.title}" loading="lazy">`).join('');
-      dotsEl.innerHTML = imgs.map((_,i)=>`<button aria-current="${i===idx}"></button>`).join('');
+      slidesEl.innerHTML=imgs.map(src=>`<img src="${src}" alt="${data.title}" loading="lazy">`).join('');
+      dotsEl.innerHTML=imgs.map((_,i)=>`<button aria-current="${i===idx}"></button>`).join('');
       update(); bind();
     }
     function update(immediate){
-      slidesEl.style.transition= immediate? 'none':'transform .5s ease';
+      slidesEl.style.transition=immediate?'none':'transform .5s ease';
       slidesEl.style.transform=`translateX(${-idx*100}%)`;
-      [...dotsEl.children].forEach((b,i)=>b.setAttribute('aria-current', i===idx));
+      [...dotsEl.children].forEach((b,i)=>b.setAttribute('aria-current',i===idx));
     }
     function bind(){
       [...dotsEl.children].forEach((b,i)=>b.onclick=()=>{idx=i;update(true)});
       prev.onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;update()};
       next.onclick=()=>{idx=(idx+1)%imgs.length;update()};
     }
-    let autoplay=null; 
-    function start(){ stop(); autoplay=setInterval(()=>{idx=(idx+1)%imgs.length;update()},4000) }
-    function stop(){ if(autoplay){ clearInterval(autoplay); autoplay=null } }
+    let autoplay=null;function start(){stop();autoplay=setInterval(()=>{idx=(idx+1)%imgs.length;update()},4000)}function stop(){if(autoplay){clearInterval(autoplay);autoplay=null}}
+    render();start();slidesEl.addEventListener('mouseenter',stop);slidesEl.addEventListener('mouseleave',start);
 
-    render(); start();
-    slidesEl.addEventListener('mouseenter', stop);
-    slidesEl.addEventListener('mouseleave', start);
-
-    // Segmented 選項
     function buildGroup(containerId, values, hiddenId){
-      const el=document.getElementById(containerId); const hid=document.getElementById(hiddenId); el.innerHTML='';
+      const el=document.getElementById(containerId), hid=document.getElementById(hiddenId);el.innerHTML='';
       values.forEach((txt,i)=>{
-        const b=document.createElement('button'); 
-        b.type='button'; b.className='opt'; b.textContent=txt; b.setAttribute('aria-pressed','false');
-        b.onclick=()=>{[...el.children].forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true'); hid.value=txt;};
-        el.appendChild(b); if(i===0){b.click()}
-      });
+        const b=document.createElement('button');b.type='button';b.className='opt';b.textContent=txt;b.setAttribute('aria-pressed','false');
+        b.onclick=()=>{[...el.children].forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');hid.value=txt;};
+        el.appendChild(b);if(i===0){b.click()}});
     }
-    buildGroup('flavours', data.flavours, 'flavourVal');
-    buildGroup('packs', data.packs, 'packVal');
+    buildGroup('flavours',data.flavours,'flavourVal');buildGroup('packs',data.packs,'packVal');
 
-    // Demo 動作（可串接你的後端）
-    document.getElementById('add').onclick=()=>alert('Added! (demo)');
-    document.getElementById('ask').onclick=()=>alert('Enquiry sent (demo)');
+    document.getElementById('add').onclick=()=>alert('Added to cart! (demo)');
+    document.getElementById('ask').onclick=()=>alert('Enquiry sent! (demo)');
   </script>
 </body>
 </html>
