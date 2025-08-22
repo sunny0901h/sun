@@ -1,75 +1,83 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sunny Sugar Art｜Shop</title>
-  <style>
-    :root{ --bg:#fff7f0; --ink:#1f2328; --muted:#6b7280; --card:#fff; --line:#eee; --accent:#f59e0b; --shadow:0 10px 30px rgba(10,10,20,.07); --radius:18px; }
-    *{box-sizing:border-box}
-    body{margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--ink)}
-    .wrap{max-width:1200px;margin:auto;padding:28px}
-    h1{font-size:1.6rem;margin:0 0 18px}
+<!DOCTYPE html>
+<h2>Classes & Workshops</h2>
+<div class="grid products">
+<article class="card"><img src="images/class-family.jpg" alt="Family class"><div class="content"><h3>👩‍👩‍👧 Family / Parent-Child</h3><p>Fun, hands-on sessions suitable for kids and families.</p><a class="btn" href="#">Enroll</a></div></article>
+<article class="card"><img src="images/class-beginner.jpg" alt="Beginner workshop"><div class="content"><h3>🎨 Beginner Workshop</h3><p>Learn piping, flooding and essential decorating skills.</p><a class="btn" href="#">Enroll</a></div></article>
+<article class="card"><img src="images/class-master.jpg" alt="Masterclass"><div class="content"><h3>🌟 Masterclass</h3><p>Advanced techniques: fine lines, shading and showpiece design.</p><a class="btn" href="#">Enroll</a></div></article>
+</div>
+</section>
 
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
-    @media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:640px){.grid{grid-template-columns:1fr}}
 
-    .card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-    .thumb{aspect-ratio:4/3;object-fit:cover;width:100%;display:block}
-    .content{padding:16px}
-    .content h3{margin:0 0 6px 0;display:flex;align-items:center;gap:8px}
-    .desc{color:var(--muted);margin:0 0 12px}
-    .btn{align-self:flex-start;background:var(--accent);color:#111827;border:0;border-radius:999px;padding:10px 16px;font-weight:800;text-decoration:none;display:inline-block}
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <h1>Shop</h1>
-    <div class="grid" id="grid"></div>
-  </div>
+<!-- Cookie Art Philosophy -->
+<section id="art">
+<h2>Cookie Art</h2>
+<p class="lead">I see cookies as canvases, decorating with royal icing lines and colours like a painter. Each cookie is edible art — not only delicious but also collectible. Art should be felt in your hands and tasted on your palate.</p>
+</section>
 
-  <script>
-    // ★ 把這裡的圖片路徑換成你的實際檔名/網址
-    const PRODUCTS=[
-      {slug:'halloween', title:'🎃 Halloween Cookies', desc:'Moody, stylish designs for October events.', images:['/images/halloween-1.jpg','/images/halloween-2.jpg','/images/halloween-3.jpg']},
-      {slug:'christmas', title:'🎄 Christmas Gift Box', desc:'Elegant gifting options in luxe packaging.', images:['/images/xmas-1.jpg','/images/xmas-2.jpg']},
-      {slug:'custom', title:'✨ Custom Cookies', desc:'Personalised designs for weddings, brands.', images:['/images/custom-1.jpg','/images/custom-2.jpg']},
-      {slug:'baby', title:'🍼 Baby Shower Cookies', desc:'Adorable favours to welcome little ones.', images:['/images/baby-1.jpg','/images/baby-2.jpg','/images/baby-3.jpg']},
-      {slug:'meringue', title:'🍭 Custom Meringue Kisses', desc:'Light, airy and colour-matched.', images:['/images/meringue-1.jpg','/images/meringue-2.jpg']},
-      {slug:'cakes', title:'🎂 Decorated Cakes', desc:'Artistic royal icing details.', images:['/images/cake-1.jpg','/images/cake-2.jpg']}
-    ];
 
-    const grid=document.getElementById('grid');
-    PRODUCTS.forEach(p=>{
-      const el=document.createElement('article'); el.className='card';
-      el.innerHTML=`
-        <img class="thumb" src="${p.images[0]}" alt="${p.title}">
-        <div class="content">
-          <h3>${p.title}</h3>
-          <p class="desc">${p.desc}</p>
-          <a class="btn" href="product.html#slug=${p.slug}">Order</a>
-        </div>`;
-      el.dataset.images = JSON.stringify(p.images);
-      grid.appendChild(el);
-    });
+<!-- Gallery -->
+<section id="gallery">
+<h2>Gallery</h2>
+<div class="gallery-grid">
+<div class="gallery-item">
+<img src="images/art1.jpg" alt="Decorated cookie art 1">
+<div class="gallery-info">
+<h3>Art Piece 1</h3>
+<p>Royal icing piece with intricate floral patterns.</p>
+<a class="btn" href="gallery/art1.html">More Information</a>
+</div>
+</div>
+<div class="gallery-item">
+<img src="images/art2.jpg" alt="Decorated cookie art 2">
+<div class="gallery-info">
+<h3>Art Piece 2</h3>
+<p>Minimalist cookie design with gold accents.</p>
+<a class="btn" href="gallery/art2.html">More Information</a>
+</div>
+</div>
+<div class="gallery-item">
+<img src="images/art3.jpg" alt="Decorated cookie art 3">
+<div class="gallery-info">
+<h3>Art Piece 3</h3>
+<p>Playful pastel colours for spring collection.</p>
+<a class="btn" href="gallery/art3.html">More Information</a>
+</div>
+</div>
+<div class="gallery-item">
+<img src="images/art4.jpg" alt="Decorated cookie art 4">
+<div class="gallery-info">
+<h3>Art Piece 4</h3>
+<p>Classic piping inspired by baroque details.</p>
+<a class="btn" href="gallery/art4.html">More Information</a>
+</div>
+</div>
+<div class="gallery-item">
+<img src="images/art5.jpg" alt="Decorated cookie art 5">
+<div class="gallery-info">
+<h3>Art Piece 5</h3>
+<p>Bright, festive theme with holiday touches.</p>
+<a class="btn" href="gallery/art5.html">More Information</a>
+</div>
+</div>
+<div class="gallery-item">
+<img src="images/art6.jpg" alt="Decorated cookie art 6">
+<div class="gallery-info">
+<h3>Art Piece 6</h3>
+<p>Refined monochrome set with modern details.</p>
+<a class="btn" href="gallery/art6.html">More Information</a>
+</div>
+</div>
+</div>
+</section>
 
-    // 自動輪播：卡片進入 viewport 才開始，離開就停止
-    const timers=new WeakMap();
-    function start(el){
-      if(timers.get(el)) return;
-      const imgs=JSON.parse(el.dataset.images||'[]'); if(imgs.length<2) return;
-      const img=el.querySelector('.thumb'); let i=0;
-      const id=setInterval(()=>{ i=(i+1)%imgs.length; img.src=imgs[i]; }, 2500);
-      timers.set(el,id);
-    }
-    function stop(el){ const id=timers.get(el); if(id){ clearInterval(id); timers.delete(el); }}
 
-    const io=new IntersectionObserver((entries)=>{
-      entries.forEach(ent=> ent.isIntersecting ? start(ent.target) : stop(ent.target));
-    },{root:null,threshold:.6});
+<!-- Contact -->
+<section id="contact" class="contact">
+<h2>Contact</h2>
+<p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
+<p>Instagram: <a href="https://www.instagram.com/sunny_sugar.art" target="_blank" rel="noopener">@sunny_sugar.art</a></p>
+</section>
+</main>
 
-    document.querySelectorAll('.card').forEach(c=>io.observe(c));
-  </script>
-</body>
-</html>
+
+<footer>
