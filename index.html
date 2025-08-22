@@ -11,11 +11,10 @@
       --card:#ffffff; --shadow:0 8px 24px rgba(0,0,0,.06);
       --brand:#fbc02d; --brand-dark:#d6a400;
 
-      /* 背景階層色 */
+      /* 背景顏色 */
       --bg-hero-grad-1:#fffef8; --bg-hero-grad-2:#fff4d4; --bg-hero-grad-3:#ffe79c;
-      --bg-plain:#fff;          /* 全站白 */
-      --bg-soft:#fff8e0;        /* About 內文說明框 */
-      --bg-band:#fff2c2;        /* 分段條帶（Classes/Contact/…） */
+      --bg-plain:#fff;
+      --bg-contact:#fffdf3; /* 更淡的米黃底 */
     }
     *{box-sizing:border-box}
     body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:var(--bg-plain)}
@@ -34,7 +33,7 @@
     .btn:hover{background:#ffd54f}
     .btn.secondary{background:#2a2100;color:#fff;border-color:#2a2100}
 
-    /* Navigation（字體更大） */
+    /* Navigation */
     nav ul{
       display:flex;gap:28px;list-style:none;justify-content:center;
       margin:0;padding:18px;background:#fff;border-bottom:1px solid var(--line);
@@ -45,21 +44,9 @@
     /* Sections */
     main{max-width:1200px;margin:0 auto;padding:0 24px}
     .section{padding:56px 0}
-    /* 分段條帶（色更深一點，確保可見） */
-    section.band{background:var(--bg-band);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
     .section h2{margin:0 0 22px;font-size:2.6rem;line-height:1.25;font-weight:900;letter-spacing:.2px}
 
-    /* About 說明框（柔和淡黃底，明顯可讀） */
-    .note{
-      background:var(--bg-soft);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:20px 18px;
-      color:#4b3e20;
-      max-width:900px;
-    }
-
-    /* Cards/Grid（乾淨） */
+    /* Cards/Grid */
     .grid{
       display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
       gap:28px;margin-top:10px
@@ -69,8 +56,8 @@
       box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .2s ease, box-shadow .2s ease
     }
     .card:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.08)}
-    .card img{width:100%;height:340px;object-fit:cover;display:block}  /* 圖片更高 */
-    .card .content{padding:22px}                                       /* 文字留白更大 */
+    .card img{width:100%;height:340px;object-fit:cover;display:block}
+    .card .content{padding:22px}
     .card h3{margin:0 0 10px;font-weight:900;font-size:1.15rem}
     .card p{margin:0 0 18px;color:#5b4d2a}
     .card .btn{align-self:flex-start}
@@ -85,7 +72,8 @@
     .gallery-info p{margin:0;color:#5b4d2a}
     .gallery-info .btn{align-self:flex-start;background:#2a2100;color:#fff}
 
-    /* Contact */
+    /* Contact：整段更淡黃底 */
+    section#contact{background:var(--bg-contact);border-top:1px solid var(--line)}
     .contact-wrap{max-width:1200px;margin:0 auto;padding:0 24px}
     footer.site{border-top:1px solid var(--line);text-align:center;padding:28px;color:#5f5336;background:#fff}
   </style>
@@ -113,13 +101,13 @@
   </nav>
 
   <main>
-    <!-- About：已加淡黃說明框 -->
+    <!-- About：回到純文字，乾淨無底色 -->
     <section id="about" class="section">
       <h2>About</h2>
-      <div class="note">
+      <p style="max-width:900px;margin:0">
         Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand-pipe royal icing cookies that
         turn celebrations into keepsakes. Pickup in Melbourne CBD by arrangement; shipping Australia-wide. Prices in AUD.
-      </div>
+      </p>
     </section>
 
     <!-- Shop -->
@@ -153,8 +141,8 @@
       </div>
     </section>
 
-    <!-- Classes：深一點的淡黃分段 -->
-    <section id="classes" class="section band">
+    <!-- Classes：白底（移除黃色分段） -->
+    <section id="classes" class="section">
       <h2>Classes & Workshops</h2>
       <div class="grid">
         <article class="card">
@@ -203,8 +191,8 @@
       </div>
     </section>
 
-    <!-- Contact：整段淡黃底（已啟用） -->
-    <section id="contact" class="section band">
+    <!-- Contact：淡黃底，橫跨整段 -->
+    <section id="contact" class="section" style="background:var(--bg-contact);">
       <div class="contact-wrap">
         <h2>Contact</h2>
         <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
