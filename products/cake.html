@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Decorated Cakes – Sunny Sugar Art</title>
+<link rel="stylesheet" href="../style.css">
+<style>.detail{max-width:1060px;margin:40px auto;padding:0 20px}.hero-img{width:100%;height:420px;object-fit:cover;border-radius:14px;box-shadow:0 8px 18px rgba(0,0,0,.08)}.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:18px 0}.thumbs img{width:100%;height:180px;object-fit:cover;border-radius:10px}.order{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;margin:26px 0}@media(max-width:900px){.order{grid-template-columns:1fr}}.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,.06)}.price{font-weight:700;font-size:1.15rem;margin:.4rem 0}.btn{display:inline-block;margin-top:.6rem}</style>
+</head>
+<body>
+<main class="detail">
+<a href="../index.html">← Back to Shop</a>
+<h1>🍰 Decorated Cakes</h1>
+<img class="hero-img" src="../images/cake.jpg" alt="Decorated cake">
+
+
+<div class="thumbs">
+<img src="../images/cake-2.jpg" alt="Cake 2" onerror="this.style.display='none'">
+<img src="../images/cake-3.jpg" alt="Cake 3" onerror="this.style.display='none'">
+</div>
+
+
+<section class="order">
+<div class="card">
+<h2>Order Brief</h2>
+<form id="orderForm">
+<fieldset>
+<legend>Size</legend>
+<label><input type="radio" name="size" value="6" checked> 6" round</label>
+<label><input type="radio" name="size" value="8"> 8" round</label>
+<label><input type="radio" name="size" value="2-tier"> 2‑tier</label>
+</fieldset>
+<label>Theme / Style
+<input type="text" id="theme" placeholder="e.g. floral piping / minimal luxe" required>
+</label>
+<label>Colours
+<input type="text" id="colors" placeholder="e.g. ivory, nude, gold">
+</label>
+<label>Servings (approx.)
+<input type="number" id="servings" min="6" step="1" placeholder="e.g. 12">
+</label>
+<label>Preferred date
+<input type="date" id="date" required>
+</label>
+<label>Your name
+<input type="text" id="name" required>
+</label>
+<label>Email
+<input type="email" id="email" required>
+</label>
+<label>Phone
+<input type="tel" id="phone">
+</label>
+<label>Notes
+<textarea id="notes" rows="4" placeholder="Flowers, toppers, inscription…"></textarea>
+</label>
+</form>
+</div>
+<aside class="card">
+<h2>Pricing</h2>
+<p>Custom quote based on size and design complexity.</p>
+<a class="btn" href="https://forms.gle/your-cake-form" target="_blank" rel="noopener">Order via Google Form</a>
+<button class="btn" id="emailBtn" type="button">Email Order</button>
+</aside>
+</section>
+</main>
+<script>
+const product = "Decorated Cakes";
+document.getElementById('emailBtn').addEventListener('click',()=>{
+const size = document.querySelector('input[name="size"]:checked').value;
+const theme = document.getElementById('theme').value.trim();
+const colors = document.getElementById('colors').value.trim();
+const servings = document.getElementById('servings').value;
+const date = document.getElementById('date').value;
+const name = document.getElementById('name').value.trim();
+const email = document.getElementById('email').value.trim();
+const phone = document.getElementById('phone').value.trim();
+const notes = document.getElementById('notes').value.trim();
+const body = encodeURIComponent(`Product: ${product}\nSize: ${size}\nTheme: ${theme}\nColours: ${colors}\nServings: ${servings}\nDate: ${date}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nNotes: ${notes}`);
+window.location.href = `mailto:sunnysugarart@gmail.com?subject=Order – ${encodeURIComponent(product)}&body=${body}`;
+});
+</script>
+</body>
+</html>
