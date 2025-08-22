@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Custom Meringue Kisses – Sunny Sugar Art</title>
+<link rel="stylesheet" href="../style.css">
+<style>.detail{max-width:1060px;margin:40px auto;padding:0 20px}.hero-img{width:100%;height:420px;object-fit:cover;border-radius:14px;box-shadow:0 8px 18px rgba(0,0,0,.08)}.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:18px 0}.thumbs img{width:100%;height:180px;object-fit:cover;border-radius:10px}.order{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;margin:26px 0}@media(max-width:900px){.order{grid-template-columns:1fr}}.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,.06)}.price{font-weight:700;font-size:1.15rem;margin:.4rem 0}.btn{display:inline-block;margin-top:.6rem}</style>
+</head>
+<body>
+<main class="detail">
+<a href="../index.html">← Back to Shop</a>
+<h1>🍬 Custom Meringue Kisses</h1>
+<img class="hero-img" src="../images/meringue.jpg" alt="Custom meringue kisses">
+
+
+<div class="thumbs">
+<img src="../images/meringue-2.jpg" alt="Meringue 2" onerror="this.style.display='none'">
+<img src="../images/meringue-3.jpg" alt="Meringue 3" onerror="this.style.display='none'">
+</div>
+
+
+<section class="order">
+<div class="card">
+<h2>Order Options</h2>
+<form id="orderForm">
+<fieldset>
+<legend>Pack Size</legend>
+<label><input type="radio" name="size" value="Small" checked> Small</label>
+<label><input type="radio" name="size" value="Medium"> Medium</label>
+<label><input type="radio" name="size" value="Large"> Large</label>
+</fieldset>
+<label>Colours
+<input type="text" id="colors" placeholder="e.g. blush, lavender, cream" required>
+</label>
+<label>Preferred date
+<input type="date" id="date" required>
+</label>
+<label>Your name
+<input type="text" id="name" required>
+</label>
+<label>Email
+<input type="email" id="email" required>
+</label>
+<label>Phone
+<input type="tel" id="phone">
+</label>
+<label>Notes
+<textarea id="notes" rows="4" placeholder="Packaging, ribbon colour, gift tag…"></textarea>
+</label>
+</form>
+</div>
+<aside class="card">
+<h2>Pricing (AUD)</h2>
+<p class="price" id="priceDisplay">Quoted after selection</p>
+<p>Airy, light and colour‑matched to your event.</p>
+<a class="btn" href="https://forms.gle/your-meringue-form" target="_blank" rel="noopener">Order via Google Form</a>
+<button class="btn" id="emailBtn" type="button">Email Order</button>
+</aside>
+</section>
+</main>
+<script>
+const product = "Custom Meringue Kisses";
+document.getElementById('emailBtn').addEventListener('click',()=>{
+const size = document.querySelector('input[name="size"]:checked').value;
+const colors = document.getElementById('colors').value.trim();
+const date = document.getElementById('date').value;
+const name = document.getElementById('name').value.trim();
+const email = document.getElementById('email').value.trim();
+const phone = document.getElementById('phone').value.trim();
+const notes = document.getElementById('notes').value.trim();
+const body = encodeURIComponent(`Product: ${product}\nPack: ${size}\nColours: ${colors}\nDate: ${date}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nNotes: ${notes}`);
+window.location.href = `mailto:sunnysugarart@gmail.com?subject=Order – ${encodeURIComponent(product)}&body=${body}`;
+});
+</script>
+</body>
+</html>
