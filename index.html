@@ -1,156 +1,220 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sunny Sugar Art | Royal Icing Cookies in Melbourne</title>
-  <meta name="description" content="Royal icing cookies handcrafted in Melbourne, Australia — Halloween, Christmas, custom cookies, baby shower cookies, meringue kisses, decorated cakes, and classes from family workshops to masterclasses." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <title>Sunny Sugar Art｜Product</title>
   <style>
-    body{margin:0;font-family:'Inter',sans-serif;background:#faf9fb;color:#1f2328}
-    header.hero{padding:80px 24px;text-align:center;background:#fff}
-    header.hero h1{font-family:'Playfair Display',serif;font-size:2.5rem;margin:0}
-    header.hero p{max-width:600px;margin:16px auto}
-    nav ul{display:flex;list-style:none;gap:16px;justify-content:center;padding:12px;margin:0;background:#fff;position:sticky;top:0}
-    nav a{text-decoration:none;color:#333;font-weight:600}
-    h2{font-size:2rem;font-family:'Playfair Display',serif;margin-top:2rem}
-    .grid.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;margin:2rem 0}
-    .card{background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.06);display:flex;flex-direction:column}
-    .card img{width:100%;height:260px;object-fit:cover;display:block}
-    .card .content{padding:16px}
-    .card h3{margin:0 0 6px;font-weight:700}
-    .card p{margin:0 0 12px;color:#555}
-    .card .btn{background:#d4a373;color:#fff;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:700;display:inline-block}
+    :root{
+      --bg:#faf9fb; --ink:#1f2328; --muted:#667085; --line:#ececf1;
+      --card:#ffffff; --shadow:0 10px 30px rgba(10,10,20,.07); --radius:18px;
+      --seg-bd:#c7c1bc; --seg-on:#5b463a; --seg-bg:#fffaf6;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:var(--bg)}
+    .wrap{max-width:1100px;margin:auto;padding:24px}
+    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+    /* 左：圖片 */
+    .gallery{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+    .slider{position:relative;overflow:hidden;border-radius:14px;height:560px;background:#f3f3f6}
+    .slides{display:flex;transition:transform .5s ease;height:100%}
+    .slides img{flex:0 0 100%;width:100%;height:560px;object-fit:cover;display:block}
+    .nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);width:44px;height:44px;border-radius:50%;box-shadow:var(--shadow);cursor:pointer}
+    .prev{left:10px}.next{right:10px}
+    .dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
+    .dots button{width:9px;height:9px;border-radius:50%;border:0;background:#d1d5db;cursor:pointer}
+    .dots button[aria-current="true"]{background:#333}
+
+    /* 右：資訊 */
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .badge{display:inline-block;background:#ede9fe;border:1px solid #d9d6fe;padding:2px 10px;border-radius:999px;color:#4b5563;font-size:.85rem}
+    h1{margin:.4rem 0 0 0;font-size:1.8rem;letter-spacing:.3px}
+    .price{font-weight:800;font-size:1.4rem;margin:6px 0 18px}
+
+    details.acc{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}
+    details.acc+details.acc{margin-top:12px}
+    details.acc>summary{cursor:pointer;font-weight:700}
+
+    /* Segmented */
+    .group{margin-top:8px;display:flex;flex-wrap:wrap;gap:10px}
+    .opt{padding:10px 14px;border:1.5px solid var(--seg-bd);border-radius:12px;background:#fff;cursor:pointer;font-weight:700;letter-spacing:.2px}
+    .opt[aria-pressed="true"]{border-color:var(--seg-on);background:var(--seg-bg)}
+
+    .actions{display:flex;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
+    .btn{border:2px solid #2f2a26;border-radius:999px;padding:12px 24px;font-weight:800;background:#fff;color:#2f2a26;cursor:pointer}
+    .btn.primary{background:#2f2a26;color:#fff}
+    small.help{color:var(--muted)}
+
+    .notes{margin-top:16px;padding:14px 16px;border:1px dashed #e5e7eb;border-radius:12px;background:#fff}
+    .notes h3{margin:0 0 8px 0;font-size:1rem}
+    .notes ul{margin:0;padding-left:18px}
   </style>
 </head>
 <body>
-  <!-- Hero -->
-  <header class="hero">
-    <h1>Sunny Sugar Art</h1>
-    <p>Royal icing cookies handcrafted in Melbourne — premium seasonal collections, custom designs, decorated cakes and creative classes.</p>
-    <div class="cta">
-      <a class="btn" href="#products">Shop Cookies</a>
-      <a class="btn" href="#classes" style="background:#aaa;margin-left:8px">View Classes</a>
+  <div class="wrap">
+    <div class="grid">
+      <!-- 左：輪播 -->
+      <section class="gallery" aria-label="product images">
+        <div class="slider" id="slider" aria-roledescription="carousel">
+          <div class="slides" id="slides"></div>
+          <button class="nav prev" aria-label="Prev" id="prev">‹</button>
+          <button class="nav next" aria-label="Next" id="next">›</button>
+        </div>
+        <div class="dots" id="dots" aria-hidden="true"></div>
+      </section>
+
+      <!-- 右：資訊 -->
+      <aside class="panel">
+        <span class="badge">Sunny Sugar Art</span>
+        <h1 id="p-title">Product</h1>
+        <div class="price" id="p-price">$ —</div>
+
+        <details class="acc" open>
+          <summary>Flavour</summary>
+          <div class="group" id="flavours"></div>
+          <input type="hidden" id="flavourVal">
+        </details>
+
+        <details class="acc" open>
+          <summary>Pack Size</summary>
+          <div class="group" id="packs"></div>
+          <input type="hidden" id="packVal">
+        </details>
+
+        <div class="actions">
+          <button class="btn primary" id="add">Add to Cart</button>
+          <button class="btn" id="ask">Send Enquiry</button>
+          <small class="help">We’ll confirm details and lead time via email/phone.</small>
+        </div>
+
+        <div class="notes">
+          <h3>Notes</h3>
+          <ul>
+            <li>Please order at least 30 days in advance; for large/wedding orders, contact earlier.</li>
+            <li>Handmade items may vary slightly in colour.</li>
+          </ul>
+        </div>
+      </aside>
     </div>
-  </header>
+  </div>
 
-  <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#products">Shop</a></li>
-      <li><a href="#classes">Classes</a></li>
-      <li><a href="#art">Cookie Art</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+  <script>
+    // 六個商品資料（slug 必須和 index.html 的連結一致）
+    const PRODUCTS = {
+      halloween:{
+        title:'Halloween Cookies',
+        price:'A$ 59.90 — 199.00',
+        images:['images/halloween.jpg','images/halloween-2.jpg','images/halloween-3.jpg'],
+        flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
+        packs:['10 PACK','15 PACK','30 PACK','50 PACK']
+      },
+      christmas:{
+        title:'Christmas Gift Box',
+        price:'A$ 69.90 — 219.00',
+        images:['images/christmas.jpg','images/christmas-2.jpg'],
+        flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
+        packs:['10 PACK','15 PACK','30 PACK','50 PACK']
+      },
+      custom:{
+        title:'Custom Cookies',
+        price:'A$ — (quote)',
+        images:['images/custom.jpg','images/custom-2.jpg'],
+        flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
+        packs:['10 PACK','15 PACK','30 PACK','50 PACK']
+      },
+      baby:{
+        title:'Baby Shower Cookies',
+        price:'A$ 59.90 — 189.00',
+        images:['images/baby.jpg','images/baby-2.jpg','images/baby-3.jpg'],
+        flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
+        packs:['10 PACK','15 PACK','30 PACK','50 PACK']
+      },
+      meringue:{
+        title:'Custom Meringue Kisses',
+        price:'A$ —',
+        images:['images/meringue.jpg','images/meringue-2.jpg'],
+        flavours:['Vanilla','Ginger'],
+        packs:['10 PACK','30 PACK','50 PACK']
+      },
+      cake:{
+        title:'Decorated Cakes',
+        price:'A$ — (quote)',
+        images:['images/cake.jpg','images/cake-2.jpg'],
+        flavours:['Vanilla','Chocolate','Lemon'],
+        packs:['6-inch','8-inch','2-tier']
+      }
+    };
 
-  <main class="container">
-    <!-- About -->
-    <section id="about">
-      <h2>About</h2>
-      <p>Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand-pipe royal icing cookies that turn celebrations into keepsakes. Pickup in CBD by arrangement; shipping Australia-wide. Prices in AUD.</p>
-    </section>
+    // 解析 slug（ex: product.html#slug=baby）
+    function getSlug(){
+      const m = location.hash.match(/slug=([^&]+)/i);
+      return m ? decodeURIComponent(m[1]).trim().toLowerCase() : '';
+    }
+    const slug = getSlug();
+    const data = PRODUCTS[slug];
 
-    <!-- Products -->
-    <section id="products">
-      <h2>Shop Cookies</h2>
-      <div class="grid products">
-        <article class="card">
-          <img src="images/halloween.jpg" alt="Halloween cookie set">
-          <div class="content">
-            <h3>🎃 Halloween Cookies</h3>
-            <p>Moody, stylish designs for your October events.</p>
-            <a class="btn" href="product.html#slug=halloween">Order</a>
-          </div>
-        </article>
+    if(!data){
+      document.body.innerHTML = `
+        <div style="max-width:720px;margin:80px auto;font:16px/1.6 system-ui">
+          <h1 style="margin:0 0 8px">Product not found</h1>
+          <p>Slug "<code>${slug||'(empty)'}</code>" not found. Go back to the <a href="index.html">Shop</a>.</p>
+        </div>`;
+      throw new Error('Unknown slug: ' + slug);
+    }
 
-        <article class="card">
-          <img src="images/christmas.jpg" alt="Christmas gift box">
-          <div class="content">
-            <h3>🎄 Christmas Gift Box</h3>
-            <p>Elegant gifting options in luxe packaging.</p>
-            <a class="btn" href="product.html#slug=christmas">Order</a>
-          </div>
-        </article>
+    // 標題與價格
+    document.title = 'Sunny Sugar Art｜' + data.title;
+    document.getElementById('p-title').textContent = data.title;
+    document.getElementById('p-price').textContent = data.price;
 
-        <article class="card">
-          <img src="images/custom.jpg" alt="Custom designed cookies">
-          <div class="content">
-            <h3>✨ Custom Cookies</h3>
-            <p>Personalised designs for weddings, birthdays and branding.</p>
-            <a class="btn" href="product.html#slug=custom">Order</a>
-          </div>
-        </article>
+    // 圖片輪播
+    const slidesEl=document.getElementById('slides');
+    const dotsEl=document.getElementById('dots');
+    const prev=document.getElementById('prev');
+    const next=document.getElementById('next');
+    let idx=0, imgs=data.images||[];
 
-        <article class="card">
-          <img src="images/baby.jpg" alt="Baby shower cookies">
-          <div class="content">
-            <h3>👶 Baby Shower Cookies</h3>
-            <p>Adorable favours to welcome little ones.</p>
-            <a class="btn" href="product.html#slug=baby">Order</a>
-          </div>
-        </article>
+    function render(){
+      slidesEl.innerHTML = imgs.map(src=>`<img src="${src}" alt="${data.title}" loading="lazy">`).join('');
+      dotsEl.innerHTML = imgs.map((_,i)=>`<button aria-current="${i===idx}"></button>`).join('');
+      update(); bind();
+    }
+    function update(immediate){
+      slidesEl.style.transition= immediate? 'none':'transform .5s ease';
+      slidesEl.style.transform=`translateX(${-idx*100}%)`;
+      [...dotsEl.children].forEach((b,i)=>b.setAttribute('aria-current', i===idx));
+    }
+    function bind(){
+      [...dotsEl.children].forEach((b,i)=>b.onclick=()=>{idx=i;update(true)});
+      prev.onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;update()};
+      next.onclick=()=>{idx=(idx+1)%imgs.length;update()};
+    }
+    let autoplay=null; 
+    function start(){ stop(); autoplay=setInterval(()=>{idx=(idx+1)%imgs.length;update()},4000) }
+    function stop(){ if(autoplay){ clearInterval(autoplay); autoplay=null } }
 
-        <article class="card">
-          <img src="images/meringue.jpg" alt="Custom meringue kisses">
-          <div class="content">
-            <h3>🍬 Custom Meringue Kisses</h3>
-            <p>Light, airy and colour-matched to your event.</p>
-            <a class="btn" href="product.html#slug=meringue">Order</a>
-          </div>
-        </article>
+    render(); start();
+    slidesEl.addEventListener('mouseenter', stop);
+    slidesEl.addEventListener('mouseleave', start);
 
-        <article class="card">
-          <img src="images/cake.jpg" alt="Decorated cake">
-          <div class="content">
-            <h3>🍰 Decorated Cakes</h3>
-            <p>Hand-decorated cakes with artistic royal icing details.</p>
-            <a class="btn" href="product.html#slug=cake">Order</a>
-          </div>
-        </article>
-      </div>
-    </section>
+    // Segmented 選項
+    function buildGroup(containerId, values, hiddenId){
+      const el=document.getElementById(containerId); const hid=document.getElementById(hiddenId); el.innerHTML='';
+      values.forEach((txt,i)=>{
+        const b=document.createElement('button'); 
+        b.type='button'; b.className='opt'; b.textContent=txt; b.setAttribute('aria-pressed','false');
+        b.onclick=()=>{[...el.children].forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true'); hid.value=txt;};
+        el.appendChild(b); if(i===0){b.click()}
+      });
+    }
+    buildGroup('flavours', data.flavours, 'flavourVal');
+    buildGroup('packs', data.packs, 'packVal');
 
-    <!-- Classes -->
-    <section id="classes">
-      <h2>Classes & Workshops</h2>
-      <div class="grid products">
-        <article class="card"><img src="images/class-family.jpg" alt="Family class"><div class="content"><h3>👩‍👩‍👧 Family / Parent-Child</h3><p>Fun, hands-on sessions suitable for kids and families.</p><a class="btn" href="#">Enroll</a></div></article>
-        <article class="card"><img src="images/class-beginner.jpg" alt="Beginner workshop"><div class="content"><h3>🎨 Beginner Workshop</h3><p>Learn piping, flooding and essential decorating skills.</p><a class="btn" href="#">Enroll</a></div></article>
-        <article class="card"><img src="images/class-master.jpg" alt="Masterclass"><div class="content"><h3>🌟 Masterclass</h3><p>Advanced techniques: fine lines, shading and showpiece design.</p><a class="btn" href="#">Enroll</a></div></article>
-      </div>
-    </section>
-
-    <!-- Cookie Art -->
-    <section id="art">
-      <h2>Cookie Art</h2>
-      <p>I see cookies as canvases, decorating with royal icing lines and colours like a painter. Each cookie is edible art — not only delicious but also collectible. Art should be felt in your hands and tasted on your palate.</p>
-    </section>
-
-    <!-- Gallery -->
-    <section id="gallery">
-      <h2>Gallery</h2>
-      <div class="grid products">
-        <article class="card"><img src="images/art1.jpg" alt="Decorated cookie art 1"><div class="content"><h3>Art Piece 1</h3><p>Royal icing piece with intricate floral patterns.</p></div></article>
-        <article class="card"><img src="images/art2.jpg" alt="Decorated cookie art 2"><div class="content"><h3>Art Piece 2</h3><p>Minimalist cookie design with gold accents.</p></div></article>
-        <article class="card"><img src="images/art3.jpg" alt="Decorated cookie art 3"><div class="content"><h3>Art Piece 3</h3><p>Playful pastel colours for spring collection.</p></div></article>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
-      <p>Instagram: <a href="https://www.instagram.com/sunny_sugar.art" target="_blank">@sunny_sugar.art</a></p>
-    </section>
-  </main>
-
-  <footer style="text-align:center;padding:2rem;color:#777">
-    © 2025 Sunny Sugar Art | Melbourne, Australia
-  </footer>
+    // Demo 動作
+    document.getElementById('add').onclick=()=>alert('Added! (demo)');
+    document.getElementById('ask').onclick=()=>alert('Enquiry sent (demo)');
+  </script>
 </body>
 </html>
