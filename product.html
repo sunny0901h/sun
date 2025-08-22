@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sunny Sugar Art | Product</title>
+  <title>Sunny Sugar Art｜Product</title>
   <style>
     :root{
       --bg:#faf9fb; --ink:#1f2328; --muted:#667085; --line:#ececf1;
@@ -37,7 +37,7 @@
     details.acc+details.acc{margin-top:12px}
     details.acc>summary{cursor:pointer;font-weight:700}
 
-    /* Segmented 選項 */
+    /* Segmented */
     .group{margin-top:8px;display:flex;flex-wrap:wrap;gap:10px}
     .opt{padding:10px 14px;border:1.5px solid var(--seg-bd);border-radius:12px;background:#fff;cursor:pointer;font-weight:700;letter-spacing:.2px}
     .opt[aria-pressed="true"]{border-color:var(--seg-on);background:var(--seg-bg)}
@@ -55,7 +55,7 @@
 <body>
   <div class="wrap">
     <div class="grid">
-      <!-- 左：圖片輪播 -->
+      <!-- 左：輪播 -->
       <section class="gallery" aria-label="product images">
         <div class="slider" id="slider" aria-roledescription="carousel">
           <div class="slides" id="slides"></div>
@@ -101,7 +101,7 @@
   </div>
 
   <script>
-    // 商品資料：在這裡填六個商品
+    // 六個商品資料（slug 必須和 index.html 的連結一致）
     const PRODUCTS = {
       halloween:{
         title:'Halloween Cookies',
@@ -117,17 +117,59 @@
         flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
         packs:['10 PACK','15 PACK','30 PACK','50 PACK']
       },
-      // 其他商品（custom, baby, meringue, cake）可照這格式加上
+      custom:{
+        title:'Custom Cookies',
+        price:'A$ — (quote)',
+        images:['images/custom.jpg','images/custom-2.jpg'],
+        flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
+        packs:['10 PACK','15 PACK','30 PACK','50 PACK']
+      },
+      baby:{
+        title:'Baby Shower Cookies',
+        price:'A$ 59.90 — 189.00',
+        images:['images/baby.jpg','images/baby-2.jpg','images/baby-3.jpg'],
+        flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
+        packs:['10 PACK','15 PACK','30 PACK','50 PACK']
+      },
+      meringue:{
+        title:'Custom Meringue Kisses',
+        price:'A$ —',
+        images:['images/meringue.jpg','images/meringue-2.jpg'],
+        flavours:['Vanilla','Ginger'],
+        packs:['10 PACK','30 PACK','50 PACK']
+      },
+      cake:{
+        title:'Decorated Cakes',
+        price:'A$ — (quote)',
+        images:['images/cake.jpg','images/cake-2.jpg'],
+        flavours:['Vanilla','Chocolate','Lemon'],
+        packs:['6-inch','8-inch','2-tier']
+      }
     };
 
-    // 依 URL hash 讀取 slug，例如 product.html#slug=halloween
-    const slug = (location.hash.match(/slug=([^&]+)/)||[])[1] || 'halloween';
-    const data = PRODUCTS[slug] || Object.values(PRODUCTS)[0];
+    // 解析 slug（ex: product.html#slug=baby）
+    function getSlug(){
+      const m = location.hash.match(/slug=([^&]+)/i);
+      return m ? decodeURIComponent(m[1]).trim().toLowerCase() : '';
+    }
+    const slug = getSlug();
+    const data = PRODUCTS[slug];
 
-    // 改網頁標題
-    document.title = 'Sunny Sugar Art | ' + data.title;
+    if(!data){
+      document.body.innerHTML = `
+        <div style="max-width:720px;margin:80px auto;font:16px/1.6 system-ui">
+          <h1 style="margin:0 0 8px">Product not found</h1>
+          <p>Slug "<code>${slug||'(empty)'}</code>" not found. Go back to the <a href="index.html">Shop</a>.</p>
+        </div>`;
+      throw new Error('Unknown slug: ' + slug);
+    }
 
-    // 建立圖片輪播
+    // 標題與價格
+    document.title = 'Sunny Sugar Art｜' + data.title;
+    document.getElementById('p-title').textContent = data.title;
+    document.getElementById('p-price').textContent = data.price;
+
+    // 圖片輪播
     const slidesEl=document.getElementById('slides');
     const dotsEl=document.getElementById('dots');
     const prev=document.getElementById('prev');
@@ -149,22 +191,28 @@
       prev.onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;update()};
       next.onclick=()=>{idx=(idx+1)%imgs.length;update()};
     }
-    let autoplay=null; function start(){stop(); autoplay=setInterval(()=>{idx=(idx+1)%imgs.length;update()},4000)}; function stop(){if(autoplay){clearInterval(autoplay);autoplay=null}};
+    let autoplay=null; 
+    function start(){ stop(); autoplay=setInterval(()=>{idx=(idx+1)%imgs.length;update()},4000) }
+    function stop(){ if(autoplay){ clearInterval(autoplay); autoplay=null } }
+
     render(); start();
-    slidesEl.addEventListener('mouseenter', stop); slidesEl.addEventListener('mouseleave', start);
+    slidesEl.addEventListener('mouseenter', stop);
+    slidesEl.addEventListener('mouseleave', start);
 
-    // 填寫文字
-    document.getElementById('p-title').textContent=data.title;
-    document.getElementById('p-price').textContent=data.price;
-
+    // Segmented 選項
     function buildGroup(containerId, values, hiddenId){
       const el=document.getElementById(containerId); const hid=document.getElementById(hiddenId); el.innerHTML='';
-      values.forEach((txt,i)=>{const b=document.createElement('button'); b.type='button'; b.className='opt'; b.textContent=txt; b.setAttribute('aria-pressed','false'); b.onclick=()=>{[...el.children].forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true'); hid.value=txt;}; el.appendChild(b); if(i===0){b.click()}})
+      values.forEach((txt,i)=>{
+        const b=document.createElement('button'); 
+        b.type='button'; b.className='opt'; b.textContent=txt; b.setAttribute('aria-pressed','false');
+        b.onclick=()=>{[...el.children].forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true'); hid.value=txt;};
+        el.appendChild(b); if(i===0){b.click()}
+      });
     }
     buildGroup('flavours', data.flavours, 'flavourVal');
     buildGroup('packs', data.packs, 'packVal');
 
-    // 示意動作
+    // Demo 動作
     document.getElementById('add').onclick=()=>alert('Added! (demo)');
     document.getElementById('ask').onclick=()=>alert('Enquiry sent (demo)');
   </script>
