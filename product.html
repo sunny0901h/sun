@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sunny Sugar Art｜Product</title>
+  <title>Sunny Sugar Art | Product</title>
   <style>
     :root{
       --bg:#faf9fb; --ink:#1f2328; --muted:#667085; --line:#ececf1;
@@ -16,19 +16,18 @@
     .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px}
     @media (max-width:900px){.grid{grid-template-columns:1fr}}
 
-    /* 左：圖片區 */
+    /* 左：圖片 */
     .gallery{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
     .slider{position:relative;overflow:hidden;border-radius:14px;height:560px;background:#f3f3f6}
     .slides{display:flex;transition:transform .5s ease;height:100%}
-    .slides img,.slides .ph{flex:0 0 100%;width:100%;height:560px;object-fit:cover;display:block}
-    .ph{display:flex;align-items:center;justify-content:center;color:#8a8fa3;font-weight:700;background:linear-gradient(135deg,#f7f7fb,#eef1f8)}
-    .slider button.nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);width:44px;height:44px;border-radius:50%;box-shadow:var(--shadow);cursor:pointer}
-    .slider .prev{left:10px}.slider .next{right:10px}
+    .slides img{flex:0 0 100%;width:100%;height:560px;object-fit:cover;display:block}
+    .nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);width:44px;height:44px;border-radius:50%;box-shadow:var(--shadow);cursor:pointer}
+    .prev{left:10px}.next{right:10px}
     .dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
     .dots button{width:9px;height:9px;border-radius:50%;border:0;background:#d1d5db;cursor:pointer}
     .dots button[aria-current="true"]{background:#333}
 
-    /* 右：資訊區 */
+    /* 右：資訊 */
     .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
     .badge{display:inline-block;background:#ede9fe;border:1px solid #d9d6fe;padding:2px 10px;border-radius:999px;color:#4b5563;font-size:.85rem}
     h1{margin:.4rem 0 0 0;font-size:1.8rem;letter-spacing:.3px}
@@ -43,15 +42,6 @@
     .opt{padding:10px 14px;border:1.5px solid var(--seg-bd);border-radius:12px;background:#fff;cursor:pointer;font-weight:700;letter-spacing:.2px}
     .opt[aria-pressed="true"]{border-color:var(--seg-on);background:var(--seg-bg)}
 
-    /* 色票（若需要） */
-    .swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-    .sw{width:32px;height:32px;border-radius:8px;border:2px solid transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
-    .sw[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:2px}
-    .sw[data-color="粉紅"]{background:#f472b6}
-    .sw[data-color="藍色"]{background:#60a5fa}
-    .sw[data-color="白色"]{background:#f8fafc;border:1px solid #e5e7eb}
-    .sw[data-color="金色"]{background:linear-gradient(135deg,#f59e0b,#facc15)}
-
     .actions{display:flex;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
     .btn{border:2px solid #2f2a26;border-radius:999px;padding:12px 24px;font-weight:800;background:#fff;color:#2f2a26;cursor:pointer}
     .btn.primary{background:#2f2a26;color:#fff}
@@ -65,19 +55,19 @@
 <body>
   <div class="wrap">
     <div class="grid">
-      <!-- 左：圖片 -->
-      <section class="gallery" aria-label="商品圖片">
+      <!-- 左：圖片輪播 -->
+      <section class="gallery" aria-label="product images">
         <div class="slider" id="slider" aria-roledescription="carousel">
-          <div class="slides" id="slides"><div class="ph">Loading…</div></div>
-          <button class="nav prev" aria-label="上一張" id="prev">‹</button>
-          <button class="nav next" aria-label="下一張" id="next">›</button>
+          <div class="slides" id="slides"></div>
+          <button class="nav prev" aria-label="Prev" id="prev">‹</button>
+          <button class="nav next" aria-label="Next" id="next">›</button>
         </div>
         <div class="dots" id="dots" aria-hidden="true"></div>
       </section>
 
       <!-- 右：資訊 -->
-      <aside class="panel" aria-label="訂購資訊">
-        <span class="badge">Sunny Sugar Art 客製化</span>
+      <aside class="panel">
+        <span class="badge">Sunny Sugar Art</span>
         <h1 id="p-title">Product</h1>
         <div class="price" id="p-price">$ —</div>
 
@@ -93,23 +83,17 @@
           <input type="hidden" id="packVal">
         </details>
 
-        <details class="acc">
-          <summary>顏色主題（可選）</summary>
-          <div class="swatches" id="swatches"></div>
-          <input type="hidden" id="colorVal">
-        </details>
-
         <div class="actions">
           <button class="btn primary" id="add">Add to Cart</button>
           <button class="btn" id="ask">Send Enquiry</button>
-          <small class="help">送出後我們會以 Email/電話與您確認細節與交期。</small>
+          <small class="help">We’ll confirm details and lead time via email/phone.</small>
         </div>
 
         <div class="notes">
-          <h3>注意事項</h3>
+          <h3>Notes</h3>
           <ul>
-            <li>建議至少提前 30 天預訂；大量/婚禮客製請更早聯繫。</li>
-            <li>手工製作會有微小色差。</li>
+            <li>Please order at least 30 days in advance; for large/wedding orders, contact earlier.</li>
+            <li>Handmade items may vary slightly in colour.</li>
           </ul>
         </div>
       </aside>
@@ -117,34 +101,31 @@
   </div>
 
   <script>
-    // ★ 把這裡換成你的實際產品資料（依 slug 載入）
+    // 商品資料：在這裡填六個商品
     const PRODUCTS = {
       halloween:{
-        title:'Halloween Cookies', price:'A$ 59.90 — 199.00',
-        images:['/images/halloween-1.jpg','/images/halloween-2.jpg','/images/halloween-3.jpg'],
+        title:'Halloween Cookies',
+        price:'A$ 59.90 — 199.00',
+        images:['images/halloween.jpg','images/halloween-2.jpg','images/halloween-3.jpg'],
         flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
-        packs:['10 PACK','15 PACK','30 PACK','50 PACK'],
-        colors:['粉紅','藍色','白色','金色']
+        packs:['10 PACK','15 PACK','30 PACK','50 PACK']
       },
       christmas:{
-        title:'Christmas Gift Box', price:'A$ 69.90 — 219.00',
-        images:['/images/xmas-1.jpg','/images/xmas-2.jpg'],
+        title:'Christmas Gift Box',
+        price:'A$ 69.90 — 219.00',
+        images:['images/christmas.jpg','images/christmas-2.jpg'],
         flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
-        packs:['10 PACK','15 PACK','30 PACK','50 PACK'],
-        colors:['粉紅','藍色','白色','金色']
+        packs:['10 PACK','15 PACK','30 PACK','50 PACK']
       },
-      baby:{
-        title:'Baby Shower Cookies', price:'A$ 59.90 — 189.00',
-        images:['/images/baby-1.jpg','/images/baby-2.jpg','/images/baby-3.jpg'],
-        flavours:['Mixture of Ginger & Vanilla','Signature Ginger','Vanilla Shortbread'],
-        packs:['10 PACK','15 PACK','30 PACK','50 PACK'],
-        colors:['粉紅','藍色','白色','金色']
-      }
+      // 其他商品（custom, baby, meringue, cake）可照這格式加上
     };
 
-    // 依 URL 取得 slug，例如 product.html#slug=baby
+    // 依 URL hash 讀取 slug，例如 product.html#slug=halloween
     const slug = (location.hash.match(/slug=([^&]+)/)||[])[1] || 'halloween';
     const data = PRODUCTS[slug] || Object.values(PRODUCTS)[0];
+
+    // 改網頁標題
+    document.title = 'Sunny Sugar Art | ' + data.title;
 
     // 建立圖片輪播
     const slidesEl=document.getElementById('slides');
@@ -172,7 +153,7 @@
     render(); start();
     slidesEl.addEventListener('mouseenter', stop); slidesEl.addEventListener('mouseleave', start);
 
-    // 文字與選項
+    // 填寫文字
     document.getElementById('p-title').textContent=data.title;
     document.getElementById('p-price').textContent=data.price;
 
@@ -183,12 +164,9 @@
     buildGroup('flavours', data.flavours, 'flavourVal');
     buildGroup('packs', data.packs, 'packVal');
 
-    const swWrap=document.getElementById('swatches'); const colVal=document.getElementById('colorVal');
-    (data.colors||[]).forEach((name,i)=>{const b=document.createElement('button'); b.type='button'; b.className='sw'; b.dataset.color=name; b.title=name; b.setAttribute('aria-pressed','false'); b.onclick=()=>{[...swWrap.children].forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true'); colVal.value=name;}; swWrap.appendChild(b); if(i===0){b.click()}});
-    
-    // 動作（示意）
-    document.getElementById('add').onclick=()=>alert('Added! (示意)');
-    document.getElementById('ask').onclick=()=>alert('已送出詢問（示意）');
+    // 示意動作
+    document.getElementById('add').onclick=()=>alert('Added! (demo)');
+    document.getElementById('ask').onclick=()=>alert('Enquiry sent (demo)');
   </script>
 </body>
 </html>
