@@ -4,39 +4,99 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sunny Sugar Art｜Royal Icing Cookies in Melbourne</title>
+  <meta name="description" content="Royal icing cookies handcrafted in Melbourne — Halloween, Christmas, custom cookies, baby shower cookies, meringue kisses, decorated cakes, and classes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#faf9fb;--ink:#1f2328;--line:#eee;--brand:#d4a373}
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--ink)}
-    header.hero{padding:72px 24px;text-align:center;background:#fff}
-    header.hero h1{font-size:2.4rem;margin:0}
-    nav ul{display:flex;gap:16px;list-style:none;justify-content:center;margin:0;padding:12px;background:#fff;position:sticky;top:0}
+    :root{
+      /* 黃色主題（可調整） */
+      --bg:#fffaf2;           /* 整體背景微奶油黃 */
+      --ink:#1f2328;
+      --muted:#6b7280;
+      --line:#eee;
+      --brand:#d4a373;        /* 主色：金黃棕 */
+      --brand-2:#f6d6a8;      /* 輔助：淡金 */
+      --card:#ffffff;
+      --shadow:0 10px 30px rgba(10,10,20,.07);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--ink)}
+    a{color:inherit}
+
+    /* Hero (延續黃色調) */
+    header.hero{
+      padding:72px 24px;
+      text-align:center;
+      background:linear-gradient(150deg,#fff,#fff8e6 60%, #fff2cc);
+      border-bottom:1px solid var(--line);
+    }
+    header.hero h1{font-family:'Playfair Display',serif;font-size:2.6rem;margin:0}
+    header.hero p{max-width:720px;margin:12px auto 0;color:#374151}
+    .cta .btn{background:var(--brand);color:#fff;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800;display:inline-block}
+    .cta .btn.secondary{background:#111;color:#fff;margin-left:8px}
+
+    /* Nav */
+    nav ul{display:flex;gap:16px;list-style:none;justify-content:center;margin:0;padding:12px;background:#fff;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line)}
     nav a{text-decoration:none;color:#333;font-weight:700}
-    h2{font-size:1.8rem;margin:28px 0 8px}
+
     main{max-width:1200px;margin:auto;padding:0 24px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;margin:18px 0 40px}
-    .card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.06);display:flex;flex-direction:column}
+    h2{font-size:2rem;font-family:'Playfair Display',serif;margin:40px 0 10px}
+
+    /* Cards/Grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;margin:18px 0 32px}
+    .card{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+      box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .25s ease, box-shadow .25s ease
+    }
+    .card:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(10,10,20,.12)}
     .card img{width:100%;height:260px;object-fit:cover;display:block}
     .card .content{padding:16px}
-    .card h3{margin:0 0 6px}
+    .card h3{margin:0 0 6px;font-weight:800;letter-spacing:.2px}
     .card p{margin:0 0 12px;color:#555}
     .btn{background:var(--brand);color:#fff;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800;display:inline-block}
-    /* 錯誤提示條 */
+
+    /* Gallery（恢復整區與黃色點綴） */
+    .gallery-grid{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+      gap:28px;margin:18px 0 40px
+    }
+    .gallery-item{
+      background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;
+      box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .25s ease
+    }
+    .gallery-item:hover{transform:translateY(-3px)}
+    .gallery-item img{width:100%;height:260px;object-fit:cover;display:block;transition:transform .3s ease}
+    .gallery-item:hover img{transform:scale(1.04)}
+    .gallery-info{padding:16px;display:flex;flex-direction:column;gap:8px}
+    .gallery-info h3{margin:0;font-weight:800}
+    .gallery-info p{margin:0;color:#555}
+    .gallery-info .btn{align-self:flex-start;background:var(--ink);}
+
+    /* 顏色強調小飾條（可選） */
+    .accent-bar{height:6px;background:linear-gradient(90deg,var(--brand),var(--brand-2))}
+    footer{border-top:1px solid var(--line);text-align:center;padding:24px;color:#777;background:#fff}
+    /* 錯誤提示條（保底可見） */
     .errorbar{display:none;padding:10px 14px;background:#fee2e2;color:#991b1b;font-weight:700}
     .errorbar.show{display:block}
   </style>
 </head>
 <body>
+  <div class="accent-bar"></div>
   <div id="errorbar" class="errorbar"></div>
 
+  <!-- Hero -->
   <header class="hero">
     <h1>Sunny Sugar Art</h1>
     <p>Royal icing cookies handcrafted in Melbourne — seasonal collections, custom designs, decorated cakes and creative classes.</p>
-    <div style="margin-top:12px">
+    <div class="cta" style="margin-top:12px">
       <a class="btn" href="#products">Shop Cookies</a>
-      <a class="btn" href="#classes" style="background:#999;margin-left:8px">View Classes</a>
+      <a class="btn secondary" href="#classes">View Classes</a>
     </div>
   </header>
 
+  <!-- Navigation -->
   <nav>
     <ul>
       <li><a href="#about">About</a></li>
@@ -48,15 +108,17 @@
   </nav>
 
   <main>
+    <!-- About -->
     <section id="about">
       <h2>About</h2>
       <p>Hi, I’m Sunny — pickup in Melbourne CBD by arrangement; shipping Australia-wide. Prices in AUD.</p>
     </section>
 
-    <!-- 先用靜態卡片保底顯示；JS 只做：自動播圖 -->
+    <!-- Products -->
     <section id="products">
       <h2>Shop Cookies</h2>
       <div class="grid" id="grid">
+        <!-- 先靜態保底顯示（第一張圖），JS 再做自動播圖 -->
         <article class="card" data-images='["images/halloween.jpg","images/halloween-2.jpg","images/halloween-3.jpg"]'>
           <img class="thumb" src="images/halloween.jpg" alt="Halloween cookie set">
           <div class="content"><h3>🎃 Halloween Cookies</h3><p>Moody, stylish designs for October.</p><a class="btn" href="product.html#slug=halloween">Order</a></div>
@@ -84,6 +146,7 @@
       </div>
     </section>
 
+    <!-- Classes -->
     <section id="classes">
       <h2>Classes & Workshops</h2>
       <div class="grid">
@@ -93,6 +156,62 @@
       </div>
     </section>
 
+    <!-- ✅ Gallery（完整恢復 6 張 + 黃色風格按鈕） -->
+    <section id="gallery">
+      <h2>Gallery</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="images/art1.jpg" alt="Decorated cookie art 1">
+          <div class="gallery-info">
+            <h3>Art Piece 1</h3>
+            <p>Royal icing piece with intricate floral patterns.</p>
+            <a class="btn" href="gallery/art1.html">More Information</a>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/art2.jpg" alt="Decorated cookie art 2">
+          <div class="gallery-info">
+            <h3>Art Piece 2</h3>
+            <p>Minimalist cookie design with gold accents.</p>
+            <a class="btn" href="gallery/art2.html">More Information</a>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/art3.jpg" alt="Decorated cookie art 3">
+          <div class="gallery-info">
+            <h3>Art Piece 3</h3>
+            <p>Playful pastel colours for spring collection.</p>
+            <a class="btn" href="gallery/art3.html">More Information</a>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/art4.jpg" alt="Decorated cookie art 4">
+          <div class="gallery-info">
+            <h3>Art Piece 4</h3>
+            <p>Classic piping inspired by baroque details.</p>
+            <a class="btn" href="gallery/art4.html">More Information</a>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/art5.jpg" alt="Decorated cookie art 5">
+          <div class="gallery-info">
+            <h3>Art Piece 5</h3>
+            <p>Bright, festive theme with holiday touches.</p>
+            <a class="btn" href="gallery/art5.html">More Information</a>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="images/art6.jpg" alt="Decorated cookie art 6">
+          <div class="gallery-info">
+            <h3>Art Piece 6</h3>
+            <p>Refined monochrome set with modern details.</p>
+            <a class="btn" href="gallery/art6.html">More Information</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
     <section id="contact">
       <h2>Contact</h2>
       <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
@@ -100,25 +219,25 @@
     </section>
   </main>
 
-  <footer style="text-align:center;padding:24px;color:#777">© 2025 Sunny Sugar Art | Melbourne, Australia</footer>
+  <footer>© 2025 Sunny Sugar Art | Melbourne, Australia</footer>
 
   <script>
-    // 錯誤提示條
+    // 顯示 JS 錯誤在頁面上（方便排錯）
     function showErr(e){ const bar=document.getElementById('errorbar'); bar.textContent='Script error: '+e; bar.className='errorbar show'; console.error(e); }
 
     try{
-      // 進視窗才自動輪播：只增強，不影響基本顯示
+      // 卡片縮圖：進入視窗才自動輪播
       const cards = document.querySelectorAll('.card[data-images]');
       const timers=new WeakMap();
-      const start = (el)=>{
+      const start=(el)=>{
         if(timers.get(el)) return;
         const list = JSON.parse(el.getAttribute('data-images')||'[]'); if(list.length<2) return;
         const img = el.querySelector('.thumb'); let i=0;
-        const id = setInterval(()=>{ i=(i+1)%list.length; img.src=list[i]; }, 2500);
+        const id=setInterval(()=>{ i=(i+1)%list.length; img.src=list[i]; }, 2500);
         timers.set(el,id);
       };
-      const stop = (el)=>{ const id=timers.get(el); if(id){ clearInterval(id); timers.delete(el); } };
-      const io = new IntersectionObserver((ents)=>{ ents.forEach(ent=> ent.isIntersecting ? start(ent.target) : stop(ent.target)); }, {threshold:.6});
+      const stop=(el)=>{const id=timers.get(el); if(id){clearInterval(id); timers.delete(el);}};
+      const io=new IntersectionObserver((ents)=>{ents.forEach(ent=> ent.isIntersecting? start(ent.target): stop(ent.target))},{threshold:.6});
       cards.forEach(c=>io.observe(c));
     }catch(err){ showErr(err); }
   </script>
