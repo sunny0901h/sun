@@ -8,47 +8,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
   <style>
-    /* Section headings */
-    h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; font-family: 'Playfair Display', serif; }
-
-    /* Gallery grid with uniform image sizes */
-    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; padding: 3rem 0; }
-    .gallery-item { background:#fff; border:1px solid #ddd; border-radius:8px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.05); display:flex; flex-direction:column; transition: transform 0.3s ease; }
-    .gallery-item:hover img { transform: scale(1.05); }
-    .gallery-item img { width:100%; height:260px; object-fit:cover; display:block; transition: transform 0.3s ease; }
-    .gallery-info { padding:1rem; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between; }
-    .gallery-info h3 { font-size:1.2rem; font-weight:600; margin:0 0 .5rem; }
-    .gallery-info p { font-size:.9rem; color:#555; }
-    .gallery-info .btn { align-self:flex-start; margin-top:.5rem; background:#d4a373; color:#fff; padding:.5rem 1rem; border-radius:4px; text-decoration:none; font-size:.9rem; }
-
-    /* Products & Classes grid image uniform size */
-    .products .card img { width:100%; height:260px; object-fit:cover; display:block; }
-
-    /* 卡片外觀（保留你原本的結構） */
-    .grid.products { display:grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap:28px; }
-    .card { background:#fff; border:1px solid #eee; border-radius:12px; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,.06); display:flex; flex-direction:column; }
-    .card .content { padding:16px; }
-    .card .content h3 { margin:0 0 6px; font-weight:700; }
-    .card .content p { margin:0 0 12px; color:#555; }
-    .card .btn { background:#d4a373; color:#fff; padding:10px 16px; border-radius:999px; text-decoration:none; font-weight:700; display:inline-block; }
+    body{margin:0;font-family:'Inter',sans-serif;background:#faf9fb;color:#1f2328}
+    header.hero{padding:80px 24px;text-align:center;background:#fff}
+    header.hero h1{font-family:'Playfair Display',serif;font-size:2.5rem;margin:0}
+    header.hero p{max-width:600px;margin:16px auto}
+    nav ul{display:flex;list-style:none;gap:16px;justify-content:center;padding:12px;margin:0;background:#fff;position:sticky;top:0}
+    nav a{text-decoration:none;color:#333;font-weight:600}
+    h2{font-size:2rem;font-family:'Playfair Display',serif;margin-top:2rem}
+    .grid.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;margin:2rem 0}
+    .card{background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.06);display:flex;flex-direction:column}
+    .card img{width:100%;height:260px;object-fit:cover;display:block}
+    .card .content{padding:16px}
+    .card h3{margin:0 0 6px;font-weight:700}
+    .card p{margin:0 0 12px;color:#555}
+    .card .btn{background:#d4a373;color:#fff;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:700;display:inline-block}
   </style>
 </head>
 <body>
-  <!-- Hero with image -->
-  <header class="hero" role="banner">
-    <div class="hero-wrap">
-      <div class="hero-content">
-        <h1>Sunny Sugar Art</h1>
-        <p class="lead">Royal icing cookies handcrafted in Melbourne — premium seasonal collections, custom designs, decorated cakes and creative classes.</p>
-        <div class="cta"><a class="btn" href="#products">Shop Cookies</a> <a class="btn secondary" href="#classes">View Classes</a></div>
-      </div>
+  <!-- Hero -->
+  <header class="hero">
+    <h1>Sunny Sugar Art</h1>
+    <p>Royal icing cookies handcrafted in Melbourne — premium seasonal collections, custom designs, decorated cakes and creative classes.</p>
+    <div class="cta">
+      <a class="btn" href="#products">Shop Cookies</a>
+      <a class="btn" href="#classes" style="background:#aaa;margin-left:8px">View Classes</a>
     </div>
   </header>
 
   <!-- Navigation -->
-  <nav aria-label="Primary">
+  <nav>
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#products">Shop</a></li>
@@ -59,19 +48,18 @@
     </ul>
   </nav>
 
-  <main class="container" role="main">
+  <main class="container">
     <!-- About -->
-    <section id="about" class="about">
+    <section id="about">
       <h2>About</h2>
-      <p class="lead">Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand-pipe royal icing cookies that turn celebrations into keepsakes. Pickup in CBD by arrangement; shipping Australia-wide. Prices in AUD.</p>
+      <p>Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand-pipe royal icing cookies that turn celebrations into keepsakes. Pickup in CBD by arrangement; shipping Australia-wide. Prices in AUD.</p>
     </section>
 
     <!-- Products -->
     <section id="products">
       <h2>Shop Cookies</h2>
-      <div class="grid products" id="productsGrid">
-        <!-- 每個 card 放第一張圖，並在 data-images 放多張圖路徑（可自行替換成你的實際檔名/雲端網址） -->
-        <article class="card" data-slug="halloween" data-images='["images/halloween.jpg","images/halloween-2.jpg","images/halloween-3.jpg"]'>
+      <div class="grid products">
+        <article class="card">
           <img src="images/halloween.jpg" alt="Halloween cookie set">
           <div class="content">
             <h3>🎃 Halloween Cookies</h3>
@@ -80,7 +68,7 @@
           </div>
         </article>
 
-        <article class="card" data-slug="christmas" data-images='["images/christmas.jpg","images/christmas-2.jpg"]'>
+        <article class="card">
           <img src="images/christmas.jpg" alt="Christmas gift box">
           <div class="content">
             <h3>🎄 Christmas Gift Box</h3>
@@ -89,7 +77,7 @@
           </div>
         </article>
 
-        <article class="card" data-slug="custom" data-images='["images/custom.jpg","images/custom-2.jpg"]'>
+        <article class="card">
           <img src="images/custom.jpg" alt="Custom designed cookies">
           <div class="content">
             <h3>✨ Custom Cookies</h3>
@@ -98,7 +86,7 @@
           </div>
         </article>
 
-        <article class="card" data-slug="baby" data-images='["images/baby.jpg","images/baby-2.jpg","images/baby-3.jpg"]'>
+        <article class="card">
           <img src="images/baby.jpg" alt="Baby shower cookies">
           <div class="content">
             <h3>👶 Baby Shower Cookies</h3>
@@ -107,7 +95,7 @@
           </div>
         </article>
 
-        <article class="card" data-slug="meringue" data-images='["images/meringue.jpg","images/meringue-2.jpg"]'>
+        <article class="card">
           <img src="images/meringue.jpg" alt="Custom meringue kisses">
           <div class="content">
             <h3>🍬 Custom Meringue Kisses</h3>
@@ -116,7 +104,7 @@
           </div>
         </article>
 
-        <article class="card" data-slug="cake" data-images='["images/cake.jpg","images/cake-2.jpg"]'>
+        <article class="card">
           <img src="images/cake.jpg" alt="Decorated cake">
           <div class="content">
             <h3>🍰 Decorated Cakes</h3>
@@ -137,103 +125,32 @@
       </div>
     </section>
 
-    <!-- Cookie Art Philosophy -->
+    <!-- Cookie Art -->
     <section id="art">
       <h2>Cookie Art</h2>
-      <p class="lead">I see cookies as canvases, decorating with royal icing lines and colours like a painter. Each cookie is edible art — not only delicious but also collectible. Art should be felt in your hands and tasted on your palate.</p>
+      <p>I see cookies as canvases, decorating with royal icing lines and colours like a painter. Each cookie is edible art — not only delicious but also collectible. Art should be felt in your hands and tasted on your palate.</p>
     </section>
 
     <!-- Gallery -->
     <section id="gallery">
       <h2>Gallery</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item">
-          <img src="images/art1.jpg" alt="Decorated cookie art 1">
-          <div class="gallery-info">
-            <h3>Art Piece 1</h3>
-            <p>Royal icing piece with intricate floral patterns.</p>
-            <a class="btn" href="gallery/art1.html">More Information</a>
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/art2.jpg" alt="Decorated cookie art 2">
-          <div class="gallery-info">
-            <h3>Art Piece 2</h3>
-            <p>Minimalist cookie design with gold accents.</p>
-            <a class="btn" href="gallery/art2.html">More Information</a>
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/art3.jpg" alt="Decorated cookie art 3">
-          <div class="gallery-info">
-            <h3>Art Piece 3</h3>
-            <p>Playful pastel colours for spring collection.</p>
-            <a class="btn" href="gallery/art3.html">More Information</a>
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/art4.jpg" alt="Decorated cookie art 4">
-          <div class="gallery-info">
-            <h3>Art Piece 4</h3>
-            <p>Classic piping inspired by baroque details.</p>
-            <a class="btn" href="gallery/art4.html">More Information</a>
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/art5.jpg" alt="Decorated cookie art 5">
-          <div class="gallery-info">
-            <h3>Art Piece 5</h3>
-            <p>Bright, festive theme with holiday touches.</p>
-            <a class="btn" href="gallery/art5.html">More Information</a>
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/art6.jpg" alt="Decorated cookie art 6">
-          <div class="gallery-info">
-            <h3>Art Piece 6</h3>
-            <p>Refined monochrome set with modern details.</p>
-            <a class="btn" href="gallery/art6.html">More Information</a>
-          </div>
-        </div>
+      <div class="grid products">
+        <article class="card"><img src="images/art1.jpg" alt="Decorated cookie art 1"><div class="content"><h3>Art Piece 1</h3><p>Royal icing piece with intricate floral patterns.</p></div></article>
+        <article class="card"><img src="images/art2.jpg" alt="Decorated cookie art 2"><div class="content"><h3>Art Piece 2</h3><p>Minimalist cookie design with gold accents.</p></div></article>
+        <article class="card"><img src="images/art3.jpg" alt="Decorated cookie art 3"><div class="content"><h3>Art Piece 3</h3><p>Playful pastel colours for spring collection.</p></div></article>
       </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="contact">
+    <section id="contact">
       <h2>Contact</h2>
       <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
-      <p>Instagram: <a href="https://www.instagram.com/sunny_sugar.art" target="_blank" rel="noopener">@sunny_sugar.art</a></p>
+      <p>Instagram: <a href="https://www.instagram.com/sunny_sugar.art" target="_blank">@sunny_sugar.art</a></p>
     </section>
   </main>
 
-  <footer>
+  <footer style="text-align:center;padding:2rem;color:#777">
     © 2025 Sunny Sugar Art | Melbourne, Australia
   </footer>
-
-  <!-- 卡片自動播放腳本 -->
-  <script>
-    const cards = document.querySelectorAll('.grid.products .card');
-    const timers = new WeakMap();
-
-    function start(el){
-      if(timers.get(el)) return; // already running
-      const img = el.querySelector('img');
-      const list = JSON.parse(el.getAttribute('data-images') || '[]');
-      if(!img || list.length < 2) return;
-      let i = 0;
-      const id = setInterval(()=>{ i = (i+1) % list.length; img.src = list[i]; }, 2500);
-      timers.set(el, id);
-    }
-    function stop(el){
-      const id = timers.get(el);
-      if(id){ clearInterval(id); timers.delete(el); }
-    }
-
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(ent => ent.isIntersecting ? start(ent.target) : stop(ent.target));
-    }, {root:null, threshold:.6});
-
-    cards.forEach(c => io.observe(c));
-  </script>
 </body>
 </html>
