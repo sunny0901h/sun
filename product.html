@@ -1,194 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sunny Sugar Art | Product</title>
-  <style>
-    :root{
-      /* brighter yellow scheme */
-      --bg:#fffaf2; --bg-2:#fff5cc;
-      --ink:#1f1b14; --muted:#6b5f4a; --line:#f0e2a0;
-      --card:#ffffff; --shadow:0 10px 30px rgba(120,85,0,.1); --radius:18px;
-      --brand:#fbc02d; --brand-dark:#d6a400; --brand-soft:#fff0a6;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:var(--bg)}
-    a{color:inherit}
-
-    .accent-bar{height:8px;background:linear-gradient(90deg,#fbc02d,#ffd54f,#ffecb3)}
-
-    .wrap{max-width:1100px;margin:auto;padding:24px}
-    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
-
-    /* Left: Carousel */
-    .gallery{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
-    .slider{position:relative;overflow:hidden;border-radius:14px;height:520px;background:#fffbea}
-    .slides{display:flex;transition:transform .5s ease;height:100%}
-    .slides img{flex:0 0 100%;width:100%;height:520px;object-fit:cover;display:block}
-    .nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.95);width:44px;height:44px;border-radius:50%;box-shadow:var(--shadow);cursor:pointer;font-size:1.2rem}
-    .prev{left:10px}.next{right:10px}
-    .dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
-    .dots button{width:9px;height:9px;border-radius:50%;border:0;background:#f5d35c;cursor:pointer}
-    .dots button[aria-current="true"]{background:#000}
-
-    /* Right: Info */
-    .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
-    .badge{display:inline-block;background:#fff7bf;border:1px solid #fbc02d;padding:4px 10px;border-radius:999px;color:#5a4200;font-size:.85rem;font-weight:700}
-    h1{margin:.4rem 0 0;font-size:1.9rem;font-weight:900}
-    .price{font-weight:800;font-size:1.4rem;margin:6px 0 18px;color:#5a4200}
-
-    details.acc{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fffdf0}
-    details.acc+details.acc{margin-top:12px}
-    details.acc>summary{cursor:pointer;font-weight:800}
-
-    /* Options */
-    .group{margin-top:8px;display:flex;flex-wrap:wrap;gap:10px}
-    .opt{padding:10px 14px;border:2px solid #d6b546;border-radius:12px;background:#fff;cursor:pointer;font-weight:700}
-    .opt[aria-pressed="true"]{border-color:#8a6f00;background:#fff7cc}
-
-    /* Buttons */
-    .actions{display:flex;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
-    .btn{border:2px solid #5a4200;border-radius:999px;padding:12px 24px;font-weight:800;background:#fff;color:#5a4200;cursor:pointer}
-    .btn.primary{background:#fbc02d;color:#2a2100;border-color:#d6a400}
-    .btn.primary:hover{background:#ffd54f}
-
-    small.help{color:var(--muted)}
-
-    .notes{margin-top:16px;padding:14px 16px;border:1px dashed #e5e7eb;border-radius:12px;background:#fff}
-    .notes h3{margin:0 0 8px;font-size:1rem;font-weight:800;color:#5a4200}
-
-    footer{border-top:1px solid var(--line);text-align:center;padding:24px;color:#5f5336;background:#fff7d1;margin-top:40px}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Product | Sunny Sugar Art</title>
+<style>
+  :root{--ink:#1f1b14;--line:#efe5c9;--brand:#6b4b3a}
+  *{box-sizing:border-box} body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink)}
+  header{padding:22px 20px;border-bottom:1px solid var(--line)}
+  header a{text-decoration:none;font-weight:900}
+  .wrap{max-width:1200px;margin:0 auto;padding:24px}
+  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  h1{margin:0 0 6px}
+  .price{font-weight:900;margin:6px 0 18px}
+  /* gallery */
+  .slider{position:relative;border:1px solid #f2ecd7;border-radius:14px;overflow:hidden;background:#f7f4ee}
+  .slides{display:flex;transition:transform .45s ease}
+  .slides img{width:100%;height:560px;object-fit:cover;flex:0 0 100%;display:block}
+  .nav{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:0;border-radius:50%;width:40px;height:40px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.12)}
+  .nav.prev{left:10px}.nav.next{right:10px}
+  .thumbs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .thumbs img{width:80px;height:80px;object-fit:cover;border:2px solid transparent;border-radius:8px;cursor:pointer}
+  .thumbs img[aria-current="true"]{border-color:#111}
+  /* form */
+  label{display:block;margin:12px 0 8px;font-weight:700}
+  select,button{font:inherit}
+  select{width:100%;padding:10px 12px;border:1px solid #e9e1c7;border-radius:10px;background:#fff}
+  .btn{display:inline-block;margin-top:16px;background:#fff;border:2px solid #4b3a2b;color:#4b3a2b;padding:12px 18px;border-radius:999px;font-weight:900}
+  .btn.primary{background:#4b3a2b;color:#fff}
+  .note{margin-top:16px;font-size:.9rem;color:#6b5f4a}
+</style>
 </head>
 <body>
-  <div class="accent-bar"></div>
+<header><a href="javascript:history.back()">← Back</a></header>
+<div class="wrap">
+  <div class="grid">
+    <section>
+      <div class="slider">
+        <div id="slides" class="slides"></div>
+        <button class="nav prev" id="prev">‹</button>
+        <button class="nav next" id="next">›</button>
+      </div>
+      <div id="thumbs" class="thumbs"></div>
+    </section>
 
-  <div class="wrap">
-    <div class="grid">
-      <!-- Left: Carousel -->
-      <section class="gallery" aria-label="Product images">
-        <div class="slider" id="slider" aria-roledescription="carousel">
-          <div class="slides" id="slides"></div>
-          <button class="nav prev" aria-label="Previous image" id="prev">‹</button>
-          <button class="nav next" aria-label="Next image" id="next">›</button>
-        </div>
-        <div class="dots" id="dots" aria-hidden="true"></div>
-      </section>
+    <aside>
+      <h1 id="title">Loading…</h1>
+      <div id="price" class="price"></div>
 
-      <!-- Right: Info -->
-      <aside class="panel">
-        <span class="badge">Sunny Sugar Art</span>
-        <h1 id="p-title">Product</h1>
-        <div class="price" id="p-price">$ —</div>
-
-        <details class="acc" open>
-          <summary>Flavour</summary>
-          <div class="group" id="flavours"></div>
-          <input type="hidden" id="flavourVal">
-        </details>
-
-        <details class="acc" open>
-          <summary>Pack Size</summary>
-          <div class="group" id="packs"></div>
-          <input type="hidden" id="packVal">
-        </details>
-
-        <div class="actions">
-          <button class="btn primary" id="add">Add to Cart</button>
-          <button class="btn" id="ask">Send Enquiry</button>
-          <small class="help">We’ll confirm lead time and details via email/phone.</small>
-        </div>
-
-        <div class="notes">
-          <h3>Notes</h3>
-          <ul>
-            <li>Please place your order at least 30 days in advance.</li>
-            <li>Handmade items may vary slightly in colour.</li>
-          </ul>
-        </div>
-      </aside>
-    </div>
+      <form id="buy">
+        <label>Flavour
+          <select id="flavour"></select>
+        </label>
+        <label>Pack Size
+          <select id="pack"></select>
+        </label>
+        <button type="submit" class="btn primary">Add to Cart</button>
+        <button type="button" class="btn" onclick="location.href='mailto:sunnysugarart@gmail.com'">Email Us</button>
+        <p class="note">Made to order. Contains egg & gluten. Nut‑free kitchen but traces may exist. Please book ahead for peak seasons.</p>
+      </form>
+    </aside>
   </div>
+</div>
 
-  <footer>© 2025 Sunny Sugar Art | Melbourne, Australia</footer>
-
-  <script>
-    const PRODUCTS = {
-      halloween:{ title:'Halloween Cookies', price:'A$ 70 — 330.00',
-        images:['images/halloween.jpg','images/halloween-2.jpg','images/halloween-3.jpg'],
-        flavours:['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
-        packs:['6 PACK','10 PACK','12 PACK','15 PACK','30 PACK'] },
-      christmas:{ title:'Christmas Gift Box', price:'A$ 70 — 330.00',
-        images:['images/christmas.jpg','images/christmas-2.jpg'],
-        flavours:['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
-        packs:['6 PACK','10 PACK','12 PACK','15 PACK','30 PACK'] },
-      custom:{ title:'Custom Cookies', price:'A$ — (quote)',
-        images:['images/custom.jpg','images/custom-2.jpg'],
-        flavours:['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
-        packs:['6 PACK','10 PACK','12 PACK','15 PACK','30 PACK'] },
-      baby:{ title:'Baby Shower Cookies', price:'A$ 90.00 — 280.00',
-        images:['images/baby.jpg','images/baby-2.jpg','images/baby-3.jpg'],
-        flavours:['Mixture of Vanilla & Chocolate','Signature Chocolate','Vanilla Shortbread'],
-        packs:['6 PACK','12 PACK','18 PACK','20 PACK'] },
-      meringue:{ title:'Custom Meringue Kisses', price:'A$ —',
-        images:['images/meringue.jpg','images/meringue-2.jpg'],
-        flavours:['Mixture of Original & Light Lemon','Original','Light Lemon'],
-        packs:['10 PACK','20 PACK','30 PACK'] },
-      cake:{ title:'Decorated Cakes', price:'A$ — (quote)',
-        images:['images/cake.jpg','images/cake-2.jpg'],
-        flavours:['Vanilla Shortbread'],
-        packs:['6-inch','8-inch'] }
-    };
-
-    function getSlug(){
-      const m = location.hash.match(/slug=([^&]+)/i);
-      return m ? decodeURIComponent(m[1]).trim().toLowerCase() : '';
+<script>
+/* ======== Catalog data (category → items → product detail) ======== */
+const CATALOG = {
+  halloween:{
+    items:{
+      ghosts:{
+        title:"Ghost Set",
+        price:"A$ 84.90",
+        images:["images/halloween-ghosts.jpg","images/halloween-2.jpg"],
+        flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+        packs:["10 PACK","15 PACK","30 PACK","50 PACK"]
+      },
+      pumpkin:{
+        title:"Pumpkin Faces",
+        price:"A$ 84.90",
+        images:["images/halloween-pumpkin.jpg","images/halloween-3.jpg"],
+        flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+        packs:["10 PACK","15 PACK","30 PACK"]
+      },
+      witch:{
+        title:"Witch & Broom",
+        price:"A$ 94.90",
+        images:["images/halloween-witch.jpg","images/halloween-2.jpg"],
+        flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+        packs:["10 PACK","15 PACK","30 PACK"]
+      },
+      spider:{
+        title:"Spider Webs",
+        price:"A$ 84.90",
+        images:["images/halloween-web.jpg","images/halloween-2.jpg"],
+        flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+        packs:["10 PACK","15 PACK","30 PACK"]
+      }
     }
-    const slug = getSlug();
-    const data = PRODUCTS[slug];
-    if(!data){
-      document.body.innerHTML=`<div style="max-width:720px;margin:80px auto;font:16px/1.6 system-ui"><h1>Product not found</h1><p>Please go back to the <a href="index.html">Shop</a>.</p></div>`;
-      throw new Error('Unknown slug: '+slug);
-    }
-
-    document.title='Sunny Sugar Art | '+data.title;
-    document.getElementById('p-title').textContent=data.title;
-    document.getElementById('p-price').textContent=data.price;
-
-    const slidesEl=document.getElementById('slides'), dotsEl=document.getElementById('dots');
-    const prev=document.getElementById('prev'), next=document.getElementById('next');
-    let idx=0, imgs=data.images||[];
-    function render(){
-      slidesEl.innerHTML=imgs.map(src=>`<img src="${src}" alt="${data.title}" loading="lazy">`).join('');
-      dotsEl.innerHTML=imgs.map((_,i)=>`<button aria-current="${i===idx}"></button>`).join('');
-      update(); bind();
-    }
-    function update(immediate){
-      slidesEl.style.transition=immediate?'none':'transform .5s ease';
-      slidesEl.style.transform=`translateX(${-idx*100}%)`;
-      [...dotsEl.children].forEach((b,i)=>b.setAttribute('aria-current',i===idx));
-    }
-    function bind(){
-      [...dotsEl.children].forEach((b,i)=>b.onclick=()=>{idx=i;update(true)});
-      prev.onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;update()};
-      next.onclick=()=>{idx=(idx+1)%imgs.length;update()};
-    }
-    let autoplay=null;function start(){stop();autoplay=setInterval(()=>{idx=(idx+1)%imgs.length;update()},4000)}function stop(){if(autoplay){clearInterval(autoplay);autoplay=null}}
-    render();start();slidesEl.addEventListener('mouseenter',stop);slidesEl.addEventListener('mouseleave',start);
-
-    function buildGroup(containerId, values, hiddenId){
-      const el=document.getElementById(containerId), hid=document.getElementById(hiddenId);el.innerHTML='';
-      values.forEach((txt,i)=>{
-        const b=document.createElement('button');b.type='button';b.className='opt';b.textContent=txt;b.setAttribute('aria-pressed','false');
-        b.onclick=()=>{[...el.children].forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');hid.value=txt;};
-        el.appendChild(b);if(i===0){b.click()}});
-    }
-    buildGroup('flavours',data.flavours,'flavourVal');buildGroup('packs',data.packs,'packVal');
-
-    document.getElementById('add').onclick=()=>alert('Added to cart! (demo)');
-    document.getElementById('ask').onclick=()=>alert('Enquiry sent! (demo)');
-  </script>
-</body>
-</html>
+  },
+  christmas:{
+    items:{
+      classic:{
+        title:"
