@@ -34,71 +34,79 @@
 </div>
 
 <script>
-/* ---------- 類別資料 ---------- */
-const DATA = {
-  halloween:{
-    title:"Halloween Cookies",
-    description:"Moody, stylish cookies for October. Choose a design below.",
-    items:[
-      {id:"ghosts",      name:"Ghost Set",           price:"From A$ 84.90", img:"images/halloween-ghosts.jpg"},
-      {id:"pumpkin",     name:"Pumpkin Faces",       price:"From A$ 84.90", img:"images/halloween-pumpkin.jpg"},
-      {id:"pumpkinmen",  name:"Pumpkin Men",         price:"From A$ 84.90", img:"images/halloween-pumpkinmen.jpg"},
-      {id:"cake",        name:"Halloween Cake Set",  price:"Quote",         img:"images/halloween-cake.jpg"},
-      {id:"drinkme",     name:"“Drink Me” Bottles",  price:"From A$ 49.00", img:"images/halloween-drink%20me.jpg"}
-    ]
-  },
+window.addEventListener('DOMContentLoaded', () => {
+  console.log("Hash now:", location.hash);
 
-  christmas:{
-    title:"Christmas Gift Box",
-    description:"Elegant gifting options in luxe packaging. Choose your favourite design below.",
-    items:[
-      {id:"snowflake",     name:"Snowflake",       price:"From A$ 84.90", img:"images/christmas-snowflake.jpg"},
-      {id:"happy-tree",    name:"Happy Tree",      price:"From A$ 84.90", img:"images/christmas-tree-smile.jpg"},
-      {id:"gingerbread",   name:"Gingerbread Man", price:"From A$ 84.90", img:"images/christmas-gingerbread.jpg"},
-      {id:"candy-cane",    name:"Candy Cane",      price:"From A$ 84.90", img:"images/christmas-candy-cane.jpg"},
-      {id:"surprise-tree", name:"Surprise Tree",   price:"From A$ 84.90", img:"images/christmas-tree.jpg"},
-      {id:"reindeer",      name:"Reindeer",        price:"From A$ 84.90", img:"images/christmas-reindeer.jpg"},
-      {id:"snowman",       name:"Snowman",         price:"From A$ 84.90", img:"images/christmas-snowman.jpg"},
-      {id:"santa-belt",    name:"Santa Belt",      price:"From A$ 84.90", img:"images/christmas-santa-belt.jpg"}
-    ]
+  /* ---------- 類別資料 ---------- */
+  const DATA = {
+    halloween:{
+      title:"Halloween Cookies",
+      description:"Moody, stylish cookies for October. Choose a design below.",
+      items:[
+        {id:"ghosts",      name:"Ghost Set",           price:"From A$ 84.90", img:"images/halloween-ghosts.jpg"},
+        {id:"pumpkin",     name:"Pumpkin Faces",       price:"From A$ 84.90", img:"images/halloween-pumpkin.jpg"},
+        {id:"pumpkinmen",  name:"Pumpkin Men",         price:"From A$ 84.90", img:"images/halloween-pumpkinmen.jpg"},
+        {id:"cake",        name:"Halloween Cake Set",  price:"Quote",         img:"images/halloween-cake.jpg"},
+        {id:"drinkme",     name:"“Drink Me” Bottles",  price:"From A$ 49.00", img:"images/halloween-drink%20me.jpg"}
+      ]
+    },
+
+    christmas:{
+      title:"Christmas Gift Box",
+      description:"Elegant gifting options in luxe packaging. Choose your favourite design below.",
+      items:[
+        {id:"snowflake",     name:"Snowflake",       price:"From A$ 84.90", img:"images/christmas-snowflake.jpg"},
+        {id:"happy-tree",    name:"Happy Tree",      price:"From A$ 84.90", img:"images/christmas-tree-smile.jpg"},
+        {id:"gingerbread",   name:"Gingerbread Man", price:"From A$ 84.90", img:"images/christmas-gingerbread.jpg"},
+        {id:"candy-cane",    name:"Candy Cane",      price:"From A$ 84.90", img:"images/christmas-candy-cane.jpg"},
+        {id:"surprise-tree", name:"Surprise Tree",   price:"From A$ 84.90", img:"images/christmas-tree.jpg"},
+        {id:"reindeer",      name:"Reindeer",        price:"From A$ 84.90", img:"images/christmas-reindeer.jpg"},
+        {id:"snowman",       name:"Snowman",         price:"From A$ 84.90", img:"images/christmas-snowman.jpg"},
+        {id:"santa-belt",    name:"Santa Belt",      price:"From A$ 84.90", img:"images/christmas-santa-belt.jpg"}
+      ]
+    }
+  };
+
+  /* ---------- 讀 hash & 安全渲染 ---------- */
+  function qs(key, def=""){ const m=location.hash.match(new RegExp(key+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
+  const cat = qs("cat");
+  console.log("Parsed cat:", cat);
+
+  const crumbsEl = document.getElementById('crumbs');
+  const titleEl  = document.getElementById('title');
+  const descEl   = document.getElementById('desc');
+  const listEl   = document.getElementById('list');
+  const errEl    = document.getElementById('error');
+
+  try{
+    if(!cat){ throw new Error('Missing "#cat=" in URL. Example: category.html#cat=christmas'); }
+    const pack = DATA[cat];
+    console.log("Pack loaded:", pack);
+
+    if(!pack){ throw new Error(`Category "${cat}" not found in DATA.`); }
+
+    crumbsEl.textContent = `Shop Cookies › ${pack.title}`;
+    titleEl.textContent  = pack.title;
+    descEl.textContent   = pack.description || '';
+
+    listEl.innerHTML = pack.items.map(it=>`
+      <article class="card">
+        <img src="${it.img}" alt="${it.name}" onerror="this.style.opacity=.2">
+        <div class="content">
+          <h3>${it.name}</h3>
+          <div class="price">${it.price||''}</div>
+          <a class="btn" href="product.html#cat=${encodeURIComponent(cat)}&item=${encodeURIComponent(it.id)}">View details</a>
+        </div>
+      </article>
+    `).join('');
+  }catch(e){
+    titleEl.textContent = "Oops";
+    descEl.textContent = "";
+    errEl.style.display='block';
+    errEl.textContent = e.message + "  (請確認 category.html 的 DATA 區塊是否貼好、逗號與括號齊全)";
+    console.error(e);
   }
-};
-
-/* ---------- 讀 hash & 安全渲染 ---------- */
-function qs(key, def=""){ const m=location.hash.match(new RegExp(key+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
-const cat = qs("cat");
-const crumbsEl = document.getElementById('crumbs');
-const titleEl  = document.getElementById('title');
-const descEl   = document.getElementById('desc');
-const listEl   = document.getElementById('list');
-const errEl    = document.getElementById('error');
-
-try{
-  if(!cat){ throw new Error('Missing "#cat=" in URL. Example: category.html#cat=christmas'); }
-  const pack = DATA[cat];
-  if(!pack){ throw new Error(`Category "${cat}" not found in DATA.`); }
-
-  crumbsEl.textContent = `Shop Cookies › ${pack.title}`;
-  titleEl.textContent  = pack.title;
-  descEl.textContent   = pack.description || '';
-
-  listEl.innerHTML = pack.items.map(it=>`
-    <article class="card">
-      <img src="${it.img}" alt="${it.name}" onerror="this.style.opacity=.2">
-      <div class="content">
-        <h3>${it.name}</h3>
-        <div class="price">${it.price||''}</div>
-        <a class="btn" href="product.html#cat=${encodeURIComponent(cat)}&item=${encodeURIComponent(it.id)}">View details</a>
-      </div>
-    </article>
-  `).join('');
-}catch(e){
-  titleEl.textContent = "Oops";
-  descEl.textContent = "";
-  errEl.style.display='block';
-  errEl.textContent = e.message + "  (請確認 category.html 的 DATA 區塊是否貼好、逗號與括號齊全)";
-  console.error(e);
-}
+});
 </script>
 </body>
 </html>
