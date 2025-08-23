@@ -12,29 +12,31 @@
   .wrap{max-width:1200px;margin:0 auto;padding:24px}
   h1{margin:6px 0 12px;font-size:2rem}
   p.lead{margin:0 0 14px;color:#574f3e}
+  .crumbs{font-size:.9rem;color:#6b5f4a}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-top:10px}
   .card{background:var(--card);border:1px solid #f2ecd7;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
   .card img{width:100%;height:220px;object-fit:cover}
   .card .content{padding:14px}
   .card h3{margin:0 0 6px;font-size:1.05rem;font-weight:900}
   .price{font-weight:800;margin:6px 0 0}
-  .crumbs{font-size:.9rem;color:#6b5f4a}
   .btn{display:inline-block;margin-top:10px;background:#fbc02d;color:#2a2100;padding:10px 14px;border-radius:999px;font-weight:800;text-decoration:none}
+  .err{margin-top:18px;color:#b42318;background:#fff3f2;border:1px solid #ffd1cd;padding:10px 12px;border-radius:10px}
 </style>
 </head>
 <body>
 <header><a href="index.html">← Back to Home</a></header>
 <div class="wrap">
   <div class="crumbs" id="crumbs"></div>
-  <h1 id="title">Loading…</h1>
+  <h1 id="title">Loading...</h1>
   <p class="lead" id="desc"></p>
-
   <div class="grid" id="list"></div>
+  <div id="error" class="err" style="display:none"></div>
 </div>
 
 <script>
+/* ---------- 類別資料 ---------- */
 const DATA = {
-    halloween:{
+  halloween:{
     title:"Halloween Cookies",
     description:"Moody, stylish cookies for October. Choose a design below.",
     items:[
@@ -45,79 +47,57 @@ const DATA = {
       {id:"drinkme",     name:"“Drink Me” Bottles",  price:"From A$ 49.00", img:"images/halloween-drink%20me.jpg"}
     ]
   },
-    christmas:{
+
+  christmas:{
     title:"Christmas Gift Box",
     description:"Elegant gifting options in luxe packaging. Choose your favourite design below.",
     items:[
-      {id:"snowflake",     name:"Snowflake",          price:"From A$ 84.90", img:"images/christmas-snowflake.jpg"},
-      {id:"happy-tree",    name:"Happy Tree",         price:"From A$ 84.90", img:"images/christmas-tree-smile.jpg"},
-      {id:"gingerbread",   name:"Gingerbread Man",    price:"From A$ 84.90", img:"images/christmas-gingerbread.jpg"},
-      {id:"candy-cane",    name:"Candy Cane",         price:"From A$ 84.90", img:"images/christmas-candy-cane.jpg"},
-      {id:"surprise-tree", name:"Surprise Tree",      price:"From A$ 84.90", img:"images/christmas-tree.jpg"},
-      {id:"reindeer",      name:"Reindeer",           price:"From A$ 84.90", img:"images/christmas-reindeer.jpg"},
-      {id:"snowman",       name:"Snowman",            price:"From A$ 84.90", img:"images/christmas-snowman.jpg"},
-      {id:"santa-belt",    name:"Santa Belt",         price:"From A$ 84.90", img:"images/christmas-santa-belt.jpg"}
-    ]
-  },
-    ]
-  },
-  custom:{
-    title:"Custom Cookies",
-    description:"Personalised designs for weddings, birthdays and branding.",
-    items:[
-      {id:"logo",   name:"Brand / Logo Cookies", price:"Quote", img:"images/custom-2.jpg"},
-      {id:"portrait", name:"Portrait Cookies",   price:"Quote", img:"images/custom.jpg"}
-    ]
-  },
-  baby:{
-    title:"Baby Shower Cookies",
-    description:"Adorable favors to welcome little ones.",
-    items:[
-      {id:"blue", name:"Blue Baby Shower",  price:"From A$ 84.90", img:"images/baby-2.jpg"},
-      {id:"pink", name:"Pink Baby Shower",  price:"From A$ 84.90", img:"images/baby.jpg"},
-      {id:"neutral", name:"Neutral Set",    price:"From A$ 84.90", img:"images/baby-3.jpg"}
-    ]
-  },
-  meringue:{
-    title:"Custom Meringue Kisses",
-    description:"Light, airy and colour‑matched.",
-    items:[
-      {id:"pastel", name:"Pastel Kisses", price:"From A$ 49.00", img:"images/meringue.jpg"},
-      {id:"xmas",   name:"Holiday Kisses", price:"From A$ 49.00", img:"images/meringue-2.jpg"}
-    ]
-  },
-  cake:{
-    title:"Decorated Cakes",
-    description:"Hand‑decorated cakes with artistic royal icing details.",
-    items:[
-      {id:"6inch", name:"6‑inch Cake", price:"Quote", img:"images/cake.jpg"},
-      {id:"8inch", name:"8‑inch Cake", price:"Quote", img:"images/cake-2.jpg"}
+      {id:"snowflake",     name:"Snowflake",       price:"From A$ 84.90", img:"images/christmas-snowflake.jpg"},
+      {id:"happy-tree",    name:"Happy Tree",      price:"From A$ 84.90", img:"images/christmas-tree-smile.jpg"},
+      {id:"gingerbread",   name:"Gingerbread Man", price:"From A$ 84.90", img:"images/christmas-gingerbread.jpg"},
+      {id:"candy-cane",    name:"Candy Cane",      price:"From A$ 84.90", img:"images/christmas-candy-cane.jpg"},
+      {id:"surprise-tree", name:"Surprise Tree",   price:"From A$ 84.90", img:"images/christmas-tree.jpg"},
+      {id:"reindeer",      name:"Reindeer",        price:"From A$ 84.90", img:"images/christmas-reindeer.jpg"},
+      {id:"snowman",       name:"Snowman",         price:"From A$ 84.90", img:"images/christmas-snowman.jpg"},
+      {id:"santa-belt",    name:"Santa Belt",      price:"From A$ 84.90", img:"images/christmas-santa-belt.jpg"}
     ]
   }
 };
 
+/* ---------- 讀 hash & 安全渲染 ---------- */
 function qs(key, def=""){ const m=location.hash.match(new RegExp(key+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
 const cat = qs("cat");
-const wrap = DATA[cat];
+const crumbsEl = document.getElementById('crumbs');
+const titleEl  = document.getElementById('title');
+const descEl   = document.getElementById('desc');
+const listEl   = document.getElementById('list');
+const errEl    = document.getElementById('error');
 
-if(!wrap){
-  document.getElementById('title').textContent = "Category not found";
-} else {
-  document.getElementById('crumbs').textContent = `Shop Cookies › ${wrap.title}`;
-  document.getElementById('title').textContent = wrap.title;
-  document.getElementById('desc').textContent = wrap.description;
+try{
+  if(!cat){ throw new Error('Missing "#cat=" in URL. Example: category.html#cat=christmas'); }
+  const pack = DATA[cat];
+  if(!pack){ throw new Error(`Category "${cat}" not found in DATA.`); }
 
-  const list = document.getElementById('list');
-  list.innerHTML = wrap.items.map(it=>`
+  crumbsEl.textContent = `Shop Cookies › ${pack.title}`;
+  titleEl.textContent  = pack.title;
+  descEl.textContent   = pack.description || '';
+
+  listEl.innerHTML = pack.items.map(it=>`
     <article class="card">
-      <img src="${it.img}" alt="${it.name}">
+      <img src="${it.img}" alt="${it.name}" onerror="this.style.opacity=.2">
       <div class="content">
         <h3>${it.name}</h3>
-        <div class="price">${it.price}</div>
+        <div class="price">${it.price||''}</div>
         <a class="btn" href="product.html#cat=${encodeURIComponent(cat)}&item=${encodeURIComponent(it.id)}">View details</a>
       </div>
     </article>
   `).join('');
+}catch(e){
+  titleEl.textContent = "Oops";
+  descEl.textContent = "";
+  errEl.style.display='block';
+  errEl.textContent = e.message + "  (請確認 category.html 的 DATA 區塊是否貼好、逗號與括號齊全)";
+  console.error(e);
 }
 </script>
 </body>
