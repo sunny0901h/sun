@@ -91,6 +91,8 @@
 
 <script>
 /* =================== 資料 =================== */
+<script>
+/* =================== 資料 =================== */
 const CATALOG = {
   halloween:{
     items:{
@@ -147,14 +149,14 @@ const CATALOG = {
 
   christmas:{
     items:{
-      surprise-tree":{
+      "surprise-tree":{
         title:"Surprise Tree",
         price:"A$ 84.90",
-        images:["images/christmas-surprise-tree.jpg","images/christmas-2.jpg"],
+        images:["images/christmas-surprise-tree.jpg","images/christmas-surprise-tree-2.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Assorted","Random","More colours – leave a note"]
-  },
+      },
       "happy-tree":{
         title:"Happy Tree",
         price:"A$ 84.90",
@@ -162,17 +164,16 @@ const CATALOG = {
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Blue gradient","Green gradient","Green","White","Red","Yellow-green gradient","Random","More colours – leave a note"]
-    },
-      "snowflake:{
+      },
+      "snowflake":{
         title:"Snowflake",
         price:"A$ 84.90",
         images:["images/christmas-snowflake.jpg","images/christmas-2.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Blue","Purple","Blue & Purple","Random","More colours – leave a note"]
-      
       },
-      gingerbread:{
+      "gingerbread":{
         title:"Gingerbread Man",
         price:"A$ 84.90",
         images:["images/christmas-gingerbread.jpg","images/christmas-2.jpg"],
@@ -187,9 +188,8 @@ const CATALOG = {
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Red","Green","Red & Green","Red & White","White & Green","Random","More colours – leave a note"]
-     
       },
-      reindeer:{
+      "reindeer":{
         title:"Reindeer",
         price:"A$ 84.90",
         images:["images/christmas-reindeer.jpg","images/christmas.jpg"],
@@ -197,7 +197,7 @@ const CATALOG = {
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["White","Brown","Random","More colours – leave a note"]
       },
-      snowman:{
+      "snowman":{
         title:"Snowman",
         price:"A$ 84.90",
         images:["images/christmas-snowman.jpg","images/christmas-2.jpg"],
@@ -216,7 +216,7 @@ const CATALOG = {
     }
   }
 };
-
+</script>
 /* =================== 工具 =================== */
 function getHashParam(name, def=""){
   const m = location.hash.match(new RegExp(name+"=([^&]+)"));
