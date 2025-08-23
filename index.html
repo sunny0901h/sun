@@ -12,19 +12,18 @@
       --brand:#fbc02d; --brand-dark:#d6a400;
 
       /* backgrounds */
-      --bg-hero-grad-1:#fffef8; --bg-hero-grad-2:#fff4d4; --bg-hero-grad-3:#ffe79c;
-      --bg-plain:#fff;
+      --bg-hero1:#fffef8; --bg-hero2:#fff4d4; --bg-hero3:#ffe79c;
       --bg-soft:#fffdf3; /* full-width soft yellow for About & Contact */
     }
     *{box-sizing:border-box}
-    body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:var(--bg-plain)}
+    body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
     a{color:inherit;text-decoration:none}
 
     /* Hero */
     header.hero{
       padding:80px 24px 64px;
       text-align:center;
-      background:linear-gradient(160deg,var(--bg-hero-grad-1) 0%, var(--bg-hero-grad-2) 55%, var(--bg-hero-grad-3) 100%);
+      background:linear-gradient(160deg,var(--bg-hero1) 0%, var(--bg-hero2) 55%, var(--bg-hero3) 100%);
       border-bottom:1px solid var(--line);
     }
     header.hero h1{font-size:3rem;margin:0 0 10px;font-weight:900;letter-spacing:.2px}
@@ -118,8 +117,8 @@
   <section id="about" class="fullband">
     <h2>About</h2>
     <p>
-      Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand-pipe royal icing cookies that
-      turn celebrations into keepsakes. Pickup in Melbourne CBD by arrangement; shipping Australia-wide. Prices in AUD.
+      Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand‑pipe royal icing cookies that
+      turn celebrations into keepsakes. Pickup in Melbourne CBD by arrangement; shipping Australia‑wide. Prices in AUD.
     </p>
   </section>
 
@@ -130,27 +129,27 @@
       <div class="grid" id="grid">
         <article class="card" data-images='["images/halloween.jpg","images/halloween-2.jpg","images/halloween-3.jpg"]'>
           <img class="thumb" src="images/halloween.jpg" alt="Halloween cookies">
-          <div class="content"><h3>🎃 Halloween Cookies</h3><p>Moody, stylish designs for October.</p><a class="btn" href="product.html#slug=halloween">Order</a></div>
+          <div class="content"><h3>🎃 Halloween Cookies</h3><p>Moody, stylish designs for October.</p><a class="btn" href="category.html#cat=halloween">Browse</a></div>
         </article>
         <article class="card" data-images='["images/christmas.jpg","images/christmas-2.jpg"]'>
           <img class="thumb" src="images/christmas.jpg" alt="Christmas gift box">
-          <div class="content"><h3>🎄 Christmas Gift Box</h3><p>Elegant gifting options in luxe packaging.</p><a class="btn" href="product.html#slug=christmas">Order</a></div>
+          <div class="content"><h3>🎄 Christmas Gift Box</h3><p>Elegant gifting options in luxe packaging.</p><a class="btn" href="category.html#cat=christmas">Browse</a></div>
         </article>
         <article class="card" data-images='["images/custom.jpg","images/custom-2.jpg"]'>
           <img class="thumb" src="images/custom.jpg" alt="Custom cookies">
-          <div class="content"><h3>✨ Custom Cookies</h3><p>Personalised designs for weddings & branding.</p><a class="btn" href="product.html#slug=custom">Order</a></div>
+          <div class="content"><h3>✨ Custom Cookies</h3><p>Personalised designs for weddings & branding.</p><a class="btn" href="category.html#cat=custom">Browse</a></div>
         </article>
         <article class="card" data-images='["images/baby.jpg","images/baby-2.jpg","images/baby-3.jpg"]'>
           <img class="thumb" src="images/baby.jpg" alt="Baby shower cookies">
-          <div class="content"><h3>🍼 Baby Shower Cookies</h3><p>Adorable favors to welcome little ones.</p><a class="btn" href="product.html#slug=baby">Order</a></div>
+          <div class="content"><h3>🍼 Baby Shower Cookies</h3><p>Adorable favors to welcome little ones.</p><a class="btn" href="category.html#cat=baby">Browse</a></div>
         </article>
         <article class="card" data-images='["images/meringue.jpg","images/meringue-2.jpg"]'>
           <img class="thumb" src="images/meringue.jpg" alt="Meringue kisses">
-          <div class="content"><h3>🍬 Meringue Kisses</h3><p>Light, airy and colour-matched.</p><a class="btn" href="product.html#slug=meringue">Order</a></div>
+          <div class="content"><h3>🍬 Meringue Kisses</h3><p>Light, airy and colour‑matched.</p><a class="btn" href="category.html#cat=meringue">Browse</a></div>
         </article>
         <article class="card" data-images='["images/cake.jpg","images/cake-2.jpg"]'>
           <img class="thumb" src="images/cake.jpg" alt="Decorated cake">
-          <div class="content"><h3>🎂 Decorated Cakes</h3><p>Hand-decorated with artistic details.</p><a class="btn" href="product.html#slug=cake">Order</a></div>
+          <div class="content"><h3>🎂 Decorated Cakes</h3><p>Hand‑decorated with artistic details.</p><a class="btn" href="category.html#cat=cake">Browse</a></div>
         </article>
       </div>
     </section>
@@ -161,7 +160,7 @@
       <div class="grid">
         <article class="card">
           <img src="images/class-family.jpg" alt="Family class">
-          <div class="content"><h3>👩‍👩‍👧 Family / Parent-Child</h3><p>Fun, hands-on sessions suitable for kids and families.</p><a class="btn" href="#">Enroll</a></div>
+          <div class="content"><h3>👩‍👩‍👧 Family / Parent‑Child</h3><p>Fun, hands‑on sessions suitable for kids and families.</p><a class="btn" href="#">Enroll</a></div>
         </article>
         <article class="card">
           <img src="images/class-beginner.jpg" alt="Beginner workshop">
@@ -209,8 +208,7 @@
   <!-- Contact (full-width soft yellow) -->
   <section id="contact" class="fullband">
     <h2>Contact</h2>
-    <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
-    <p>Instagram: <a href="https://www.instagram.com/sunny_sugar.art" target="_blank">@sunny_sugar.art</a></p>
+    <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a> · Instagram: <a href="https://www.instagram.com/sunny_sugar.art" target="_blank">@sunny_sugar.art</a></p>
   </section>
 
   <footer class="site">© 2025 Sunny Sugar Art | Melbourne, Australia</footer>
