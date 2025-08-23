@@ -81,7 +81,7 @@
 
         <button type="submit" class="btn primary">Add to Cart</button>
         <button type="button" class="btn" onclick="location.href='mailto:sunnysugarart@gmail.com'">Email Us</button>
-        <p class="note">Made to order. Contains egg & gluten. Nut‑free kitchen but traces may exist. Please book ahead for peak seasons.</p>
+        <p class="note">Made to order. Contains egg & gluten. Nut-free kitchen but traces may exist. Please book ahead for peak seasons.</p>
       </form>
     </aside>
   </div>
@@ -90,9 +90,7 @@
 </div>
 
 <script>
-/* =================== 資料 =================== */
-<script>
-/* =================== 資料 =================== */
+/* =================== 商品資料 =================== */
 const CATALOG = {
   halloween:{
     items:{
@@ -102,8 +100,7 @@ const CATALOG = {
         images:[
           "images/halloween-ghosts.jpg",
           "images/halloween-ghosts-2.jpg",
-          "images/halloween-ghosts-3.jpg",
-          "images/halloween-2.jpg"
+          "images/halloween-ghosts-3.jpg"
         ],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
@@ -136,10 +133,7 @@ const CATALOG = {
       drinkme:{
         title:"“Drink Me” Bottles",
         price:"A$ 49.00",
-        images:[
-          "images/halloween-drink-me.jpg",  // 檔名請用 '-'，避免空白
-          "images/halloween-2.jpg"
-        ],
+        images:["images/halloween-drink-me.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK"],
         colours:["White","Gold","Black"]
@@ -160,7 +154,7 @@ const CATALOG = {
       "happy-tree":{
         title:"Happy Tree",
         price:"A$ 84.90",
-        images:["images/christmas-happy-tree.jpg","images/christmas.jpg"],
+        images:["images/christmas-happy-tree.jpg","images/christmas-happy-tree-2.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Blue gradient","Green gradient","Green","White","Red","Yellow-green gradient","Random","More colours – leave a note"]
@@ -168,7 +162,7 @@ const CATALOG = {
       "snowflake":{
         title:"Snowflake",
         price:"A$ 84.90",
-        images:["images/christmas-snowflake.jpg","images/christmas-2.jpg"],
+        images:["images/christmas-snowflake.jpg","images/christmas-snowflake-2.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Blue","Purple","Blue & Purple","Random","More colours – leave a note"]
@@ -176,7 +170,7 @@ const CATALOG = {
       "gingerbread":{
         title:"Gingerbread Man",
         price:"A$ 84.90",
-        images:["images/christmas-gingerbread.jpg","images/christmas-2.jpg"],
+        images:["images/christmas-gingerbread.jpg","images/christmas-gingerbread-2.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Classic","Pastel","Random","More colours – leave a note"]
@@ -184,7 +178,7 @@ const CATALOG = {
       "candy-cane":{
         title:"Candy Cane",
         price:"A$ 84.90",
-        images:["images/christmas-candy-cane.jpg","images/christmas.jpg"],
+        images:["images/christmas-candy-cane.jpg","images/christmas-candy-cane-2.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Red","Green","Red & Green","Red & White","White & Green","Random","More colours – leave a note"]
@@ -192,7 +186,7 @@ const CATALOG = {
       "reindeer":{
         title:"Reindeer",
         price:"A$ 84.90",
-        images:["images/christmas-reindeer.jpg","images/christmas.jpg"],
+        images:["images/christmas-reindeer.jpg","images/christmas-reindeer-2.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["White","Brown","Random","More colours – leave a note"]
@@ -200,7 +194,7 @@ const CATALOG = {
       "snowman":{
         title:"Snowman",
         price:"A$ 84.90",
-        images:["images/christmas-snowman.jpg","images/christmas-2.jpg"],
+        images:["images/christmas-snowman.jpg","images/christmas-snowman-2.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Classic","Pastel","Random","More colours – leave a note"]
@@ -208,7 +202,7 @@ const CATALOG = {
       "santa-belt":{
         title:"Santa Belt",
         price:"A$ 84.90",
-        images:["images/christmas-santa-belt.jpg","images/christmas.jpg"],
+        images:["images/christmas-santa-belt.jpg","images/christmas-santa-belt-2.jpg"],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
         packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
         colours:["Red & Black","Classic","Random","More colours – leave a note"]
@@ -216,115 +210,3 @@ const CATALOG = {
     }
   }
 };
-</script>
-  
-/* =================== 工具 =================== */
-function getHashParam(name, def=""){
-  const m = location.hash.match(new RegExp(name+"=([^&]+)"));
-  return m ? decodeURIComponent(m[1]) : def;
-}
-function colorClass(name=""){
-  const n=name.toLowerCase();
-  if(n.includes("pink")) return "pink";
-  if(n.includes("orange")) return "orange";
-  if(n.includes("black")) return "black";
-  if(n.includes("white")) return "white";
-  if(n.includes("gold") || n.includes("champagne")) return "gold";
-  if(n.includes("red")) return "red";
-  if(n.includes("green")) return "green";
-  if(n.includes("blue")) return "blue";
-  if(n.includes("purple")) return "purple";
-  if(n.includes("brown")) return "brown";
-  if(n.includes("yellow")) return "yellow";
-  return "white";
-}
-
-/* =================== 渲染 =================== */
-function renderFromHash(){
-  const cat = getHashParam("cat");
-  const itemKey = getHashParam("item");
-  const grid   = document.getElementById('grid');
-  const oops   = document.getElementById('oops');
-  const heroEl = document.getElementById('hero');
-  const thumbsEl = document.getElementById('thumbs');
-  const titleEl = document.getElementById('title');
-  const priceEl = document.getElementById('price');
-  const flavourSel = document.getElementById('flavour');
-  const packSel = document.getElementById('pack');
-  const swatchesEl = document.getElementById('swatches');
-
-  const item = CATALOG[cat]?.items?.[itemKey];
-
-  if(!item){
-    grid.style.display='none';
-    oops.style.display='block';
-    oops.textContent = 'Product not found. Please go back and choose again.';
-    return;
-  }
-  oops.style.display='none';
-  grid.style.display='grid';
-
-  titleEl.textContent = item.title || 'Untitled';
-  priceEl.textContent = item.price || '';
-
-  // Flavour / Pack
-  flavourSel.innerHTML = (item.flavours||[]).map(f=>`<option>${f}</option>`).join('');
-  packSel.innerHTML    = (item.packs||[]).map(p=>`<option>${p}</option>`).join('');
-
-  // 色票
-  const colours = item.colours && item.colours.length ? item.colours : ["Random"];
-  swatchesEl.innerHTML = colours.map((c,i)=>`<button type="button" class="swatch ${colorClass(c)}" data-color="${c}" aria-pressed="${i===0}"></button>`).join('');
-  let colorChosen = colours[0];
-  swatchesEl.querySelectorAll('.swatch').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      swatchesEl.querySelectorAll('.swatch').forEach(b=>b.setAttribute('aria-pressed','false'));
-      btn.setAttribute('aria-pressed','true');
-      colorChosen = btn.dataset.color;
-    });
-  });
-
-  // 圖片載入（過濾首頁大圖；失敗自動忽略；全失敗使用佔位）
-  const blocked = /(^|\/)(christmas\.jpg|halloween\.jpg)$/i;
-  const planned = (item.images||[]).filter(src => !blocked.test(src));
-  function loadImg(src){
-    return new Promise(res=>{
-      const im=new Image();
-      im.onload = ()=>res(src);
-      im.onerror= ()=>{ console.warn('Image NOT found:', src); res(null); };
-      im.src = src;
-    });
-  }
-  Promise.all(planned.map(loadImg)).then(list=>{
-    const imgs = list.filter(Boolean);
-    if(!imgs.length){ imgs.push('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900"><rect width="100%" height="100%" fill="%23f5f0e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23998" font-family="sans-serif" font-size="28">Image coming soon</text></svg>'); }
-
-    let idx = 0;
-    const renderStage = ()=>{
-      heroEl.src = imgs[idx];
-      [...thumbsEl.querySelectorAll('img')].forEach((t,i)=>t.setAttribute('aria-current', i===idx));
-    };
-
-    thumbsEl.innerHTML = imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join('');
-    thumbsEl.querySelectorAll('img').forEach((t,i)=>t.addEventListener('click',()=>{idx=i; renderStage();}));
-    document.getElementById('prev').onclick = ()=>{idx=(idx-1+imgs.length)%imgs.length; renderStage();};
-    document.getElementById('next').onclick = ()=>{idx=(idx+1)%imgs.length; renderStage();};
-    renderStage();
-  });
-
-  // 表單送出（示範）
-  document.getElementById('buy').onsubmit = (e)=>{
-    e.preventDefault();
-    const data = {
-      cat, item: itemKey,
-      title: item.title, price: item.price,
-      flavour: flavourSel.value, pack: packSel.value, colour: colorChosen
-    };
-    alert(`Added:\n${data.title}\n${data.flavour} / ${data.pack}\nColour: ${data.colour}\n${data.price}`);
-  };
-}
-
-renderFromHash();
-window.addEventListener('hashchange', renderFromHash);
-</script>
-</body>
-</html>
