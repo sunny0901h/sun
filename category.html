@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Browse | Sunny Sugar Art</title>
+<style>
+  :root{--ink:#1f1b14;--line:#efe5c9;--card:#fff;--shadow:0 8px 24px rgba(0,0,0,.06)}
+  *{box-sizing:border-box} body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink)}
+  header{padding:22px 20px;border-bottom:1px solid var(--line)}
+  header a{text-decoration:none;font-weight:900}
+  .wrap{max-width:1200px;margin:0 auto;padding:24px}
+  h1{margin:6px 0 12px;font-size:2rem}
+  p.lead{margin:0 0 14px;color:#574f3e}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-top:10px}
+  .card{background:var(--card);border:1px solid #f2ecd7;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .card img{width:100%;height:220px;object-fit:cover}
+  .card .content{padding:14px}
+  .card h3{margin:0 0 6px;font-size:1.05rem;font-weight:900}
+  .price{font-weight:800;margin:6px 0 0}
+  .crumbs{font-size:.9rem;color:#6b5f4a}
+  .btn{display:inline-block;margin-top:10px;background:#fbc02d;color:#2a2100;padding:10px 14px;border-radius:999px;font-weight:800;text-decoration:none}
+</style>
+</head>
+<body>
+<header><a href="index.html">← Back to Home</a></header>
+<div class="wrap">
+  <div class="crumbs" id="crumbs"></div>
+  <h1 id="title">Loading…</h1>
+  <p class="lead" id="desc"></p>
+
+  <div class="grid" id="list"></div>
+</div>
+
+<script>
+const DATA = {
+  halloween:{
+    title:"Halloween Cookies",
+    description:"Moody, stylish cookies for October. Choose a design below.",
+    items:[
+      {id:"ghosts",  name:"Ghost Set",      price:"From A$ 84.90", img:"images/halloween-ghosts.jpg"},
+      {id:"pumpkin", name:"Pumpkin Faces",  price:"From A$ 84.90", img:"images/halloween-pumpkin.jpg"},
+      {id:"witch",   name:"Witch & Broom",  price:"From A$ 94.90", img:"images/halloween-witch.jpg"},
+      {id:"spider",  name:"Spider Webs",    price:"From A$ 84.90", img:"images/halloween-web.jpg"}
+    ]
+  },
+  christmas:{
+    title:"Christmas Gift Box",
+    description:"Elegant gifting options in luxe packaging.",
+    items:[
+      {id:"classic", name:"Classic Reds & Greens", price:"From A$ 84.90", img:"images/christmas-2.jpg"},
+      {id:"pastel",  name:"Pastel Christmas",      price:"From A$ 84.90", img:"images/christmas.jpg"}
+    ]
+  },
+  custom:{
+    title:"Custom Cookies",
+    description:"Personalised designs for weddings, birthdays and branding.",
+    items:[
+      {id:"logo",   name:"Brand / Logo Cookies", price:"Quote", img:"images/custom-2.jpg"},
+      {id:"portrait", name:"Portrait Cookies",   price:"Quote", img:"images/custom.jpg"}
+    ]
+  },
+  baby:{
+    title:"Baby Shower Cookies",
+    description:"Adorable favors to welcome little ones.",
+    items:[
+      {id:"blue", name:"Blue Baby Shower",  price:"From A$ 84.90", img:"images/baby-2.jpg"},
+      {id:"pink", name:"Pink Baby Shower",  price:"From A$ 84.90", img:"images/baby.jpg"},
+      {id:"neutral", name:"Neutral Set",    price:"From A$ 84.90", img:"images/baby-3.jpg"}
+    ]
+  },
+  meringue:{
+    title:"Custom Meringue Kisses",
+    description:"Light, airy and colour‑matched.",
+    items:[
+      {id:"pastel", name:"Pastel Kisses", price:"From A$ 49.00", img:"images/meringue.jpg"},
+      {id:"xmas",   name:"Holiday Kisses", price:"From A$ 49.00", img:"images/meringue-2.jpg"}
+    ]
+  },
+  cake:{
+    title:"Decorated Cakes",
+    description:"Hand‑decorated cakes with artistic royal icing details.",
+    items:[
+      {id:"6inch", name:"6‑inch Cake", price:"Quote", img:"images/cake.jpg"},
+      {id:"8inch", name:"8‑inch Cake", price:"Quote", img:"images/cake-2.jpg"}
+    ]
+  }
+};
+
+function qs(key, def=""){ const m=location.hash.match(new RegExp(key+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
+const cat = qs("cat");
+const wrap = DATA[cat];
+
+if(!wrap){
+  document.getElementById('title').textContent = "Category not found";
+} else {
+  document.getElementById('crumbs').textContent = `Shop Cookies › ${wrap.title}`;
+  document.getElementById('title').textContent = wrap.title;
+  document.getElementById('desc').textContent = wrap.description;
+
+  const list = document.getElementById('list');
+  list.innerHTML = wrap.items.map(it=>`
+    <article class="card">
+      <img src="${it.img}" alt="${it.name}">
+      <div class="content">
+        <h3>${it.name}</h3>
+        <div class="price">${it.price}</div>
+        <a class="btn" href="product.html#cat=${encodeURIComponent(cat)}&item=${encodeURIComponent(it.id)}">View details</a>
+      </div>
+    </article>
+  `).join('');
+}
+</script>
+</body>
+</html>
