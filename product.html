@@ -16,7 +16,6 @@
   header a{font-weight:900}
 
   .wrap{max-width:1200px;margin:0 auto;padding:24px}
-  /* 版面：左（縮圖+主圖）右（表單） */
   .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
   @media (max-width:980px){.grid{grid-template-columns:1fr}}
   h1{margin:0 0 6px}
@@ -39,17 +38,18 @@
   .swatches{display:flex;gap:10px;flex-wrap:wrap}
   .swatch{width:34px;height:34px;border-radius:10px;border:2px solid transparent;cursor:pointer}
   .swatch[aria-pressed="true"]{outline:2px solid #111;outline-offset:2px}
-  .swatch.pink{background:#f472b6}.swatch.orange{background:#fb923c}.swatch.black{background:#111}.swatch.white{background:#fff;border-color:#e5e1d0}.swatch.gold{background:linear-gradient(135deg,#f59e0b,#facc15)}
+  .swatch.pink{background:#f472b6}.swatch.orange{background:#fb923c}.swatch.black{background:#111}.swatch.white{background:#fff;border-color:#e5e1d0}.swatch.gold{background:linear-gradient(135deg,#f59e0b,#facc15)}.swatch.red{background:#ef4444}.swatch.green{background:#10b981}.swatch.blue{background:#3b82f6}.swatch.purple{background:#8b5cf6}.swatch.brown{background:#8b5e3c}.swatch.yellow{background:#fde047}
   .btn{display:inline-block;margin-top:16px;background:#fff;border:2px solid var(--pill);color:var(--pill);padding:12px 18px;border-radius:999px;font-weight:900}
   .btn.primary{background:var(--pill);color:var(--pill-ink)}
   .note{margin-top:16px;font-size:.9rem;color:var(--muted)}
+  .oops{padding:18px;border:1px solid #ffd1cd;background:#fff3f2;border-radius:12px}
 </style>
 </head>
 <body>
 <header><a href="index.html">← Back to Home</a></header>
 
-<div class="wrap">
-  <div class="grid">
+<div class="wrap" id="app">
+  <div class="grid" id="grid" style="display:none">
     <!-- 圖片 -->
     <section>
       <div class="gallery">
@@ -85,11 +85,13 @@
       </form>
     </aside>
   </div>
+
+  <div id="oops" class="oops" style="display:none"></div>
 </div>
 
 <script>
+window.addEventListener('DOMContentLoaded', () => {
 /* =================== 資料 =================== */
-/* 用你「實際上傳的檔名」： */
 const CATALOG = {
   halloween:{
     items:{
@@ -98,7 +100,7 @@ const CATALOG = {
         price:"A$ 84.90",
         images:[
           "images/halloween-ghosts.jpg",
-          "images/halloween-ghosts-2.jpg",   // 若不存在，顯示時會自動跳過失敗圖
+          "images/halloween-ghosts-2.jpg",
           "images/halloween-ghosts-3.jpg",
           "images/halloween-2.jpg"
         ],
@@ -134,7 +136,7 @@ const CATALOG = {
         title:"“Drink Me” Bottles",
         price:"A$ 49.00",
         images:[
-          "images/halloween-drink%20me.jpg",  // 若你改名為 halloween-drink-me.jpg，記得同步改這行
+          "images/halloween-drink%20me.jpg",  // 若改名為 halloween-drink-me.jpg，記得同步改
           "images/halloween-2.jpg"
         ],
         flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
@@ -142,8 +144,9 @@ const CATALOG = {
         colours:["White","Gold","Black"]
       }
     }
- },
-    christmas:{
+  },
+
+  christmas:{
     items:{
       snowflake:{
         title:"Snowflake",
@@ -210,10 +213,7 @@ const CATALOG = {
         colours:["Red & Black","Classic","Random","More colours – leave a note"]
       }
     }
-  },
-    }
-  },
-  /* 其他分類可之後再補：christmas, baby, custom, meringue, cake ... */
+  }
 };
 
 /* =================== 讀取網址參數 =================== */
@@ -221,29 +221,36 @@ function getHashParam(name, def=""){
   const m = location.hash.match(new RegExp(name+"=([^&]+)"));
   return m ? decodeURIComponent(m[1]) : def;
 }
-const cat = getHashParam("cat");
-const itemKey = getHashParam("item");
+function renderFromHash(){
+  const cat = getHashParam("cat");
+  const itemKey = getHashParam("item");
+  console.log("cat=",cat,"item=",itemKey);
 
-/* =================== 找商品 =================== */
-const item = CATALOG[cat]?.items?.[itemKey];
-const titleEl = document.getElementById('title');
-const priceEl = document.getElementById('price');
-const flavourSel = document.getElementById('flavour');
-const packSel = document.getElementById('pack');
-const swatchesEl = document.getElementById('swatches');
-const heroEl = document.getElementById('hero');
-const thumbsEl = document.getElementById('thumbs');
+  const grid   = document.getElementById('grid');
+  const oops   = document.getElementById('oops');
+  const heroEl = document.getElementById('hero');
+  const thumbsEl = document.getElementById('thumbs');
+  const titleEl = document.getElementById('title');
+  const priceEl = document.getElementById('price');
+  const flavourSel = document.getElementById('flavour');
+  const packSel = document.getElementById('pack');
+  const swatchesEl = document.getElementById('swatches');
 
-if(!item){
-  titleEl.textContent = "Product not found";
-} else {
+  const item = CATALOG[cat]?.items?.[itemKey];
+  if(!item){
+    grid.style.display='none';
+    oops.style.display='block';
+    oops.textContent = 'Product not found. Please go back and choose again.';
+    return;
+  }
+  oops.style.display='none';
+  grid.style.display='grid';
+
   titleEl.textContent = item.title;
   priceEl.textContent = item.price;
 
-  // Flavours
+  // Flavours & Packs
   flavourSel.innerHTML = item.flavours.map(f=>`<option>${f}</option>`).join('');
-
-  // Packs
   packSel.innerHTML = item.packs.map(p=>`<option>${p}</option>`).join('');
 
   // Colours (色票)
@@ -254,10 +261,16 @@ if(!item){
     if(n.includes("black")) return "black";
     if(n.includes("white")) return "white";
     if(n.includes("gold") || n.includes("champagne")) return "gold";
+    if(n.includes("red")) return "red";
+    if(n.includes("green")) return "green";
+    if(n.includes("blue")) return "blue";
+    if(n.includes("purple")) return "purple";
+    if(n.includes("brown")) return "brown";
+    if(n.includes("yellow")) return "yellow";
     return "white";
   };
-  swatchesEl.innerHTML = item.colours.map((c,i)=>`<button type="button" class="swatch ${colorClass(c)}" data-color="${c}" aria-pressed="${i===0}"></button>`).join('');
-  let colorChosen = item.colours[0] || "";
+  swatchesEl.innerHTML = (item.colours||["Random"]).map((c,i)=>`<button type="button" class="swatch ${colorClass(c)}" data-color="${c}" aria-pressed="${i===0}"></button>`).join('');
+  let colorChosen = (item.colours||["Random"])[0];
 
   swatchesEl.querySelectorAll('.swatch').forEach(btn=>{
     btn.addEventListener('click', ()=>{
@@ -275,14 +288,13 @@ if(!item){
     im.onerror = ()=>res(null);
     im.src = src;
   });
-  Promise.all(item.images.map(loadImg)).then(list=>{
-    list.filter(Boolean).forEach(src=>imgs.push(src));
-    if(!imgs.length){ imgs.push('images/halloween-2.jpg'); } // fallback
+  Promise.all((item.images||[]).map(loadImg)).then(list=>{
+    imgs.splice(0,imgs.length, ...list.filter(Boolean));
+    if(!imgs.length){ imgs.push('images/christmas.jpg'); } // fallback
 
     let idx = 0;
     const renderStage = ()=>{
       heroEl.src = imgs[idx];
-      // thumbs aria-current
       [...thumbsEl.querySelectorAll('img')].forEach((t,i)=>t.setAttribute('aria-current', i===idx));
     };
 
@@ -290,12 +302,11 @@ if(!item){
     thumbsEl.querySelectorAll('img').forEach((t,i)=>t.addEventListener('click', ()=>{idx=i; renderStage();}));
     document.getElementById('prev').addEventListener('click', ()=>{idx=(idx-1+imgs.length)%imgs.length; renderStage();});
     document.getElementById('next').addEventListener('click', ()=>{idx=(idx+1)%imgs.length; renderStage();});
-
     renderStage();
   });
 
-  // 表單送出（此處僅示範）
-  document.getElementById('buy').addEventListener('submit', (e)=>{
+  // 表單送出（示範）
+  document.getElementById('buy').onsubmit = (e)=>{
     e.preventDefault();
     const data = {
       cat, item: itemKey,
@@ -305,8 +316,12 @@ if(!item){
       colour: colorChosen
     };
     alert(`Added:\n${data.title}\n${data.flavour} / ${data.pack}\nColour: ${data.colour}\n${data.price}`);
-  });
+  };
 }
+
+renderFromHash();
+window.addEventListener('hashchange', renderFromHash);
+});
 </script>
 </body>
 </html>
