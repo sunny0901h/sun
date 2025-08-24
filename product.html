@@ -215,60 +215,95 @@ const CATALOG = {
   }}
 };
 
-/* ----------------- 顏色：漸層 / 雙色 / Random / 自訂 ----------------- */
+/* ---------- 顏色：強化漸層視覺 ---------- */
+/* 開關：banded / split / shimmer */
+const GRADIENT_MODE = 'banded'; // ← 想換效果：'banded' | 'split' | 'shimmer'
+
 const PALETTE = {
   blue:"#3b82f6", purple:"#8b5cf6", green:"#10b981", red:"#ef4444",
   white:"#ffffff", black:"#111111", gold:"#f59e0b", brown:"#8b5e3c", yellow:"#fde047",
   pink:"#f472b6", orange:"#fb923c", "yellow-green":"#a3e635"
 };
-const GRADIENTS = {
-  blue:["#3b82f6","#0000ff"],
-  purple:["#8b5cf6","#800080"],
-  green:["#10b981","#006400"],
-  red:["#ef4444","#ff0000"],
-  yellow:["#fde047","#ffd700"],
-  "yellow-green":["#a3e635","#228b22"]
+const STRONG = { // 每個主色對應一個更深或更亮的搭配色
+  blue:"#1d4ed8", purple:"#6d28d9", green:"#15803d", red:"#b91c1c",
+  yellow:"#b45309", "yellow-green":"#3f6212"
 };
 
-if(l.includes('gradient')){
-  const base = token(raw.replace('gradient','').trim());
-  const key = base.replace(' ', '-');
-  const pair = GRADIENTS[key] || [hexFor(base),'#000'];
-  return { css:`background:linear-gradient(90deg, ${pair[0]}, ${pair[1]})` };
-}
-
+/* 小工具 */
 function token(t){ return t.trim().toLowerCase(); }
 function hexFor(name){
   const n = token(name).replace('champagne','gold');
-  return PALETTE[n] || "#ddd";
+  return PALETTE[n] || "#999";
 }
+function abbrev(label){
+  // 生成角標文字（BG = Blue Gradient, B&P = Blue & Purple, RND = Random, MORE = More colours）
+  const l = label.toLowerCase();
+  if(l.includes('more colours') || l.includes('more colors')) return 'MORE';
+  if(l.includes('random')) return 'RND';
+  if(l.includes('&')){
+    return label.split('&').map(s=>s.trim()[0]).join('&').toUpperCase(); // e.g. B&P
+  }
+  if(l.includes('gradient')){
+    const base = label.replace(/gradient/i,'').trim();
+    return (base.split(/\s+/).map(s=>s[0]).join('')+'G').toUpperCase(); // e.g. BG, YGG
+  }
+  return label[0].toUpperCase();
+}
+
+/* 主邏輯：把顏色標籤轉成 CSS 背景 + 角標 */
 function styleForColourLabel(label){
   const raw = label.trim();
   const l = raw.toLowerCase();
 
   // 自訂：More colours
   if(l.includes('more colours') || l.includes('more colors')){
-    return { css:'background:#fff;border:2px dashed #d4a373', inner:'<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;color:#8a6d3b">＋</span>' };
+    return {
+      css:'background:#fff;border:2px dashed #d4a373',
+      tag:'MORE'
+    };
   }
   // 隨機：彩條
   if(l.includes('random')){
-    return { css:'background:repeating-linear-gradient(45deg,#fcd34d 0 10px,#86efac 10px 20px,#93c5fd 20px 30px,#f9a8d4 30px 40px,#fda4af 40px 50px)' };
+    return {
+      css:'background:repeating-linear-gradient(45deg,#fcd34d 0 10px,#86efac 10px 20px,#93c5fd 20px 30px,#f9a8d4 30px 40px,#fda4af 40px 50px)',
+      tag:'RND'
+    };
   }
   // 雙色：Blue & Purple
   if(l.includes('&')){
     const [a,b] = raw.split('&').map(s=>token(s));
-    return { css:`background:linear-gradient(90deg, ${hexFor(a)} 0 50%, ${hexFor(b)} 50% 100%)` };
+    return {
+      css:`background:linear-gradient(90deg, ${hexFor(a)} 0 50%, ${hexFor(b)} 50% 100%)`,
+      tag:abbrev(raw)
+    };
   }
-  // 漸層：Blue gradient / Yellow-green gradient
+  // 漸層（三種模式）
   if(l.includes('gradient')){
-    const base = token(raw.replace('gradient','').replace(/-/g,' ').trim());
-    const key = base.replace(' ', '-'); // 支援 yellow green
-    const pair = GRADIENTS[key] || [hexFor(base),'#999'];
-    return { css:`background:linear-gradient(135deg, ${pair[0]}, ${pair[1]})` };
+    // 解析 "Yellow-green gradient" 這種帶連字號的
+    const base = token(raw.replace(/gradient/i,'').trim()).replace(/\s+/g,'-'); // e.g. blue, yellow-green
+    const c1 = hexFor(base);
+    const c2 = STRONG[base] || '#000';
+
+    if(GRADIENT_MODE === 'split'){
+      // 左 70% 主色，右 30% 深色，硬邊界
+      return { css:`background:linear-gradient(90deg, ${c1} 0 70%, ${c2} 70% 100%)`, tag:abbrev(raw) };
+    }
+    if(GRADIENT_MODE === 'shimmer'){
+      // 三色帶＋動畫，超明顯
+      return { css:`background:linear-gradient(90deg, ${c1}, #ffffff, ${c2}); background-size:200% 100%; animation: shimmerMove 2s linear infinite;`, tag:abbrev(raw) };
+    }
+    // 預設 banded：硬邊條帶（c1 → 中間色 → c2）
+    const mid = '#ffffff';
+    return { css:`background:linear-gradient(90deg, ${c1} 0 33%, ${mid} 33% 66%, ${c2} 66% 100%)`, tag:abbrev(raw) };
   }
+
   // 單色
-  return { css:`background:${hexFor(raw)}${raw.toLowerCase()==='white' ? ';border:1px solid #e5e1d0' : ''}` };
+  const base = hexFor(raw);
+  const extra = raw.toLowerCase()==='white' ? ';border:1px solid #e5e1d0' : '';
+  return { css:`background:${base}${extra}`, tag:abbrev(raw) };
 }
+
+/* 建立色票（含角標與「More colours」留言框） */
 function buildSwatches(swatchesEl, labels){
   const box = document.getElementById('customColorBox');
   const input = document.getElementById('customColorInput');
@@ -279,7 +314,10 @@ function buildSwatches(swatchesEl, labels){
 
   swatchesEl.innerHTML = list.map((c,i)=>{
     const st = styleForColourLabel(c);
-    return `<button type="button" class="swatch" data-color="${c.replace(/"/g,'&quot;')}" aria-pressed="${i===0}" title="${c}" style="${st.css||''}">${st.inner||''}</button>`;
+    const aria = i===0 ? 'true' : 'false';
+    return `<button type="button" class="swatch" data-color="${c.replace(/"/g,'&quot;')}" aria-pressed="${aria}" title="${c}" style="${st.css||''}">
+      <span class="tag">${st.tag||''}</span>
+    </button>`;
   }).join('');
 
   let chosen = list[0];
@@ -289,8 +327,13 @@ function buildSwatches(swatchesEl, labels){
     buttons.forEach(b=>b.setAttribute('aria-pressed','false'));
     btn.setAttribute('aria-pressed','true');
     chosen = btn.dataset.color;
-    if(/more colours|more colors/i.test(chosen)){ box.style.display='block'; input.focus(); }
-    else{ box.style.display='none'; }
+
+    if(/more colours|more colors/i.test(chosen)){
+      box.style.display = 'block';
+      input.focus();
+    }else{
+      box.style.display = 'none';
+    }
   }
   buttons.forEach(btn=>btn.addEventListener('click',()=>applySelection(btn)));
 
