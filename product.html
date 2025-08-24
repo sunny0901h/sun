@@ -222,10 +222,20 @@ const PALETTE = {
   pink:"#f472b6", orange:"#fb923c", "yellow-green":"#a3e635"
 };
 const GRADIENTS = {
-  blue:["#93c5fd","#1d4ed8"], purple:["#c4b5fd","#6d28d9"],
-  green:["#86efac","#15803d"], red:["#fecaca","#b91c1c"],
-  yellow:["#fde68a","#b45309"], "yellow-green":["#fef08a","#65a30d"]
+  blue:["#3b82f6","#0000ff"],
+  purple:["#8b5cf6","#800080"],
+  green:["#10b981","#006400"],
+  red:["#ef4444","#ff0000"],
+  yellow:["#fde047","#ffd700"],
+  "yellow-green":["#a3e635","#228b22"]
 };
+
+if(l.includes('gradient')){
+  const base = token(raw.replace('gradient','').trim());
+  const key = base.replace(' ', '-');
+  const pair = GRADIENTS[key] || [hexFor(base),'#000'];
+  return { css:`background:linear-gradient(90deg, ${pair[0]}, ${pair[1]})` };
+}
 
 function token(t){ return t.trim().toLowerCase(); }
 function hexFor(name){
