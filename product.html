@@ -9,7 +9,7 @@
   *{box-sizing:border-box}
   body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
   a{color:inherit;text-decoration:none}
-  header{padding:18px 20px;border-bottom:1px solid var(--line)}
+  header{padding:18px 20px;border-bottom:1px solid #efe5c9}
   header a{font-weight:900}
   .wrap{max-width:1200px;margin:0 auto;padding:24px}
   .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
@@ -81,159 +81,159 @@
   <div id="oops" class="oops" style="display:none"></div>
 </div>
 
-<!-- 純 JSON 商品資料（不會有語法錯誤） -->
+<!-- 純 JSON 商品資料 -->
 <script type="application/json" id="catalog">
 {
- halloween:{
-  items:{
-    "pumpkin-charm":{
-      title:"Pumpkin Charm",
-      price:"A$ 84.90",
-      images:["images/halloween-pumpkin-charm.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
-      colours:["Orange","Black","White"]
-    },
-    "pumpkin-men":{
-      title:"Pumpkin Men",
-      price:"A$ 84.90",
-      images:["images/halloween-pumpkin-men.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK"],
-      colours:["Orange","Black","White"]
-    },
-    "cauldron-cake":{
-      title:"Cauldron Cake",
-      price:"A$ 84.90",
-      images:["images/halloween-cauldron-cake.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
-      colours:["Orange","Black","White","Copper"]
-    },
-    "drink-me":{
-      title:"“Drink Me” Bottles",
-      price:"A$ 49.00",
-      images:["images/halloween-drink-me.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK"],
-      colours:["White","Gold","Black"]
-    },
-    "ghostie-boo":{
-      title:"Ghostie Boo",
-      price:"A$ 84.90",
-      images:["images/halloween-ghostie-boo.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK"],
-      colours:["White","Black","Orange"]
-    },
-    "witchy-skirt":{
-      title:"Witchy Skirt",
-      price:"A$ 84.90",
-      images:["images/halloween-witchy-skirt.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK"],
-      colours:["Black","Purple","Orange","White"]
-    },
-    "witchy-brew":{
-      title:"Witchy Brew",
-      price:"A$ 84.90",
-      images:["images/halloween-witchy-brew.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK"],
-      colours:["Green","Purple","Black","Orange"]
-    },
-    "witchy-hat":{
-      title:"Witchy Hat",
-      price:"A$ 84.90",
-      images:["images/halloween-witchy-hat.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK"],
-      colours:["Black","Purple","Orange","White"]
-    },
-    "spooky-cat":{
-      title:"Spooky Cat",
-      price:"A$ 84.90",
-      images:["images/halloween-spooky-cat.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK"],
-      colours:["Black","White","Gold"]
-    },
-    "boo-candy":{
-      title:"Boo Candy",
-      price:"A$ 84.90",
-      images:["images/halloween-boo-candy.jpg"],
-      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-      packs:["10 PACK","15 PACK","30 PACK"],
-      colours:["Orange","Black","White"]
+  "halloween": {
+    "items": {
+      "pumpkin-charm": {
+        "title": "Pumpkin Charm",
+        "price": "A$ 84.90",
+        "images": ["images/halloween-pumpkin-charm.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["Orange", "Black", "White"]
+      },
+      "pumpkin-men": {
+        "title": "Pumpkin Men",
+        "price": "A$ 84.90",
+        "images": ["images/halloween-pumpkin-men.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK"],
+        "colours": ["Orange", "Black", "White"]
+      },
+      "cauldron-cake": {
+        "title": "Cauldron Cake",
+        "price": "A$ 84.90",
+        "images": ["images/halloween-cauldron-cake.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["Orange", "Black", "White", "Copper"]
+      },
+      "drink-me": {
+        "title": "“Drink Me” Bottles",
+        "price": "A$ 49.00",
+        "images": ["images/halloween-drink-me.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK"],
+        "colours": ["White", "Gold", "Black"]
+      },
+      "ghostie-boo": {
+        "title": "Ghostie Boo",
+        "price": "A$ 84.90",
+        "images": ["images/halloween-ghostie-boo.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK"],
+        "colours": ["White", "Black", "Orange"]
+      },
+      "witchy-skirt": {
+        "title": "Witchy Skirt",
+        "price": "A$ 84.90",
+        "images": ["images/halloween-witchy-skirt.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK"],
+        "colours": ["Black", "Purple", "Orange", "White"]
+      },
+      "witchy-brew": {
+        "title": "Witchy Brew",
+        "price": "A$ 84.90",
+        "images": ["images/halloween-witchy-brew.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK"],
+        "colours": ["Green", "Purple", "Black", "Orange"]
+      },
+      "witchy-hat": {
+        "title": "Witchy Hat",
+        "price": "A$ 84.90",
+        "images": ["images/halloween-witchy-hat.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK"],
+        "colours": ["Black", "Purple", "Orange", "White"]
+      },
+      "spooky-cat": {
+        "title": "Spooky Cat",
+        "price": "A$ 84.90",
+        "images": ["images/halloween-spooky-cat.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK"],
+        "colours": ["Black", "White", "Gold"]
+      },
+      "boo-candy": {
+        "title": "Boo Candy",
+        "price": "A$ 84.90",
+        "images": ["images/halloween-boo-candy.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK"],
+        "colours": ["Orange", "Black", "White"]
+      }
     }
-  }
-}
+  },
 
   "christmas": {
     "items": {
       "snowflake": {
         "title": "Snowflake",
         "price": "A$ 84.90",
-        "images": ["images/christmas-snowflake.jpg","images/christmas-snowflake-2.jpg"],
-        "flavours": ["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs": ["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours": ["Blue","Purple","Blue & Purple","Random","More colours – leave a note"]
+        "images": ["images/christmas-snowflake.jpg", "images/christmas-snowflake-2.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["Blue", "Purple", "Blue & Purple", "Random", "More colours – leave a note"]
       },
       "happy-tree": {
         "title": "Happy Tree",
         "price": "A$ 84.90",
-        "images": ["images/christmas-happy-tree.jpg","images/christmas-happy-tree-2.jpg"],
-        "flavours": ["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs": ["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours": ["Blue gradient","Green gradient","Green","White","Red","Yellow-green gradient","Random","More colours – leave a note"]
+        "images": ["images/christmas-happy-tree.jpg", "images/christmas-happy-tree-2.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["Blue gradient", "Green gradient", "Green", "White", "Red", "Yellow-green gradient", "Random", "More colours – leave a note"]
       },
       "gingerbread": {
         "title": "Gingerbread Man",
         "price": "A$ 84.90",
-        "images": ["images/christmas-gingerbread.jpg","images/christmas-gingerbread-2.jpg"],
-        "flavours": ["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs": ["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours": ["Classic","Pastel","Random","More colours – leave a note"]
+        "images": ["images/christmas-gingerbread.jpg", "images/christmas-gingerbread-2.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["Classic", "Pastel", "Random", "More colours – leave a note"]
       },
       "candy-cane": {
         "title": "Candy Cane",
         "price": "A$ 84.90",
-        "images": ["images/christmas-candy-cane.jpg","images/christmas-candy-cane-2.jpg"],
-        "flavours": ["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs": ["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours": ["Red","Green","Red & Green","Red & White","White & Green","Random","More colours – leave a note"]
+        "images": ["images/christmas-candy-cane.jpg", "images/christmas-candy-cane-2.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["Red", "Green", "Red & Green", "Red & White", "White & Green", "Random", "More colours – leave a note"]
       },
       "surprise-tree": {
         "title": "Surprise Tree",
         "price": "A$ 84.90",
-        "images": ["images/christmas-surprise-tree.jpg","images/christmas-surprise-tree-2.jpg"],
-        "flavours": ["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs": ["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours": ["Assorted","Random","More colours – leave a note"]
+        "images": ["images/christmas-surprise-tree.jpg", "images/christmas-surprise-tree-2.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["Assorted", "Random", "More colours – leave a note"]
       },
       "reindeer": {
         "title": "Reindeer",
         "price": "A$ 84.90",
-        "images": ["images/christmas-reindeer.jpg","images/christmas-reindeer-2.jpg"],
-        "flavours": ["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs": ["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours": ["White","Brown","Random","More colours – leave a note"]
+        "images": ["images/christmas-reindeer.jpg", "images/christmas-reindeer-2.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["White", "Brown", "Random", "More colours – leave a note"]
       },
       "snowman": {
         "title": "Snowman",
         "price": "A$ 84.90",
-        "images": ["images/christmas-snowman.jpg","images/christmas-snowman-2.jpg"],
-        "flavours": ["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs": ["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours": ["Classic","Pastel","Random","More colours – leave a note"]
+        "images": ["images/christmas-snowman.jpg", "images/christmas-snowman-2.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["Classic", "Pastel", "Random", "More colours – leave a note"]
       },
       "santa-belt": {
         "title": "Santa Belt",
         "price": "A$ 84.90",
-        "images": ["images/christmas-santa-belt.jpg","images/christmas-santa-belt-2.jpg"],
-        "flavours": ["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs": ["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours": ["Red & Black","Classic","Random","More colours – leave a note"]
+        "images": ["images/christmas-santa-belt.jpg", "images/christmas-santa-belt-2.jpg"],
+        "flavours": ["Mixture of Vanilla & Chocolate", "Signature Chocolate", "Vanilla Shortbread"],
+        "packs": ["10 PACK", "15 PACK", "30 PACK", "50 PACK"],
+        "colours": ["Red & Black", "Classic", "Random", "More colours – leave a note"]
       }
     }
   }
