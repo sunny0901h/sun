@@ -222,8 +222,7 @@ const CATALOG = {
   }}
 };
 
-/* ================= 強化漸層視覺 ================= */
-/* 可選模式：'diagonal' 斜向硬切（預設）、'triple' 三段硬邊、'split70' 7:3 硬切、'ring' 外圈漸層環 */
+/* ===== 漸層顯示模式：ring（外圈漸層環） ===== */
 const GRADIENT_MODE = 'ring';
 
 const PALETTE = {
@@ -242,21 +241,23 @@ function hexFor(name){
   return PALETTE[n] || "#999";
 }
 
-/* 針對「漸層」回傳對應的 CSS 背景或類別 */
+/* 指定各種漸層模式的樣式（ring 會加 class） */
 function gradientStyle(rawLabel){
-  const baseKey = token(rawLabel.replace(/gradient/i,'').trim()).replace(/\s+/g,'-');
+  const baseKey = token(rawLabel.replace(/gradient/i,'').trim()).replace(/\s+/g,'-'); // e.g. blue, yellow-green
   const c1 = hexFor(baseKey);
   const c2 = STRONG[baseKey] || '#000';
-  switch(GRADIENT_MODE){
-    case 'triple': // 三段硬邊：主色 / 白 / 深色
-      return { css:`background:linear-gradient(90deg, ${c1} 0 40%, #ffffff 40% 60%, ${c2} 60% 100%)` };
-    case 'split70': // 7:3 硬切
-      return { css:`background:linear-gradient(90deg, ${c1} 0 70%, ${c2} 70% 100%)` };
-    case 'ring':   // 外圈漸層環
-      return { css:`border-image: linear-gradient(90deg, ${c1}, ${c2}) 1`, addClass:'ring' };
-    default:       // 'diagonal' 斜向硬切（最直覺）
-      return { css:`background:linear-gradient(135deg, ${c1} 0 50%, ${c2} 50% 100%)` };
+  if (GRADIENT_MODE === 'ring') {
+    // 重要：需要 element 上帶 .swatch.ring，加粗邊框 + border-image 漸層
+    return { css:`border-image: linear-gradient(90deg, ${c1}, ${c2}) 1`, addClass:'ring' };
   }
+  if (GRADIENT_MODE === 'split70') {
+    return { css:`background:linear-gradient(90deg, ${c1} 0 70%, ${c2} 70% 100%)` };
+  }
+  if (GRADIENT_MODE === 'triple') {
+    return { css:`background:linear-gradient(90deg, ${c1} 0 40%, #ffffff 40% 60%, ${c2} 60% 100%)` };
+  }
+  // 預設 diagonal
+  return { css:`background:linear-gradient(135deg, ${c1} 0 50%, ${c2} 50% 100%)` };
 }
 
 /* 主邏輯：把顏色標籤轉成 CSS 背景 */
@@ -273,16 +274,14 @@ function styleForColourLabel(label){
   }
   // 隨機：彩條
   if(l.includes('random')){
-    return {
-      css:'background:repeating-linear-gradient(45deg,#ffd54a 0 12px,#9bf6a3 12px 24px,#7db3ff 24px 36px,#fca7da 36px 48px,#ff9b8a 48px 60px)'
-    };
+    return { css:'background:repeating-linear-gradient(45deg,#ffd54a 0 12px,#9bf6a3 12px 24px,#7db3ff 24px 36px,#fca7da 36px 48px,#ff9b8a 48px 60px)' };
   }
   // 雙色：Blue & Purple
   if(l.includes('&')){
     const [a,b] = raw.split('&').map(s=>token(s));
     return { css:`background:linear-gradient(90deg, ${hexFor(a)} 0 50%, ${hexFor(b)} 50% 100%)` };
   }
-  // 漸層：依模式產出
+  // 漸層
   if(l.includes('gradient')){
     return gradientStyle(raw);
   }
@@ -292,7 +291,7 @@ function styleForColourLabel(label){
   return { css:`background:${base}${extra}` };
 }
 
-/* 建立色票（維持無文字、More 顯示 +） */
+/* 建立色票（維持無文字、More 顯示 +；ring 會套 class） */
 function buildSwatches(swatchesEl, labels){
   const box = document.getElementById('customColorBox');
   const input = document.getElementById('customColorInput');
@@ -304,7 +303,7 @@ function buildSwatches(swatchesEl, labels){
   swatchesEl.innerHTML = list.map((c,i)=>{
     const st = styleForColourLabel(c);
     const aria = i===0 ? 'true' : 'false';
-    const cls = st.addClass ? ` swatch ${st.addClass}` : 'swatch';
+    const cls = `swatch${st.addClass ? ' '+st.addClass : ''}`; // ← 關鍵：把 ring class 帶上去
     return `<button type="button" class="${cls}" data-color="${c.replace(/"/g,'&quot;')}" aria-pressed="${aria}" title="${c}" style="${st.css||''}">
       ${st.content||''}
     </button>`;
@@ -312,15 +311,12 @@ function buildSwatches(swatchesEl, labels){
 
   let chosen = list[0];
   const buttons = swatchesEl.querySelectorAll('.swatch');
-
   function applySelection(btn){
     buttons.forEach(b=>b.setAttribute('aria-pressed','false'));
     btn.setAttribute('aria-pressed','true');
     chosen = btn.dataset.color;
-
-    if(/more colours|more colors/i.test(chosen)){
-      box.style.display = 'block'; input.focus();
-    }else{ box.style.display = 'none'; }
+    if(/more colours|more colors/i.test(chosen)){ box.style.display = 'block'; input.focus(); }
+    else{ box.style.display = 'none'; }
   }
   buttons.forEach(btn=>btn.addEventListener('click',()=>applySelection(btn)));
 
