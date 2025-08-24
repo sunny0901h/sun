@@ -33,44 +33,43 @@
   <div id="error" class="err" style="display:none"></div>
 </div>
 
-<script>
-/* ---------- 類別資料（可自行擴充） ---------- */
-const DATA = {
-  halloween:{
-    title:"Halloween Cookies",
-    description:"Moody, stylish cookies for October. Choose a design below.",
-    // 依你指定的順序
-    items:[
-      {id:"pumpkin-charm", name:"Pumpkin Charm",      price:"From A$ 84.90", img:"images/halloween-pumpkin-charm.jpg"},
-      {id:"pumpkin-men",   name:"Pumpkin Men",        price:"From A$ 84.90", img:"images/halloween-pumpkin-men.jpg"},
-      {id:"cauldron-cake", name:"Cauldron Cake",      price:"From A$ 84.90", img:"images/halloween-cauldron-cake.jpg"},
-      {id:"drink-me",      name:"“Drink Me” Bottles", price:"From A$ 49.00",  img:"images/halloween-drink-me.jpg"},
-      {id:"ghostie-boo",   name:"Ghostie Boo",        price:"From A$ 84.90", img:"images/halloween-ghostie-boo.jpg"},
-      {id:"witchy-skirt",  name:"Witchy Skirt",       price:"From A$ 84.90", img:"images/halloween-witchy-skirt.jpg"},
-      {id:"witchy-brew",   name:"Witchy Brew",        price:"From A$ 84.90", img:"images/halloween-witchy-brew.jpg"},
-      {id:"witchy-hat",    name:"Witchy Hat",         price:"From A$ 84.90", img:"images/halloween-witchy-hat.jpg"},
-      {id:"spooky-cat",    name:"Spooky Cat",         price:"From A$ 84.90", img:"images/halloween-spooky-cat.jpg"},
-      {id:"boo-candy",     name:"Boo Candy",          price:"From A$ 84.90", img:"images/halloween-boo-candy.jpg"}
+<!-- ✅ 商品清單 JSON -->
+<script type="application/json" id="categories">
+{
+  "halloween":{
+    "title":"Halloween Cookies",
+    "description":"Spooky, fun designs for October — choose your favourite below!",
+    "items":[
+      {"id":"pumpkin-charm","name":"Pumpkin Charm","price":"From A$ 84.90","img":"images/halloween-pumpkin-charm.jpg"},
+      {"id":"pumpkin-men","name":"Pumpkin Men","price":"From A$ 84.90","img":"images/halloween-pumpkin-men.jpg"},
+      {"id":"cauldron-cake","name":"Cauldron Cake","price":"From A$ 84.90","img":"images/halloween-cauldron-cake.jpg"},
+      {"id":"drink-me","name":"Drink Me Bottles","price":"From A$ 49.00","img":"images/halloween-drink-me.jpg"},
+      {"id":"ghostie-boo","name":"Ghostie Boo","price":"From A$ 84.90","img":"images/halloween-ghostie-boo.jpg"},
+      {"id":"witchy-skirt","name":"Witchy Skirt","price":"From A$ 84.90","img":"images/halloween-witchy-skirt.jpg"},
+      {"id":"witchy-brew","name":"Witchy Brew","price":"From A$ 84.90","img":"images/halloween-witchy-brew.jpg"},
+      {"id":"witchy-hat","name":"Witchy Hat","price":"From A$ 84.90","img":"images/halloween-witchy-hat.jpg"},
+      {"id":"spooky-cat","name":"Spooky Cat","price":"From A$ 84.90","img":"images/halloween-spooky-cat.jpg"},
+      {"id":"boo-candy","name":"Boo Candy","price":"From A$ 84.90","img":"images/halloween-boo-candy.jpg"}
     ]
   },
-
-  christmas:{
-    title:"Christmas Gift Box",
-    description:"Elegant gifting options in luxe packaging. Choose your favourite design below.",
-    items:[
-      {id:"snowflake",     name:"Snowflake",       price:"From A$ 84.90", img:"images/christmas-snowflake.jpg"},
-      {id:"happy-tree",    name:"Happy Tree",      price:"From A$ 84.90", img:"images/christmas-happy-tree.jpg"},
-      {id:"gingerbread",   name:"Gingerbread Man", price:"From A$ 84.90", img:"images/christmas-gingerbread.jpg"},
-      {id:"candy-cane",    name:"Candy Cane",      price:"From A$ 84.90", img:"images/christmas-candy-cane.jpg"},
-      {id:"surprise-tree", name:"Surprise Tree",   price:"From A$ 84.90", img:"images/christmas-surprise-tree.jpg"},
-      {id:"reindeer",      name:"Reindeer",        price:"From A$ 84.90", img:"images/christmas-reindeer.jpg"},
-      {id:"snowman",       name:"Snowman",         price:"From A$ 84.90", img:"images/christmas-snowman.jpg"},
-      {id:"santa-belt",    name:"Santa Belt",      price:"From A$ 84.90", img:"images/christmas-santa-belt.jpg"}
+  "christmas":{
+    "title":"Christmas Gift Box",
+    "description":"Elegant gifting options in festive packaging — choose your favourite below!",
+    "items":[
+      {"id":"snowflake","name":"Snowflake","price":"From A$ 84.90","img":"images/christmas-snowflake.jpg"},
+      {"id":"happy-tree","name":"Happy Tree","price":"From A$ 84.90","img":"images/christmas-happy-tree.jpg"},
+      {"id":"gingerbread","name":"Gingerbread Man","price":"From A$ 84.90","img":"images/christmas-gingerbread.jpg"},
+      {"id":"candy-cane","name":"Candy Cane","price":"From A$ 84.90","img":"images/christmas-candy-cane.jpg"},
+      {"id":"surprise-tree","name":"Surprise Tree","price":"From A$ 84.90","img":"images/christmas-surprise-tree.jpg"},
+      {"id":"reindeer","name":"Reindeer","price":"From A$ 84.90","img":"images/christmas-reindeer.jpg"},
+      {"id":"snowman","name":"Snowman","price":"From A$ 84.90","img":"images/christmas-snowman.jpg"},
+      {"id":"santa-belt","name":"Santa Belt","price":"From A$ 84.90","img":"images/christmas-santa-belt.jpg"}
     ]
   }
-};
+}
+</script>
 
-/* ---------- 讀 hash & 渲染 ---------- */
+<script>
 function qs(key, def=""){ const m=location.hash.match(new RegExp(key+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
 const cat = qs("cat");
 const crumbsEl = document.getElementById('crumbs');
@@ -80,7 +79,8 @@ const listEl   = document.getElementById('list');
 const errEl    = document.getElementById('error');
 
 try{
-  if(!cat){ throw new Error('Missing "#cat=" in URL. Example: category.html#cat=halloween'); }
+  const DATA = JSON.parse(document.getElementById('categories').textContent);
+  if(!cat){ throw new Error('Missing "#cat=" in URL. Example: category.html#cat=christmas'); }
   const pack = DATA[cat];
   if(!pack){ throw new Error(`Category "${cat}" not found in DATA.`); }
 
@@ -102,7 +102,7 @@ try{
   titleEl.textContent = "Oops";
   descEl.textContent = "";
   errEl.style.display='block';
-  errEl.textContent = e.message + "  (請確認 category.html 的 DATA 區塊是否貼好、逗號與括號齊全)";
+  errEl.textContent = e.message + "  (請確認 category.html 的 JSON 是否正確)";
   console.error(e);
 }
 </script>
