@@ -9,15 +9,15 @@
   *{box-sizing:border-box}
   body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
   a{color:inherit;text-decoration:none}
-  header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}
-  header .btnlink{font-weight:900;text-decoration:none;border:1px solid var(--line);padding:6px 10px;border-radius:999px}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;gap:10px}
+  header a{font-weight:900}
   .wrap{max-width:1200px;margin:0 auto;padding:24px}
   .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
   @media (max-width:980px){.grid{grid-template-columns:1fr}}
   h1{margin:0 0 6px}
   .price{font-weight:900;margin:6px 0 18px;font-size:1.2rem}
 
-  /* gallery */
+  /* 圖片區 */
   .gallery{display:grid;grid-template-columns:88px 1fr;gap:12px}
   .thumbs{display:flex;flex-direction:column;gap:8px;max-height:560px;overflow:auto;padding-right:2px}
   .thumbs img{width:88px;height:88px;object-fit:cover;border-radius:10px;border:2px solid transparent;cursor:pointer;display:block;background:#f7f4ee}
@@ -27,47 +27,57 @@
   .nav{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:0;border-radius:50%;width:40px;height:40px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.12)}
   .nav.prev{left:10px}.nav.next{right:10px}
 
-  /* form */
+  /* 表單 */
   label{display:block;margin:12px 0 8px;font-weight:800}
   select,button,input{font:inherit}
-  select,input[type="text"]{width:100%;padding:10px 12px;border:1px solid #e9e1c7;border-radius:10px;background:#fff}
-  .swatches{display:flex;gap:10px;flex-wrap:wrap}
-  .swatch{width:34px;height:34px;border-radius:10px;border:2px solid transparent;cursor:pointer;position:relative}
+  select{width:100%;padding:10px 12px;border:1px solid #e9e1c7;border-radius:10px;background:#fff}
+
+  .swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .swatch{width:34px;height:34px;border-radius:10px;border:2px solid #ddd;cursor:pointer;display:inline-block}
   .swatch[aria-pressed="true"]{outline:2px solid #111;outline-offset:2px}
+
+  /* 單色 */
+  .swatch.white{background:#fff;border-color:#ccc}
+  .swatch.black{background:#111}
+  .swatch.orange{background:#fb923c}
+  .swatch.gold{background:linear-gradient(135deg,#f59e0b,#facc15)}
+  .swatch.red{background:#ef4444}
+  .swatch.green{background:#10b981}
+  .swatch.blue{background:#3b82f6}
+  .swatch.purple{background:#8b5cf6}
+  .swatch.brown{background:#8b5e3c}
+  .swatch.yellow{background:#fde047}
+
+  /* 雙色分割（左右各半） */
+  .swatch.split-blue-purple{background:linear-gradient(90deg,#3b82f6 50%,#8b5cf6 50%)}
+  .swatch.split-red-green{background:linear-gradient(90deg,#ef4444 50%,#10b981 50%)}
+  .swatch.split-red-white{background:linear-gradient(90deg,#ef4444 50%,#ffffff 50%)}
+  .swatch.split-white-green{background:linear-gradient(90deg,#ffffff 50%,#10b981 50%)}
+
+  /* 漸層「外圈 ring」：看起來清楚、不會混色 */
+  .swatch.ring{background:#fff !important;border:6px solid transparent !important;box-sizing:border-box}
+  .swatch.ring[aria-pressed="true"]{outline:2px solid #1f1b14;outline-offset:2px}
+
+  /* Random 彩條 */
+  .swatch.random{background:repeating-linear-gradient(45deg,#f87171 0 10px,#34d399 10px 20px,#60a5fa 20px 30px,#fbbf24 30px 40px)}
+
+  /* ＋留言 */
+  .swatch.more{display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#999;background:#fff;border:2px dashed #bbb}
+
   .btn{display:inline-block;margin-top:16px;background:#fff;border:2px solid var(--pill);color:var(--pill);padding:12px 18px;border-radius:999px;font-weight:900}
   .btn.primary{background:var(--pill);color:var(--pill-ink)}
   .note{margin-top:16px;font-size:.9rem;color:var(--muted)}
-  .oops{padding:16px 18px;margin:18px;border:1px solid #ffd1cd;background:#fff3f2;border-radius:12px;display:none;white-space:pre-wrap}
-  .debug{font-size:.9rem;color:#8a6d3b;padding:0 24px 16px}
-
-  /* 給 ring 漸層用：粗邊框 */
-.swatch.ring {
-  background:#fff !important;
-  border:6px solid transparent !important; /* 讓邊框夠粗看出漸層 */
-  box-sizing:border-box;
-} 
-  /* 漸層外圈：ring 樣式（一定要有這段，且放在後面以覆蓋） */
-.swatch.ring{
-  background:#fff !important;       /* 內部留白，讓外圈更明顯 */
-  border:6px solid transparent !important;
-  box-sizing:border-box;
-  /* 提高可視化：讓按下去的 ring 也能清楚 */
-}
-.swatch.ring[aria-pressed="true"]{
-  outline:2px solid #1f1b14;
-  outline-offset:2px;
-}
+  .oops{padding:18px;border:1px solid #ffd1cd;background:#fff3f2;border-radius:12px}
 </style>
 </head>
 <body>
 <header>
-  <a class="btnlink" href="javascript:history.back()">← Back</a>
-  <a class="btnlink" href="index.html">Home</a>
+  <a href="javascript:history.back()">← Back</a>
+  <a href="index.html">Home</a>
 </header>
 
 <div class="wrap">
   <div id="grid" class="grid" style="display:none">
-    <!-- gallery -->
     <section>
       <div class="gallery">
         <div class="thumbs" id="thumbs"></div>
@@ -79,7 +89,6 @@
       </div>
     </section>
 
-    <!-- form -->
     <aside>
       <h1 id="title">Loading…</h1>
       <div id="price" class="price"></div>
@@ -94,15 +103,8 @@
         </label>
 
         <label>Colour</label>
-        <div class="swatches" id="swatches" role="group" aria-label="Choose colour theme"></div>
-
-        <!-- 自訂顏色留言盒（選到「More colours…」時顯示） -->
-        <div id="customColorBox" style="display:none; margin-top:10px">
-          <label style="margin-top:2px">Colour note
-            <input id="customColorInput" type="text" placeholder="e.g. blue→purple gradient with gold specks">
-          </label>
-          <small style="color:#6b5f4a">Tell us your exact colours or gradient idea here.</small>
-        </div>
+        <div class="swatches" id="swatches" role="group"></div>
+        <input type="text" id="customColour" placeholder="Enter custom colours…" style="display:none;margin-top:8px;width:100%;padding:8px;border:1px solid #ccc;border-radius:8px" />
 
         <button type="submit" class="btn primary">Add to Cart</button>
         <button type="button" class="btn" onclick="location.href='mailto:sunnysugarart@gmail.com'">Email Us</button>
@@ -111,12 +113,11 @@
     </aside>
   </div>
 
-  <div id="oops" class="oops"></div>
-  <div class="debug" id="debug"></div>
+  <div id="oops" class="oops" style="display:none"></div>
 </div>
 
 <script>
-/* ----------------- 資料：用 JS 物件，不用 JSON.parse ----------------- */
+/* ========== 商品資料 ========== */
 const CATALOG = {
   halloween:{ items:{
     "pumpkin-charm":{ title:"Pumpkin Charm", price:"A$ 84.90",
@@ -204,7 +205,7 @@ const CATALOG = {
       images:["images/christmas-candy-cane.jpg","images/christmas-candy-cane-2.jpg"],
       flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
       packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
-      colours:["Red","Green"," White & Red","White & Green","Red & Green","Random","More colours – leave a note"]
+      colours:["Red","Green","White & Red","White & Green","Red & Green","Random","More colours – leave a note"]
     },
     "surprise-tree":{ title:"Surprise Tree", price:"A$ 84.90",
       images:["images/christmas-surprise-tree.jpg","images/christmas-surprise-tree-2.jpg"],
@@ -233,181 +234,160 @@ const CATALOG = {
   }}
 };
 
-/* ===== 漸層顯示模式：ring（外圈漸層環） ===== */
-const GRADIENT_MODE = 'ring';
+/* ========== 工具 ========== */
+function getHash(name,def=""){const m=location.hash.match(new RegExp(name+"=([^&]+)"));return m?decodeURIComponent(m[1]):def;}
+function token(s=""){return s.toLowerCase().replace(/[^a-z0-9]+/g,"-");}
 
-const PALETTE = {
-  blue:"#0070ff", purple:"#7a2cff", green:"#00b66d", red:"#ff2e2e",
-  white:"#ffffff", black:"#111111", gold:"#f5a300", brown:"#8b5e3c",
-  yellow:"#ffd800", pink:"#ff5ca8", orange:"#ff7a2c", "yellow-green":"#9cdc00"
-};
-const STRONG = { // 同色系對比色（更深更飽和）
-  blue:"#001aff", purple:"#4b00c9", green:"#007a46", red:"#b10000",
-  yellow:"#b98500", "yellow-green":"#4c7f00"
-};
-
-function token(t){ return t.trim().toLowerCase(); }
-function hexFor(name){
-  const n = token(name).replace('champagne','gold');
-  return PALETTE[n] || "#999";
+/* 顏色映射（單色） */
+function colorClass(name=""){
+  const n=token(name);
+  if(n.includes("black")) return "black";
+  if(n.includes("white")) return "white";
+  if(n.includes("gold")||n.includes("champagne")) return "gold";
+  if(n.includes("orange")) return "orange";
+  if(n.includes("red")) return "red";
+  if(n.includes("green") && !n.includes("yellow")) return "green";
+  if(n.includes("blue")) return "blue";
+  if(n.includes("purple")) return "purple";
+  if(n.includes("brown")) return "brown";
+  if(n.includes("yellow")) return "yellow";
+  return "white";
 }
 
-/* 指定各種漸層模式的樣式：ring = 外圈彩色漸層 */
-function gradientStyle(rawLabel){
-  const baseKey = token(rawLabel.replace(/gradient/i,'').trim()).replace(/\s+/g,'-'); // e.g. blue, yellow-green
-  const c1 = hexFor(baseKey);                  // 主色
-  const c2 = STRONG[baseKey] || '#000000';     // 對比色
+/* 雙色分割 class（若沒列在預設，就動態用 style 生成） */
+function splitStyle(a,b){
+  return `background:linear-gradient(90deg, ${a} 50%, ${b} 50%)`;
+}
+const HEX = {blue:"#3b82f6",purple:"#8b5cf6",red:"#ef4444",green:"#10b981",white:"#ffffff"};
 
-  // —— 使用 border-image 畫出彩色外圈（inline style 需要拆成兩個屬性）——
-  // 有些瀏覽器對 shorthand 不穩定，所以改成 source + slice 兩條
-  return {
-    addClass: 'ring',
-    css: [
-      `border-image-source: linear-gradient(90deg, ${c1}, ${c2})`,
-      `border-image-slice: 1`
-    ].join(';')
+function buildSwatchHTML(label,isFirst){
+  const raw=label.trim();
+  const key=token(raw);
+
+  // More（＋）與 Random
+  if(key.startsWith("more-colours")) return `<button type="button" class="swatch more" data-type="more" aria-pressed="${isFirst}">+</button>`;
+  if(key.startsWith("random")) return `<button type="button" class="swatch random" data-type="random" aria-pressed="${isFirst}"></button>`;
+
+  // 漸層（ring 外圈）："... gradient"
+  if(key.endsWith("gradient")){
+    // 取 base（如 "blue-gradient" -> "blue"）
+    const base=key.replace("-gradient","");
+    const c1 = HEX[base] || "#7dd3fc";
+    const c2 = (base==="blue")? "#1e3a8a"
+            : (base==="green")? "#065f46"
+            : (base==="yellow-green")? "#4d7c0f"
+            : (base==="purple")? "#4c1d95"
+            : "#111";
+    const style=`border-image-source:linear-gradient(90deg, ${c1}, ${c2});border-image-slice:1;`;
+    return `<button type="button" class="swatch ring" style="${style}" data-type="gradient" data-label="${raw}" aria-pressed="${isFirst}"></button>`;
+  }
+
+  // 雙色（含 &）
+  if(raw.includes("&")){
+    const [a,b]=raw.split("&").map(s=>token(s.trim()));
+    const known = `split-${a}-${b}`;
+    if(document && false){} // 只是避免編譯警告
+    if(HEX[a] && HEX[b]){
+      const style=splitStyle(HEX[a],HEX[b]);
+      return `<button type="button" class="swatch" style="${style}" data-type="split" data-label="${raw}" aria-pressed="${isFirst}"></button>`;
+    }
+    return `<button type="button" class="swatch ${known}" data-type="split" data-label="${raw}" aria-pressed="${isFirst}"></button>`;
+  }
+
+  // 其它單色
+  return `<button type="button" class="swatch ${colorClass(raw)}" data-type="solid" data-label="${raw}" aria-pressed="${isFirst}"></button>`;
+}
+
+/* ========== 渲染 ========== */
+function render(){
+  const cat=getHash("cat");
+  const key=getHash("item");
+
+  const grid=document.getElementById("grid");
+  const oops=document.getElementById("oops");
+  const hero=document.getElementById("hero");
+  const thumbs=document.getElementById("thumbs");
+  const title=document.getElementById("title");
+  const price=document.getElementById("price");
+  const flavourSel=document.getElementById("flavour");
+  const packSel=document.getElementById("pack");
+  const swatches=document.getElementById("swatches");
+  const customColour=document.getElementById("customColour");
+
+  const item=CATALOG?.[cat]?.items?.[key];
+  if(!item){
+    grid.style.display="none";
+    oops.style.display="block";
+    oops.textContent="Product not found. Please go back and choose again.";
+    return;
+  }
+  oops.style.display="none";
+  grid.style.display="grid";
+
+  title.textContent=item.title||"Untitled";
+  price.textContent=item.price||"";
+
+  flavourSel.innerHTML=(item.flavours||[]).map(f=>`<option>${f}</option>`).join("");
+  packSel.innerHTML=(item.packs||[]).map(p=>`<option>${p}</option>`).join("");
+
+  // 顏色
+  const colours=item.colours?.length?item.colours:["Random","More colours – leave a note"];
+  swatches.innerHTML=colours.map((c,i)=>buildSwatchHTML(c,i===0)).join("");
+  let chosenKind = swatches.querySelector(".swatch")?.dataset.type || "solid";
+  let chosenLabel= swatches.querySelector(".swatch")?.dataset.label || colours[0];
+  customColour.style.display="none";
+
+  swatches.querySelectorAll(".swatch").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      swatches.querySelectorAll(".swatch").forEach(b=>b.setAttribute("aria-pressed","false"));
+      btn.setAttribute("aria-pressed","true");
+      chosenKind = btn.dataset.type || "solid";
+      chosenLabel= btn.dataset.label || (btn.classList.contains("more")?"Custom":btn.className);
+
+      // 顯示 / 隱藏自訂顏色輸入
+      if(btn.classList.contains("more")){
+        customColour.style.display="block";
+        customColour.focus();
+      }else{
+        customColour.style.display="none";
+      }
+    });
+  });
+
+  // 圖片載入（避免首頁大圖）
+  const blocked=/(^|\/)(christmas\.jpg|halloween\.jpg)$/i;
+  const planned=(item.images||[]).filter(src=>!blocked.test(src));
+  function loadOne(src){return new Promise(res=>{const im=new Image();im.onload=()=>res(src);im.onerror=()=>res(null);im.src=src;});}
+  Promise.all(planned.map(loadOne)).then(list=>{
+    const imgs=list.filter(Boolean);
+    if(!imgs.length){
+      imgs.push('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900"><rect width="100%" height="100%" fill="%23f5f0e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23998" font-family="sans-serif" font-size="28">Image coming soon</text></svg>');
+    }
+    let idx=0;
+    const paint=()=>{
+      hero.src=imgs[idx];
+      [...thumbs.querySelectorAll("img")].forEach((t,i)=>t.setAttribute("aria-current",i===idx));
+    };
+    thumbs.innerHTML=imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join("");
+    thumbs.querySelectorAll("img").forEach((t,i)=>t.addEventListener("click",()=>{idx=i;paint();}));
+    document.getElementById("prev").onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;paint();};
+    document.getElementById("next").onclick=()=>{idx=(idx+1)%imgs.length;paint();};
+    paint();
+  });
+
+  // 假裝加入購物車
+  document.getElementById("buy").onsubmit=(e)=>{
+    e.preventDefault();
+    const displayColour = (chosenKind==="more")
+      ? (customColour.value||"Custom request")
+      : (chosenLabel||"Random");
+    alert(`Added:\n${item.title}\n${flavourSel.value} / ${packSel.value}\nColour: ${displayColour}\n${item.price||""}`);
   };
 }
 
-/* 主邏輯：把顏色標籤轉成 CSS 背景 */
-function styleForColourLabel(label){
-  const raw = label.trim();
-  const l = raw.toLowerCase();
-
-  // 自訂：More colours → 顯示「+」
-  if(l.includes('more colours') || l.includes('more colors')){
-    return {
-      css:'background:#fff;border:2px dashed #d4a373;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#d4a373',
-      content:'+'
-    };
-  }
-  // 隨機：彩條
-  if(l.includes('random')){
-    return { css:'background:repeating-linear-gradient(45deg,#ffd54a 0 12px,#9bf6a3 12px 24px,#7db3ff 24px 36px,#fca7da 36px 48px,#ff9b8a 48px 60px)' };
-  }
-  // 雙色：Blue & Purple
-  if(l.includes('&')){
-    const [a,b] = raw.split('&').map(s=>token(s));
-    return { css:`background:linear-gradient(90deg, ${hexFor(a)} 0 50%, ${hexFor(b)} 50% 100%)` };
-  }
-  // 漸層
-  if(l.includes('gradient')){
-    return gradientStyle(raw);
-  }
-  // 單色
-  const base = hexFor(raw);
-  const extra = l==='white' ? ';border:1px solid #e5e1d0' : '';
-  return { css:`background:${base}${extra}` };
-}
-
-/* 建立色票（維持無文字、More 顯示 +；ring 會套 class） */
-function buildSwatches(swatchesEl, labels){
-  const box = document.getElementById('customColorBox');
-  const input = document.getElementById('customColorInput');
-
-  const list = [...labels];
-  if(!list.some(s=>/random/i.test(s))) list.push('Random');
-  if(!list.some(s=>/more colours|more colors/i.test(s))) list.push('More colours – leave a note');
-
-  swatchesEl.innerHTML = list.map((c,i)=>{
-    const st = styleForColourLabel(c);
-    const aria = i===0 ? 'true' : 'false';
-    const cls = `swatch${st.addClass ? ' '+st.addClass : ''}`; // ← 關鍵：把 ring class 帶上去
-    return `<button type="button" class="${cls}" data-color="${c.replace(/"/g,'&quot;')}" aria-pressed="${aria}" title="${c}" style="${st.css||''}">
-      ${st.content||''}
-    </button>`;
-  }).join('');
-
-  let chosen = list[0];
-  const buttons = swatchesEl.querySelectorAll('.swatch');
-  function applySelection(btn){
-    buttons.forEach(b=>b.setAttribute('aria-pressed','false'));
-    btn.setAttribute('aria-pressed','true');
-    chosen = btn.dataset.color;
-    if(/more colours|more colors/i.test(chosen)){ box.style.display = 'block'; input.focus(); }
-    else{ box.style.display = 'none'; }
-  }
-  buttons.forEach(btn=>btn.addEventListener('click',()=>applySelection(btn)));
-
-  return ()=>({ label: chosen, note: (/more colours|more colors/i.test(chosen) ? input.value.trim() : '') });
-}
-
-/* ----------------- 工具 ----------------- */
-function getHash(name, def=""){ const m = location.hash.match(new RegExp(name+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
-
-/* ----------------- 主流程 ----------------- */
-(function start(){
-  const oops = document.getElementById('oops');
-  const dbg  = document.getElementById('debug');
-
-  function showError(msg, err){
-    oops.style.display='block';
-    oops.textContent = msg + (err ? ("\n\n" + (err.stack || err)) : "");
-  }
-
-  try{
-    const cat = getHash('cat');   // e.g. halloween
-    const key = getHash('item');  // e.g. pumpkin-charm
-    dbg.textContent = `CAT=${cat} | ITEM=${key}`;
-
-    const item = CATALOG?.[cat]?.items?.[key];
-    if(!cat || !key || !item){
-      document.getElementById('grid').style.display='none';
-      showError('Product not found. Please go back and choose again.');
-      return;
-    }
-
-    const grid   = document.getElementById('grid');
-    const heroEl = document.getElementById('hero');
-    const thumbs = document.getElementById('thumbs');
-    const title  = document.getElementById('title');
-    const price  = document.getElementById('price');
-    const flavourSel = document.getElementById('flavour');
-    const packSel    = document.getElementById('pack');
-    const swatchesEl = document.getElementById('swatches');
-
-    grid.style.display='grid';
-    title.textContent = item.title || 'Untitled';
-    price.textContent = item.price || '';
-
-    flavourSel.innerHTML = (item.flavours||[]).map(f=>`<option>${f}</option>`).join('');
-    packSel.innerHTML    = (item.packs||[]).map(p=>`<option>${p}</option>`).join('');
-
-    // 顏色色票（含漸層/雙色/Random/自訂）
-    const colours = item.colours?.length ? item.colours : ['Random'];
-    const getColour = buildSwatches(swatchesEl, colours);
-
-    // 載入圖片（若有壞圖會略過並顯示佔位）
-    function loadOne(src){ return new Promise(res=>{ const im=new Image(); im.onload=()=>res(src); im.onerror=()=>res(null); im.src=src; }); }
-    Promise.all((item.images||[]).map(loadOne)).then(all=>{
-      const imgs = all.filter(Boolean);
-      if(!imgs.length){
-        imgs.push('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900"><rect width="100%" height="100%" fill="%23f5f0e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23998" font-family="sans-serif" font-size="28">Image coming soon</text></svg>');
-      }
-      let idx=0;
-      const paint=()=>{ heroEl.src=imgs[idx]; [...thumbs.querySelectorAll('img')].forEach((t,i)=>t.setAttribute('aria-current', i===idx)); };
-      thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join('');
-      thumbs.querySelectorAll('img').forEach((t,i)=>t.addEventListener('click',()=>{idx=i; paint();}));
-      document.getElementById('prev').onclick = ()=>{idx=(idx-1+imgs.length)%imgs.length; paint();};
-      document.getElementById('next').onclick = ()=>{idx=(idx+1)%imgs.length; paint();};
-      paint();
-    });
-
-    // 送出（示例）
-    document.getElementById('buy').onsubmit = (e)=>{
-      e.preventDefault();
-      const picked = getColour(); // {label, note}
-      alert(
-        `Added:\n${item.title}\n${flavourSel.value} / ${packSel.value}\n` +
-        `Colour: ${picked.label}${picked.note ? ' ('+picked.note+')' : ''}\n` +
-        `${item.price||''}`
-      );
-    };
-
-  }catch(err){
-    showError('Runtime error. Please screenshot this and send to me.', err);
-  }
-})();
+render();
+window.addEventListener("hashchange",render);
 </script>
 </body>
 </html>
+
