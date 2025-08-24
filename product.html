@@ -48,20 +48,20 @@
   .swatch.brown{background:#8b5e3c}
   .swatch.yellow{background:#fde047}
 
-  /* 雙色分割（左右各半） */
+  /* 雙色分割（50/50） */
   .swatch.split-blue-purple{background:linear-gradient(90deg,#3b82f6 50%,#8b5cf6 50%)}
   .swatch.split-red-green{background:linear-gradient(90deg,#ef4444 50%,#10b981 50%)}
   .swatch.split-red-white{background:linear-gradient(90deg,#ef4444 50%,#ffffff 50%)}
   .swatch.split-white-green{background:linear-gradient(90deg,#ffffff 50%,#10b981 50%)}
 
-  /* 漸層「外圈 ring」：看起來清楚、不會混色 */
+  /* 漸層（ring 外圈，不會混色成中間色） */
   .swatch.ring{background:#fff !important;border:6px solid transparent !important;box-sizing:border-box}
   .swatch.ring[aria-pressed="true"]{outline:2px solid #1f1b14;outline-offset:2px}
 
   /* Random 彩條 */
   .swatch.random{background:repeating-linear-gradient(45deg,#f87171 0 10px,#34d399 10px 20px,#60a5fa 20px 30px,#fbbf24 30px 40px)}
 
-  /* ＋留言 */
+  /* More (+) */
   .swatch.more{display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#999;background:#fff;border:2px dashed #bbb}
 
   .btn{display:inline-block;margin-top:16px;background:#fff;border:2px solid var(--pill);color:var(--pill);padding:12px 18px;border-radius:999px;font-weight:900}
@@ -117,7 +117,7 @@
 </div>
 
 <script>
-/* ========== 商品資料 ========== */
+/* ========== 你的最新商品資料（已合併） ========== */
 const CATALOG = {
   halloween:{ items:{
     "pumpkin-charm":{ title:"Pumpkin Charm", price:"A$ 84.90",
@@ -181,7 +181,6 @@ const CATALOG = {
       colours:["Orange","Purple","Black","Random","More colours – leave a note"]
     }
   }},
-
   christmas:{ items:{
     "snowflake":{ title:"Snowflake", price:"A$ 84.90",
       images:["images/christmas-snowflake.jpg","images/christmas-snowflake-2.jpg"],
@@ -234,160 +233,143 @@ const CATALOG = {
   }}
 };
 
-/* ========== 工具 ========== */
-function getHash(name,def=""){const m=location.hash.match(new RegExp(name+"=([^&]+)"));return m?decodeURIComponent(m[1]):def;}
-function token(s=""){return s.toLowerCase().replace(/[^a-z0-9]+/g,"-");}
+/* ========== 小工具 ========== */
+function getHash(name, def=""){ const m = location.hash.match(new RegExp(name+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
 
-/* 顏色映射（單色） */
-function colorClass(name=""){
-  const n=token(name);
-  if(n.includes("black")) return "black";
-  if(n.includes("white")) return "white";
-  if(n.includes("gold")||n.includes("champagne")) return "gold";
-  if(n.includes("orange")) return "orange";
-  if(n.includes("red")) return "red";
-  if(n.includes("green") && !n.includes("yellow")) return "green";
-  if(n.includes("blue")) return "blue";
-  if(n.includes("purple")) return "purple";
-  if(n.includes("brown")) return "brown";
-  if(n.includes("yellow")) return "yellow";
-  return "white";
-}
+/* 顏色文字 → CSS class / style */
+function colourChip(label){
+  const t = (label||"").trim().toLowerCase();
 
-/* 雙色分割 class（若沒列在預設，就動態用 style 生成） */
-function splitStyle(a,b){
-  return `background:linear-gradient(90deg, ${a} 50%, ${b} 50%)`;
-}
-const HEX = {blue:"#3b82f6",purple:"#8b5cf6",red:"#ef4444",green:"#10b981",white:"#ffffff"};
+  // Random / More
+  if(t.startsWith("random")) return {cls:"swatch random", title:label};
+  if(t.startsWith("more"))   return {cls:"swatch more",  title:"+"};
 
-function buildSwatchHTML(label,isFirst){
-  const raw=label.trim();
-  const key=token(raw);
-
-  // More（＋）與 Random
-  if(key.startsWith("more-colours")) return `<button type="button" class="swatch more" data-type="more" aria-pressed="${isFirst}">+</button>`;
-  if(key.startsWith("random")) return `<button type="button" class="swatch random" data-type="random" aria-pressed="${isFirst}"></button>`;
-
-  // 漸層（ring 外圈）："... gradient"
-  if(key.endsWith("gradient")){
-    // 取 base（如 "blue-gradient" -> "blue"）
-    const base=key.replace("-gradient","");
-    const c1 = HEX[base] || "#7dd3fc";
-    const c2 = (base==="blue")? "#1e3a8a"
-            : (base==="green")? "#065f46"
-            : (base==="yellow-green")? "#4d7c0f"
-            : (base==="purple")? "#4c1d95"
-            : "#111";
-    const style=`border-image-source:linear-gradient(90deg, ${c1}, ${c2});border-image-slice:1;`;
-    return `<button type="button" class="swatch ring" style="${style}" data-type="gradient" data-label="${raw}" aria-pressed="${isFirst}"></button>`;
+  // 50/50 split
+  if(t.includes("&")){
+    const [a,b] = t.split("&").map(s=>s.trim());
+    const key = `${a}-${b}`.replace(/\s+/g,"-");
+    const map = {
+      "blue-purple":"split-blue-purple",
+      "red-green":"split-red-green",
+      "red-white":"split-red-white",
+      "white-green":"split-white-green"
+    };
+    if(map[key]) return {cls:`swatch ${map[key]}`, title:""};
   }
 
-  // 雙色（含 &）
-  if(raw.includes("&")){
-    const [a,b]=raw.split("&").map(s=>token(s.trim()));
-    const known = `split-${a}-${b}`;
-    if(document && false){} // 只是避免編譯警告
-    if(HEX[a] && HEX[b]){
-      const style=splitStyle(HEX[a],HEX[b]);
-      return `<button type="button" class="swatch" style="${style}" data-type="split" data-label="${raw}" aria-pressed="${isFirst}"></button>`;
-    }
-    return `<button type="button" class="swatch ${known}" data-type="split" data-label="${raw}" aria-pressed="${isFirst}"></button>`;
+  // ring 漸層（Blue gradient / Green gradient / Yellow-green gradient）
+  if(t.endsWith("gradient")){
+    if(t.startsWith("blue"))   return {cls:"swatch ring", style:"border-color:#3b82f6;border-right-color:#60a5fa"};
+    if(t.startsWith("green"))  return {cls:"swatch ring", style:"border-color:#10b981;border-right-color:#6ee7b7"};
+    if(t.startsWith("yellow-green")) return {cls:"swatch ring", style:"border-color:#fde047;border-right-color:#10b981"};
   }
 
-  // 其它單色
-  return `<button type="button" class="swatch ${colorClass(raw)}" data-type="solid" data-label="${raw}" aria-pressed="${isFirst}"></button>`;
+  // 單色
+  const single = {
+    "white":"white","black":"black","orange":"orange","gold":"gold","red":"red",
+    "green":"green","blue":"blue","purple":"purple","brown":"brown","yellow":"yellow",
+    "classic":"gold","pastel":"purple" // 先用近似表示
+  };
+  if(single[t]) return {cls:`swatch ${single[t]}`, title:""};
+
+  // fallback
+  return {cls:"swatch white", title:""};
 }
 
 /* ========== 渲染 ========== */
 function render(){
-  const cat=getHash("cat");
-  const key=getHash("item");
+  const cat = getHash('cat');
+  const key = getHash('item');
 
-  const grid=document.getElementById("grid");
-  const oops=document.getElementById("oops");
-  const hero=document.getElementById("hero");
-  const thumbs=document.getElementById("thumbs");
-  const title=document.getElementById("title");
-  const price=document.getElementById("price");
-  const flavourSel=document.getElementById("flavour");
-  const packSel=document.getElementById("pack");
-  const swatches=document.getElementById("swatches");
-  const customColour=document.getElementById("customColour");
+  const grid   = document.getElementById('grid');
+  const oops   = document.getElementById('oops');
+  const heroEl = document.getElementById('hero');
+  const thumbs = document.getElementById('thumbs');
+  const title  = document.getElementById('title');
+  const price  = document.getElementById('price');
+  const flavourSel = document.getElementById('flavour');
+  const packSel    = document.getElementById('pack');
+  const swatches   = document.getElementById('swatches');
+  const customInp  = document.getElementById('customColour');
 
-  const item=CATALOG?.[cat]?.items?.[key];
+  const item = CATALOG?.[cat]?.items?.[key];
   if(!item){
-    grid.style.display="none";
-    oops.style.display="block";
-    oops.textContent="Product not found. Please go back and choose again.";
+    grid.style.display='none';
+    oops.style.display='block';
+    oops.textContent = 'Product not found. Please go back and choose again.';
     return;
   }
-  oops.style.display="none";
-  grid.style.display="grid";
 
-  title.textContent=item.title||"Untitled";
-  price.textContent=item.price||"";
+  oops.style.display='none';
+  grid.style.display='grid';
 
-  flavourSel.innerHTML=(item.flavours||[]).map(f=>`<option>${f}</option>`).join("");
-  packSel.innerHTML=(item.packs||[]).map(p=>`<option>${p}</option>`).join("");
+  title.textContent = item.title || 'Untitled';
+  price.textContent = item.price || '';
 
-  // 顏色
-  const colours=item.colours?.length?item.colours:["Random","More colours – leave a note"];
-  swatches.innerHTML=colours.map((c,i)=>buildSwatchHTML(c,i===0)).join("");
-  let chosenKind = swatches.querySelector(".swatch")?.dataset.type || "solid";
-  let chosenLabel= swatches.querySelector(".swatch")?.dataset.label || colours[0];
-  customColour.style.display="none";
+  flavourSel.innerHTML = (item.flavours||[]).map(f=>`<option>${f}</option>`).join('');
+  packSel.innerHTML    = (item.packs||[]).map(p=>`<option>${p}</option>`).join('');
 
-  swatches.querySelectorAll(".swatch").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      swatches.querySelectorAll(".swatch").forEach(b=>b.setAttribute("aria-pressed","false"));
-      btn.setAttribute("aria-pressed","true");
-      chosenKind = btn.dataset.type || "solid";
-      chosenLabel= btn.dataset.label || (btn.classList.contains("more")?"Custom":btn.className);
+  // 顏色 swatches
+  const colours = item.colours?.length ? item.colours : ['Random'];
+  swatches.innerHTML = colours.map((c,i)=>{
+    const chip = colourChip(c);
+    const extra = chip.style ? ` style="${chip.style}"` : "";
+    const title = chip.title ? ` title="${chip.title}"` : "";
+    return `<button type="button" class="${chip.cls}" data-color="${c}" aria-pressed="${i===0}"${extra}${title}>${chip.title||""}</button>`;
+  }).join('');
 
-      // 顯示 / 隱藏自訂顏色輸入
-      if(btn.classList.contains("more")){
-        customColour.style.display="block";
-        customColour.focus();
-      }else{
-        customColour.style.display="none";
-      }
+  let chosenColour = colours[0];
+  customInp.style.display = chosenColour.toLowerCase().startsWith('more') ? 'block' : 'none';
+
+  swatches.querySelectorAll('.swatch').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      swatches.querySelectorAll('.swatch').forEach(b=>b.setAttribute('aria-pressed','false'));
+      btn.setAttribute('aria-pressed','true');
+      chosenColour = btn.dataset.color;
+      customInp.style.display = chosenColour.toLowerCase().startsWith('more') ? 'block' : 'none';
+      if (!customInp.style.display || customInp.style.display==='none') customInp.value="";
     });
   });
 
-  // 圖片載入（避免首頁大圖）
-  const blocked=/(^|\/)(christmas\.jpg|halloween\.jpg)$/i;
-  const planned=(item.images||[]).filter(src=>!blocked.test(src));
-  function loadOne(src){return new Promise(res=>{const im=new Image();im.onload=()=>res(src);im.onerror=()=>res(null);im.src=src;});}
+  // 圖片：忽略首頁大圖名稱；失敗自動濾掉
+  const blocked = /(^|\/)(christmas\.jpg|halloween\.jpg)$/i;
+  const planned = (item.images||[]).filter(src=>!blocked.test(src));
+
+  function loadOne(src){
+    return new Promise(res=>{
+      const im = new Image();
+      im.onload = ()=>res(src);
+      im.onerror= ()=>res(null);
+      im.src = src;
+    });
+  }
   Promise.all(planned.map(loadOne)).then(list=>{
-    const imgs=list.filter(Boolean);
+    const imgs = list.filter(Boolean);
     if(!imgs.length){
       imgs.push('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900"><rect width="100%" height="100%" fill="%23f5f0e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23998" font-family="sans-serif" font-size="28">Image coming soon</text></svg>');
     }
-    let idx=0;
-    const paint=()=>{
-      hero.src=imgs[idx];
-      [...thumbs.querySelectorAll("img")].forEach((t,i)=>t.setAttribute("aria-current",i===idx));
+    let idx = 0;
+    const paint = ()=>{
+      heroEl.src = imgs[idx];
+      [...thumbs.querySelectorAll('img')].forEach((t,i)=>t.setAttribute('aria-current', i===idx));
     };
-    thumbs.innerHTML=imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join("");
-    thumbs.querySelectorAll("img").forEach((t,i)=>t.addEventListener("click",()=>{idx=i;paint();}));
-    document.getElementById("prev").onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;paint();};
-    document.getElementById("next").onclick=()=>{idx=(idx+1)%imgs.length;paint();};
+    thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join('');
+    thumbs.querySelectorAll('img').forEach((t,i)=>t.addEventListener('click',()=>{idx=i; paint();}));
+    document.getElementById('prev').onclick = ()=>{idx=(idx-1+imgs.length)%imgs.length; paint();};
+    document.getElementById('next').onclick = ()=>{idx=(idx+1)%imgs.length; paint();};
     paint();
   });
 
-  // 假裝加入購物車
-  document.getElementById("buy").onsubmit=(e)=>{
+  // 提交示範
+  document.getElementById('buy').onsubmit = (e)=>{
     e.preventDefault();
-    const displayColour = (chosenKind==="more")
-      ? (customColour.value||"Custom request")
-      : (chosenLabel||"Random");
-    alert(`Added:\n${item.title}\n${flavourSel.value} / ${packSel.value}\nColour: ${displayColour}\n${item.price||""}`);
+    const colourNote = chosenColour.toLowerCase().startsWith('more') ? (customInp.value||"(no note)") : chosenColour;
+    alert(`Added:\n${item.title}\n${flavourSel.value} / ${packSel.value}\nColour: ${colourNote}\n${item.price||''}`);
   };
 }
 
 render();
-window.addEventListener("hashchange",render);
+window.addEventListener('hashchange', render);
 </script>
 </body>
 </html>
-
