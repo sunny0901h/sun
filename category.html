@@ -6,107 +6,125 @@
 <title>Browse | Sunny Sugar Art</title>
 <style>
   :root{--ink:#1f1b14;--line:#efe5c9;--card:#fff;--shadow:0 8px 24px rgba(0,0,0,.06)}
-  *{box-sizing:border-box} body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink)}
-  header{padding:22px 20px;border-bottom:1px solid var(--line)}
-  header a{text-decoration:none;font-weight:900}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink)}
+  a{color:inherit;text-decoration:none}
+  header{padding:18px 20px;border-bottom:1px solid var(--line)}
+  header a{font-weight:900;text-decoration:none}
   .wrap{max-width:1200px;margin:0 auto;padding:24px}
-  h1{margin:6px 0 12px;font-size:2rem}
-  p.lead{margin:0 0 14px;color:#574f3e}
   .crumbs{font-size:.9rem;color:#6b5f4a}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-top:10px}
+  h1{margin:.4rem 0 8px;font-size:2rem}
+  p.lead{margin:0 0 14px;color:#574f3e}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-top:12px}
   .card{background:var(--card);border:1px solid #f2ecd7;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
-  .card img{width:100%;height:220px;object-fit:cover}
+  .card img{width:100%;height:220px;object-fit:cover;display:block;background:#f7f4ee;transition:opacity .2s}
   .card .content{padding:14px}
   .card h3{margin:0 0 6px;font-size:1.05rem;font-weight:900}
   .price{font-weight:800;margin:6px 0 0}
-  .btn{display:inline-block;margin-top:10px;background:#fbc02d;color:#2a2100;padding:10px 14px;border-radius:999px;font-weight:800;text-decoration:none}
-  .err{margin-top:18px;color:#b42318;background:#fff3f2;border:1px solid #ffd1cd;padding:10px 12px;border-radius:10px}
+  .btn{display:inline-block;margin-top:10px;background:#fbc02d;color:#2a2100;padding:10px 14px;border-radius:999px;font-weight:900;text-decoration:none;border:1px solid #e2b100}
+  .err{margin-top:18px;color:#b42318;background:#fff3f2;border:1px solid #ffd1cd;padding:10px 12px;border-radius:10px;display:none}
 </style>
 </head>
 <body>
-<header><a href="index.html">← Back to Home</a></header>
+<header><a href="javascript:history.back()">← Back</a></header>
+
 <div class="wrap">
   <div class="crumbs" id="crumbs"></div>
-  <h1 id="title">Loading...</h1>
+  <h1 id="title">Loading…</h1>
   <p class="lead" id="desc"></p>
+
   <div class="grid" id="list"></div>
-  <div id="error" class="err" style="display:none"></div>
+  <div id="error" class="err"></div>
 </div>
 
 <script>
-window.addEventListener('DOMContentLoaded', () => {
-  console.log("Hash now:", location.hash);
+/* ----------------- Data ----------------- */
+/* 先讓頁面跑起來：Christmas 有些圖你尚未上傳，
+   我暫時用「現有的 happy-tree / surprise-tree / reindeer…」代替。
+   之後有了專屬縮圖，改掉 img 檔名即可。 */
+const DATA = {
+  halloween:{
+    title:"Halloween Cookies",
+    description:"Moody, stylish cookies for October. Choose a design below.",
+    items:[
+      {id:"ghosts",      name:"Ghost Set",           price:"From A$ 84.90", img:"images/halloween-ghosts.jpg"},
+      {id:"pumpkin",     name:"Pumpkin Faces",       price:"From A$ 84.90", img:"images/halloween-pumpkin.jpg"},
+      {id:"pumpkinmen",  name:"Pumpkin Men",         price:"From A$ 84.90", img:"images/halloween-pumpkinmen.jpg"},
+      {id:"cake",        name:"Halloween Cake Set",  price:"Quote",         img:"images/halloween-cake.jpg"},
+      {id:"drinkme",     name:"“Drink Me” Bottles",  price:"From A$ 49.00", img:"images/halloween-drink-me.jpg"}
+    ]
+  },
 
-  /* ---------- 類別資料 ---------- */
-  const DATA = {
-    halloween:{
-      title:"Halloween Cookies",
-      description:"Moody, stylish cookies for October. Choose a design below.",
-      items:[
-        {id:"ghosts",      name:"Ghost Set",           price:"From A$ 84.90", img:"images/halloween-ghosts.jpg"},
-        {id:"pumpkin",     name:"Pumpkin Faces",       price:"From A$ 84.90", img:"images/halloween-pumpkin.jpg"},
-        {id:"pumpkinmen",  name:"Pumpkin Men",         price:"From A$ 84.90", img:"images/halloween-pumpkinmen.jpg"},
-        {id:"cake",        name:"Halloween Cake Set",  price:"Quote",         img:"images/halloween-cake.jpg"},
-        {id:"drink-me",     name:"“Drink Me” Bottles",  price:"From A$ 49.00", img:"images/halloween-drink-me.jpg"}
-      ]
-    },
+  christmas:{
+    title:"Christmas Gift Box",
+    description:"Elegant gifting options in luxe packaging. Choose your favourite design below.",
+    items:[
+      /* 下列四個先用現有圖「暫代」，避免空白。
+         之後若上傳對應縮圖，把檔名改為：
+         snowflake -> images/christmas-snowflake.jpg
+         happy-tree -> images/christmas-happy-tree.jpg（已是）
+         gingerbread -> images/christmas-gingerbread.jpg
+         candy-cane -> images/christmas-candy-cane.jpg
+      */
+      {id:"snowflake",     name:"Snowflake",        price:"From A$ 84.90", img:"images/christmas-happy-tree.jpg"},
+      {id:"happy-tree",    name:"Happy Tree",       price:"From A$ 84.90", img:"images/christmas-happy-tree.jpg"},
+      {id:"gingerbread",   name:"Gingerbread Man",  price:"From A$ 84.90", img:"images/christmas-surprise-tree.jpg"},
+      {id:"candy-cane",    name:"Candy Cane",       price:"From A$ 84.90", img:"images/christmas-reindeer.jpg"},
+      /* 下面這些有對應檔名可用 */
+      {id:"surprise-tree", name:"Surprise Tree",    price:"From A$ 84.90", img:"images/christmas-surprise-tree.jpg"},
+      {id:"reindeer",      name:"Reindeer",         price:"From A$ 84.90", img:"images/christmas-reindeer.jpg"},
+      {id:"snowman",       name:"Snowman",          price:"From A$ 84.90", img:"images/christmas-snowman.jpg"},
+      {id:"santa-belt",    name:"Santa Belt",       price:"From A$ 84.90", img:"images/christmas-santa-belt.jpg"}
+    ]
+  }
+};
 
-    christmas:{
-      title:"Christmas Gift Box",
-      description:"Elegant gifting options in luxe packaging. Choose your favourite design below.",
-      items:[
-        {id:"surprise-tree", name:"Surprise Tree",   price:"From A$ 84.90", img:"images/christmas-surprise-tree.jpg"},
-        {id:"happy-tree",    name:"Happy Tree",      price:"From A$ 84.90", img:"images/christmas-happy-tree.jpg"},
-        {id:"snowflake",     name:"Snowflake",       price:"From A$ 84.90", img:"images/christmas-snowflake.jpg"},
-        {id:"gingerbread",   name:"Gingerbread Man", price:"From A$ 84.90", img:"images/christmas-gingerbread.jpg"},
-        {id:"candy-cane",    name:"Candy Cane",      price:"From A$ 84.90", img:"images/christmas-candy-cane.jpg"},
-        {id:"reindeer",      name:"Reindeer",        price:"From A$ 84.90", img:"images/christmas-reindeer.jpg"},
-        {id:"snowman",       name:"Snowman",         price:"From A$ 84.90", img:"images/christmas-snowman.jpg"},
-        {id:"santa-belt",    name:"Santa Belt",      price:"From A$ 84.90", img:"images/christmas-santa-belt.jpg"}
-      ]
-    }
-  };
+/* ----------------- Helpers ----------------- */
+function qsParam(key, def=""){
+  const m = location.hash.match(new RegExp(key+"=([^&]+)"));
+  return m ? decodeURIComponent(m[1]) : def;
+}
 
-  /* ---------- 讀 hash & 安全渲染 ---------- */
-  function qs(key, def=""){ const m=location.hash.match(new RegExp(key+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
-  const cat = qs("cat");
-  console.log("Parsed cat:", cat);
-
-  const crumbsEl = document.getElementById('crumbs');
-  const titleEl  = document.getElementById('title');
-  const descEl   = document.getElementById('desc');
-  const listEl   = document.getElementById('list');
-  const errEl    = document.getElementById('error');
+/* ----------------- Render ----------------- */
+(function render(){
+  const catKey = qsParam("cat");
+  const crumbs = document.getElementById('crumbs');
+  const title  = document.getElementById('title');
+  const desc   = document.getElementById('desc');
+  const list   = document.getElementById('list');
+  const error  = document.getElementById('error');
 
   try{
-    if(!cat){ throw new Error('Missing "#cat=" in URL. Example: category.html#cat=christmas'); }
-    const pack = DATA[cat];
-    console.log("Pack loaded:", pack);
+    if(!catKey) throw new Error('Missing "#cat=" in URL. Try: category.html#cat=christmas');
+    const pack = DATA[catKey];
+    if(!pack) throw new Error(`Category "${catKey}" not found.`);
 
-    if(!pack){ throw new Error(`Category "${cat}" not found in DATA.`); }
+    crumbs.textContent = `Shop Cookies › ${pack.title}`;
+    title.textContent  = pack.title;
+    desc.textContent   = pack.description || '';
 
-    crumbsEl.textContent = `Shop Cookies › ${pack.title}`;
-    titleEl.textContent  = pack.title;
-    descEl.textContent   = pack.description || '';
-
-    listEl.innerHTML = pack.items.map(it=>`
+    list.innerHTML = pack.items.map(it => `
       <article class="card">
-        <img src="${it.img}" alt="${it.name}" onerror="this.style.opacity=.2">
+        <img src="${it.img}" alt="${it.name}"
+             onerror="this.style.opacity=.25; this.alt='Image not found';">
         <div class="content">
           <h3>${it.name}</h3>
           <div class="price">${it.price||''}</div>
-          <a class="btn" href="product.html#cat=${encodeURIComponent(cat)}&item=${encodeURIComponent(it.id)}">View details</a>
+          <a class="btn" href="product.html#cat=${encodeURIComponent(catKey)}&item=${encodeURIComponent(it.id)}">View details</a>
         </div>
       </article>
     `).join('');
+
   }catch(e){
-    titleEl.textContent = "Oops";
-    descEl.textContent = "";
-    errEl.style.display='block';
-    errEl.textContent = e.message + "  (請確認 category.html 的 DATA 區塊是否貼好、逗號與括號齊全)";
+    title.textContent = "Oops";
+    desc.textContent  = "";
+    error.style.display = 'block';
+    error.textContent = e.message + "  (Check the URL or DATA block.)";
     console.error(e);
   }
-});
+})();
+
+window.addEventListener('hashchange', ()=>location.reload());
 </script>
 </body>
 </html>
