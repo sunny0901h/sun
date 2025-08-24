@@ -45,6 +45,17 @@
   background:#fff !important;
   border:6px solid transparent !important; /* 讓邊框夠粗看出漸層 */
   box-sizing:border-box;
+} 
+  /* 漸層外圈：ring 樣式（一定要有這段，且放在後面以覆蓋） */
+.swatch.ring{
+  background:#fff !important;       /* 內部留白，讓外圈更明顯 */
+  border:6px solid transparent !important;
+  box-sizing:border-box;
+  /* 提高可視化：讓按下去的 ring 也能清楚 */
+}
+.swatch.ring[aria-pressed="true"]{
+  outline:2px solid #1f1b14;
+  outline-offset:2px;
 }
 </style>
 </head>
@@ -241,23 +252,21 @@ function hexFor(name){
   return PALETTE[n] || "#999";
 }
 
-/* 指定各種漸層模式的樣式（ring 會加 class） */
+/* 指定各種漸層模式的樣式：ring = 外圈彩色漸層 */
 function gradientStyle(rawLabel){
   const baseKey = token(rawLabel.replace(/gradient/i,'').trim()).replace(/\s+/g,'-'); // e.g. blue, yellow-green
-  const c1 = hexFor(baseKey);
-  const c2 = STRONG[baseKey] || '#000';
-  if (GRADIENT_MODE === 'ring') {
-    // 重要：需要 element 上帶 .swatch.ring，加粗邊框 + border-image 漸層
-    return { css:`border-image: linear-gradient(90deg, ${c1}, ${c2}) 1`, addClass:'ring' };
-  }
-  if (GRADIENT_MODE === 'split70') {
-    return { css:`background:linear-gradient(90deg, ${c1} 0 70%, ${c2} 70% 100%)` };
-  }
-  if (GRADIENT_MODE === 'triple') {
-    return { css:`background:linear-gradient(90deg, ${c1} 0 40%, #ffffff 40% 60%, ${c2} 60% 100%)` };
-  }
-  // 預設 diagonal
-  return { css:`background:linear-gradient(135deg, ${c1} 0 50%, ${c2} 50% 100%)` };
+  const c1 = hexFor(baseKey);                  // 主色
+  const c2 = STRONG[baseKey] || '#000000';     // 對比色
+
+  // —— 使用 border-image 畫出彩色外圈（inline style 需要拆成兩個屬性）——
+  // 有些瀏覽器對 shorthand 不穩定，所以改成 source + slice 兩條
+  return {
+    addClass: 'ring',
+    css: [
+      `border-image-source: linear-gradient(90deg, ${c1}, ${c2})`,
+      `border-image-slice: 1`
+    ].join(';')
+  };
 }
 
 /* 主邏輯：把顏色標籤轉成 CSS 背景 */
