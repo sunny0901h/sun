@@ -9,13 +9,14 @@
   *{box-sizing:border-box}
   body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
   a{color:inherit;text-decoration:none}
-  header{padding:18px 20px;border-bottom:1px solid var(--line)}
-  header a{font-weight:900}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}
+  header .btnlink{font-weight:900;text-decoration:none;border:1px solid var(--line);padding:6px 10px;border-radius:999px}
   .wrap{max-width:1200px;margin:0 auto;padding:24px}
   .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
   @media (max-width:980px){.grid{grid-template-columns:1fr}}
   h1{margin:0 0 6px}
   .price{font-weight:900;margin:6px 0 18px;font-size:1.2rem}
+
   /* gallery */
   .gallery{display:grid;grid-template-columns:88px 1fr;gap:12px}
   .thumbs{display:flex;flex-direction:column;gap:8px;max-height:560px;overflow:auto;padding-right:2px}
@@ -25,27 +26,30 @@
   .stage img{width:100%;height:100%;object-fit:cover;display:block}
   .nav{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:0;border-radius:50%;width:40px;height:40px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.12)}
   .nav.prev{left:10px}.nav.next{right:10px}
+
   /* form */
   label{display:block;margin:12px 0 8px;font-weight:800}
-  select,button{font:inherit}
-  select{width:100%;padding:10px 12px;border:1px solid #e9e1c7;border-radius:10px;background:#fff}
+  select,button,input{font:inherit}
+  select,input[type="text"]{width:100%;padding:10px 12px;border:1px solid #e9e1c7;border-radius:10px;background:#fff}
   .swatches{display:flex;gap:10px;flex-wrap:wrap}
-  .swatch{width:34px;height:34px;border-radius:10px;border:2px solid transparent;cursor:pointer}
+  .swatch{width:34px;height:34px;border-radius:10px;border:2px solid transparent;cursor:pointer;position:relative}
   .swatch[aria-pressed="true"]{outline:2px solid #111;outline-offset:2px}
-  .swatch.pink{background:#f472b6}.swatch.orange{background:#fb923c}.swatch.black{background:#111}.swatch.white{background:#fff;border-color:#e5e1d0}.swatch.gold{background:linear-gradient(135deg,#f59e0b,#facc15)}.swatch.red{background:#ef4444}.swatch.green{background:#10b981}.swatch.blue{background:#3b82f6}.swatch.purple{background:#8b5cf6}.swatch.brown{background:#8b5e3c}.swatch.yellow{background:#fde047}
   .btn{display:inline-block;margin-top:16px;background:#fff;border:2px solid var(--pill);color:var(--pill);padding:12px 18px;border-radius:999px;font-weight:900}
   .btn.primary{background:var(--pill);color:var(--pill-ink)}
   .note{margin-top:16px;font-size:.9rem;color:var(--muted)}
-  .oops{padding:18px;border:1px solid #ffd1cd;background:#fff3f2;border-radius:12px}
+  .oops{padding:16px 18px;margin:18px;border:1px solid #ffd1cd;background:#fff3f2;border-radius:12px;display:none;white-space:pre-wrap}
+  .debug{font-size:.9rem;color:#8a6d3b;padding:0 24px 16px}
 </style>
 </head>
 <body>
 <header>
-  <a href="javascript:history.back()">← Back</a>
+  <a class="btnlink" href="javascript:history.back()">← Back</a>
+  <a class="btnlink" href="index.html">Home</a>
 </header>
 
 <div class="wrap">
   <div id="grid" class="grid" style="display:none">
+    <!-- gallery -->
     <section>
       <div class="gallery">
         <div class="thumbs" id="thumbs"></div>
@@ -57,6 +61,7 @@
       </div>
     </section>
 
+    <!-- form -->
     <aside>
       <h1 id="title">Loading…</h1>
       <div id="price" class="price"></div>
@@ -73,6 +78,14 @@
         <label>Colour</label>
         <div class="swatches" id="swatches" role="group" aria-label="Choose colour theme"></div>
 
+        <!-- 自訂顏色留言盒（選到「More colours…」時顯示） -->
+        <div id="customColorBox" style="display:none; margin-top:10px">
+          <label style="margin-top:2px">Colour note
+            <input id="customColorInput" type="text" placeholder="e.g. blue→purple gradient with gold specks">
+          </label>
+          <small style="color:#6b5f4a">Tell us your exact colours or gradient idea here.</small>
+        </div>
+
         <button type="submit" class="btn primary">Add to Cart</button>
         <button type="button" class="btn" onclick="location.href='mailto:sunnysugarart@gmail.com'">Email Us</button>
         <p class="note">Made to order. Contains egg & gluten. Nut‑free kitchen but traces may exist. Please book ahead for peak seasons.</p>
@@ -80,222 +93,276 @@
     </aside>
   </div>
 
-  <div id="oops" class="oops" style="display:none"></div>
+  <div id="oops" class="oops"></div>
+  <div class="debug" id="debug"></div>
 </div>
 
-<!-- ✅ 合法 JSON（請不要改成 JS 物件語法） -->
-<script type="application/json" id="catalog">
-{
-  "halloween":{
-    "items":{
-      "pumpkin-charm":{
-        "title":"Pumpkin Charm",
-        "price":"A$ 84.90",
-        "images":["images/halloween-pumpkin-charm.jpg","images/halloween-pumpkin-charm-2.jpg","images/halloween-pumpkin-charm-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours":["Orange","Black","Purple"]
-      },
-      "pumpkin-men":{
-        "title":"Pumpkin Men",
-        "price":"A$ 84.90",
-        "images":["images/halloween-pumpkin-men.jpg","images/halloween-pumpkin-men-2.jpg","images/halloween-pumpkin-men-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK"],
-        "colours":["Blue","Purple","Green"]
-      },
-      "cauldron-cake":{
-        "title":"Cauldron Cake",
-        "price":"A$ 84.90",
-        "images":["images/halloween-cauldron-cake.jpg","images/halloween-cauldron-cake-2.jpg","images/halloween-cauldron-cake-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK","50 PACK"],
-        "colours":["Blue","Black"]
-      },
-      "drink-me":{
-        "title":"Drink Me Bottles",
-        "price":"A$ 49.00",
-        "images":["images/halloween-drink-me.jpg","images/halloween-drink-me-2.jpg","images/halloween-drink-me-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK"],
-        "colours":["Orange","Gold","Black"]
-      },
-      "ghostie-boo":{
-        "title":"Ghostie Boo",
-        "price":"A$ 84.90",
-        "images":["images/halloween-ghostie-boo.jpg","images/halloween-ghostie-boo-2.jpg","images/halloween-ghostie-boo-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK"],
-        "colours":["White","Black","Orange","Purple"]
-      },
-      "witchy-skirt":{
-        "title":"Witchy Skirt",
-        "price":"A$ 84.90",
-        "images":["images/halloween-witchy-skirt.jpg","images/halloween-witchy-skirt-2.jpg","images/halloween-witchy-skirt-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK"],
-        "colours":["Black","Purple","Orange"]
-      },
-      "witchy-brew":{
-        "title":"Witchy Brew",
-        "price":"A$ 84.90",
-        "images":["images/halloween-witchy-brew.jpg","images/halloween-witchy-brew-2.jpg","images/halloween-witchy-brew-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK"],
-        "colours":["Green","Purple","Black","Orange"]
-      },
-      "witchy-hat":{
-        "title":"Witchy Hat",
-        "price":"A$ 84.90",
-        "images":["images/halloween-witchy-hat.jpg","images/halloween-witchy-hat-2.jpg","images/halloween-witchy-hat-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK"],
-        "colours":["Black","Purple"]
-      },
-      "spooky-cat":{
-        "title":"Spooky Cat",
-        "price":"A$ 84.90",
-        "images":["images/halloween-spooky-cat.jpg","images/halloween-spooky-cat-2.jpg","images/halloween-spooky-cat-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK"],
-        "colours":["Black","White"]
-      },
-      "boo-candy":{
-        "title":"Boo Candy",
-        "price":"A$ 84.90",
-        "images":["images/halloween-boo-candy.jpg","images/halloween-boo-candy-2.jpg","images/halloween-boo-candy-3.jpg"],
-        "flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
-        "packs":["10 PACK","15 PACK","30 PACK"],
-        "colours":["Orange","Black","Purple"]
-      }
-    }
-  },
-
-  "christmas":{
-    "items":{
-      "snowflake":{"title":"Snowflake","price":"A$ 84.90","images":["images/christmas-snowflake.jpg","images/christmas-snowflake-2.jpg"],"flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],"packs":["10 PACK","15 PACK","30 PACK","50 PACK"],"colours":["Blue","Purple","Blue & Purple","Random","More colours – leave a note"]},
-      "happy-tree":{"title":"Happy Tree","price":"A$ 84.90","images":["images/christmas-happy-tree.jpg","images/christmas-happy-tree-2.jpg"],"flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],"packs":["10 PACK","15 PACK","30 PACK","50 PACK"],"colours":["Blue gradient","Green gradient","Green","White","Red","Yellow-green gradient","Random","More colours – leave a note"]},
-      "gingerbread":{"title":"Gingerbread Man","price":"A$ 84.90","images":["images/christmas-gingerbread.jpg","images/christmas-gingerbread-2.jpg"],"flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],"packs":["10 PACK","15 PACK","30 PACK","50 PACK"],"colours":["Classic","Pastel","Random","More colours – leave a note"]},
-      "candy-cane":{"title":"Candy Cane","price":"A$ 84.90","images":["images/christmas-candy-cane.jpg","images/christmas-candy-cane-2.jpg"],"flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],"packs":["10 PACK","15 PACK","30 PACK","50 PACK"],"colours":["Red","Green","Red & Green","Red & White","White & Green","Random","More colours – leave a note"]},
-      "surprise-tree":{"title":"Surprise Tree","price":"A$ 84.90","images":["images/christmas-surprise-tree.jpg","images/christmas-surprise-tree-2.jpg"],"flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],"packs":["10 PACK","15 PACK","30 PACK","50 PACK"],"colours":["Assorted","Random","More colours – leave a note"]},
-      "reindeer":{"title":"Reindeer","price":"A$ 84.90","images":["images/christmas-reindeer.jpg","images/christmas-reindeer-2.jpg"],"flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],"packs":["10 PACK","15 PACK","30 PACK","50 PACK"],"colours":["White","Brown","Random","More colours – leave a note"]},
-      "snowman":{"title":"Snowman","price":"A$ 84.90","images":["images/christmas-snowman.jpg","images/christmas-snowman-2.jpg"],"flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],"packs":["10 PACK","15 PACK","30 PACK","50 PACK"],"colours":["Classic","Pastel","Random","More colours – leave a note"]},
-      "santa-belt":{"title":"Santa Belt","price":"A$ 84.90","images":["images/christmas-santa-belt.jpg","images/christmas-santa-belt-2.jpg"],"flavours":["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],"packs":["10 PACK","15 PACK","30 PACK","50 PACK"],"colours":["Red & Black","Classic","Random","More colours – leave a note"]}
-    }
-  }
-}
-</script>
-
 <script>
-/* 讀 JSON（若壞掉會顯示錯誤框，不會整頁空白） */
-let CATALOG = {};
-try {
-  CATALOG = JSON.parse(document.getElementById('catalog').textContent);
-} catch (e) {
-  document.getElementById('grid').style.display = 'none';
-  const o = document.getElementById('oops');
-  o.style.display = 'block';
-  o.textContent = 'Catalog JSON parse error. Please check product.html.';
-}
-
-/* 小工具 */
-function getHash(name, def=""){ const m = location.hash.match(new RegExp(name+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
-function colorClass(name=""){
-  const n=name.toLowerCase();
-  if(n.includes("pink")) return "pink";
-  if(n.includes("orange")) return "orange";
-  if(n.includes("black")) return "black";
-  if(n.includes("white")) return "white";
-  if(n.includes("gold") || n.includes("champagne")) return "gold";
-  if(n.includes("red")) return "red";
-  if(n.includes("green")) return "green";
-  if(n.includes("blue")) return "blue";
-  if(n.includes("purple")) return "purple";
-  if(n.includes("brown")) return "brown";
-  if(n.includes("yellow")) return "yellow";
-  return "white";
-}
-
-/* 渲染 */
-function render(){
-  const cat = getHash('cat');
-  const key = getHash('item');
-
-  const grid   = document.getElementById('grid');
-  const oops   = document.getElementById('oops');
-  const heroEl = document.getElementById('hero');
-  const thumbs = document.getElementById('thumbs');
-  const title  = document.getElementById('title');
-  const price  = document.getElementById('price');
-  const flavourSel = document.getElementById('flavour');
-  const packSel    = document.getElementById('pack');
-  const swatches   = document.getElementById('swatches');
-
-  const item = CATALOG?.[cat]?.items?.[key];
-  if(!item){
-    grid.style.display='none';
-    oops.style.display='block';
-    oops.textContent = 'Product not found. Please go back and choose again.';
-    return;
-  }
-
-  oops.style.display='none';
-  grid.style.display='grid';
-
-  title.textContent = item.title || 'Untitled';
-  price.textContent = item.price || '';
-
-  flavourSel.innerHTML = (item.flavours||[]).map(f=>`<option>${f}</option>`).join('');
-  packSel.innerHTML    = (item.packs||[]).map(p=>`<option>${p}</option>`).join('');
-
-  const colours = item.colours?.length ? item.colours : ['Random'];
-  swatches.innerHTML = colours.map((c,i)=>`<button type="button" class="swatch ${colorClass(c)}" data-color="${c}" aria-pressed="${i===0}"></button>`).join('');
-  let chosenColour = colours[0];
-  swatches.querySelectorAll('.swatch').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      swatches.querySelectorAll('.swatch').forEach(b=>b.setAttribute('aria-pressed','false'));
-      btn.setAttribute('aria-pressed','true');
-      chosenColour = btn.dataset.color;
-    });
-  });
-
-  // 過濾掉首頁大圖名稱
-  const blockHero = /(^|\/)(christmas\.jpg|halloween\.jpg)$/i;
-  const planned = (item.images||[]).filter(src=>!blockHero.test(src));
-
-  function loadOne(src){
-    return new Promise(res=>{
-      const im = new Image();
-      im.onload = ()=>res(src);
-      im.onerror= ()=>res(null);
-      im.src = src;
-    });
-  }
-  Promise.all(planned.map(loadOne)).then(all=>{
-    const imgs = all.filter(Boolean);
-    if(!imgs.length){
-      imgs.push('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900"><rect width="100%" height="100%" fill="%23f5f0e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23998" font-family="sans-serif" font-size="28">Image coming soon</text></svg>');
+/* ----------------- 資料：用 JS 物件，不用 JSON.parse ----------------- */
+const CATALOG = {
+  halloween:{ items:{
+    "pumpkin-charm":{ title:"Pumpkin Charm", price:"A$ 84.90",
+      images:["images/halloween-pumpkin-charm.jpg","images/halloween-pumpkin-charm-2.jpg","images/halloween-pumpkin-charm-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["Orange","Black","White"]
+    },
+    "pumpkin-men":{ title:"Pumpkin Men", price:"A$ 84.90",
+      images:["images/halloween-pumpkin-men.jpg","images/halloween-pumpkin-men-2.jpg","images/halloween-pumpkin-men-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK"],
+      colours:["Orange","Black","White"]
+    },
+    "cauldron-cake":{ title:"Cauldron Cake", price:"A$ 84.90",
+      images:["images/halloween-cauldron-cake.jpg","images/halloween-cauldron-cake-2.jpg","images/halloween-cauldron-cake-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["Orange","Black","White","Copper"]
+    },
+    "drink-me":{ title:"Drink Me Bottles", price:"A$ 49.00",
+      images:["images/halloween-drink-me.jpg","images/halloween-drink-me-2.jpg","images/halloween-drink-me-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK"],
+      colours:["White","Gold","Black"]
+    },
+    "ghostie-boo":{ title:"Ghostie Boo", price:"A$ 84.90",
+      images:["images/halloween-ghostie-boo.jpg","images/halloween-ghostie-boo-2.jpg","images/halloween-ghostie-boo-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK"],
+      colours:["White","Black","Orange"]
+    },
+    "witchy-skirt":{ title:"Witchy Skirt", price:"A$ 84.90",
+      images:["images/halloween-witchy-skirt.jpg","images/halloween-witchy-skirt-2.jpg","images/halloween-witchy-skirt-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK"],
+      colours:["Black","Purple","Orange","White"]
+    },
+    "witchy-brew":{ title:"Witchy Brew", price:"A$ 84.90",
+      images:["images/halloween-witchy-brew.jpg","images/halloween-witchy-brew-2.jpg","images/halloween-witchy-brew-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK"],
+      colours:["Green","Purple","Black","Orange"]
+    },
+    "witchy-hat":{ title:"Witchy Hat", price:"A$ 84.90",
+      images:["images/halloween-witchy-hat.jpg","images/halloween-witchy-hat-2.jpg","images/halloween-witchy-hat-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK"],
+      colours:["Black","Purple","Orange","White"]
+    },
+    "spooky-cat":{ title:"Spooky Cat", price:"A$ 84.90",
+      images:["images/halloween-spooky-cat.jpg","images/halloween-spooky-cat-2.jpg","images/halloween-spooky-cat-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK"],
+      colours:["Black","White","Gold"]
+    },
+    "boo-candy":{ title:"Boo Candy", price:"A$ 84.90",
+      images:["images/halloween-boo-candy.jpg","images/halloween-boo-candy-2.jpg","images/halloween-boo-candy-3.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK"],
+      colours:["Orange","Black","White"]
     }
-    let idx = 0;
-    const paint = ()=>{
-      heroEl.src = imgs[idx];
-      [...thumbs.querySelectorAll('img')].forEach((t,i)=>t.setAttribute('aria-current', i===idx));
-    };
-    thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join('');
-    thumbs.querySelectorAll('img').forEach((t,i)=>t.addEventListener('click',()=>{idx=i; paint();}));
-    document.getElementById('prev').onclick = ()=>{idx=(idx-1+imgs.length)%imgs.length; paint();};
-    document.getElementById('next').onclick = ()=>{idx=(idx+1)%imgs.length; paint();};
-    paint();
-  });
+  }},
 
-  document.getElementById('buy').onsubmit = (e)=>{
-    e.preventDefault();
-    alert(`Added:\n${item.title}\n${flavourSel.value} / ${packSel.value}\nColour: ${chosenColour}\n${item.price||''}`);
-  };
+  christmas:{ items:{
+    "snowflake":{ title:"Snowflake", price:"A$ 84.90",
+      images:["images/christmas-snowflake.jpg","images/christmas-snowflake-2.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["Blue","Purple","Blue & Purple","Random","More colours – leave a note"]
+    },
+    "happy-tree":{ title:"Happy Tree", price:"A$ 84.90",
+      images:["images/christmas-happy-tree.jpg","images/christmas-happy-tree-2.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["Blue gradient","Green gradient","Green","White","Red","Yellow-green gradient","Random","More colours – leave a note"]
+    },
+    "gingerbread":{ title:"Gingerbread Man", price:"A$ 84.90",
+      images:["images/christmas-gingerbread.jpg","images/christmas-gingerbread-2.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["Classic","Pastel","Random","More colours – leave a note"]
+    },
+    "candy-cane":{ title:"Candy Cane", price:"A$ 84.90",
+      images:["images/christmas-candy-cane.jpg","images/christmas-candy-cane-2.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["Red","Green","Red & Green","Red & White","White & Green","Random","More colours – leave a note"]
+    },
+    "surprise-tree":{ title:"Surprise Tree", price:"A$ 84.90",
+      images:["images/christmas-surprise-tree.jpg","images/christmas-surprise-tree-2.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["Assorted","Random","More colours – leave a note"]
+    },
+    "reindeer":{ title:"Reindeer", price:"A$ 84.90",
+      images:["images/christmas-reindeer.jpg","images/christmas-reindeer-2.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["White","Brown","Random","More colours – leave a note"]
+    },
+    "snowman":{ title:"Snowman", price:"A$ 84.90",
+      images:["images/christmas-snowman.jpg","images/christmas-snowman-2.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["Classic","Pastel","Random","More colours – leave a note"]
+    },
+    "santa-belt":{ title:"Santa Belt", price:"A$ 84.90",
+      images:["images/christmas-santa-belt.jpg","images/christmas-santa-belt-2.jpg"],
+      flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
+      packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
+      colours:["Red & Black","Classic","Random","More colours – leave a note"]
+    }
+  }}
+};
+
+/* ----------------- 顏色：漸層 / 雙色 / Random / 自訂 ----------------- */
+const PALETTE = {
+  blue:"#3b82f6", purple:"#8b5cf6", green:"#10b981", red:"#ef4444",
+  white:"#ffffff", black:"#111111", gold:"#f59e0b", brown:"#8b5e3c", yellow:"#fde047",
+  pink:"#f472b6", orange:"#fb923c", "yellow-green":"#a3e635"
+};
+const GRADIENTS = {
+  blue:["#93c5fd","#1d4ed8"], purple:["#c4b5fd","#6d28d9"],
+  green:["#86efac","#15803d"], red:["#fecaca","#b91c1c"],
+  yellow:["#fde68a","#b45309"], "yellow-green":["#fef08a","#65a30d"]
+};
+
+function token(t){ return t.trim().toLowerCase(); }
+function hexFor(name){
+  const n = token(name).replace('champagne','gold');
+  return PALETTE[n] || "#ddd";
+}
+function styleForColourLabel(label){
+  const raw = label.trim();
+  const l = raw.toLowerCase();
+
+  // 自訂：More colours
+  if(l.includes('more colours') || l.includes('more colors')){
+    return { css:'background:#fff;border:2px dashed #d4a373', inner:'<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;color:#8a6d3b">＋</span>' };
+  }
+  // 隨機：彩條
+  if(l.includes('random')){
+    return { css:'background:repeating-linear-gradient(45deg,#fcd34d 0 10px,#86efac 10px 20px,#93c5fd 20px 30px,#f9a8d4 30px 40px,#fda4af 40px 50px)' };
+  }
+  // 雙色：Blue & Purple
+  if(l.includes('&')){
+    const [a,b] = raw.split('&').map(s=>token(s));
+    return { css:`background:linear-gradient(90deg, ${hexFor(a)} 0 50%, ${hexFor(b)} 50% 100%)` };
+  }
+  // 漸層：Blue gradient / Yellow-green gradient
+  if(l.includes('gradient')){
+    const base = token(raw.replace('gradient','').replace(/-/g,' ').trim());
+    const key = base.replace(' ', '-'); // 支援 yellow green
+    const pair = GRADIENTS[key] || [hexFor(base),'#999'];
+    return { css:`background:linear-gradient(135deg, ${pair[0]}, ${pair[1]})` };
+  }
+  // 單色
+  return { css:`background:${hexFor(raw)}${raw.toLowerCase()==='white' ? ';border:1px solid #e5e1d0' : ''}` };
+}
+function buildSwatches(swatchesEl, labels){
+  const box = document.getElementById('customColorBox');
+  const input = document.getElementById('customColorInput');
+
+  const list = [...labels];
+  if(!list.some(s=>/random/i.test(s))) list.push('Random');
+  if(!list.some(s=>/more colours|more colors/i.test(s))) list.push('More colours – leave a note');
+
+  swatchesEl.innerHTML = list.map((c,i)=>{
+    const st = styleForColourLabel(c);
+    return `<button type="button" class="swatch" data-color="${c.replace(/"/g,'&quot;')}" aria-pressed="${i===0}" title="${c}" style="${st.css||''}">${st.inner||''}</button>`;
+  }).join('');
+
+  let chosen = list[0];
+  const buttons = swatchesEl.querySelectorAll('.swatch');
+
+  function applySelection(btn){
+    buttons.forEach(b=>b.setAttribute('aria-pressed','false'));
+    btn.setAttribute('aria-pressed','true');
+    chosen = btn.dataset.color;
+    if(/more colours|more colors/i.test(chosen)){ box.style.display='block'; input.focus(); }
+    else{ box.style.display='none'; }
+  }
+  buttons.forEach(btn=>btn.addEventListener('click',()=>applySelection(btn)));
+
+  return ()=>({ label: chosen, note: (/more colours|more colors/i.test(chosen) ? input.value.trim() : '') });
 }
 
-render();
-window.addEventListener('hashchange', render);
+/* ----------------- 工具 ----------------- */
+function getHash(name, def=""){ const m = location.hash.match(new RegExp(name+"=([^&]+)")); return m?decodeURIComponent(m[1]):def; }
+
+/* ----------------- 主流程 ----------------- */
+(function start(){
+  const oops = document.getElementById('oops');
+  const dbg  = document.getElementById('debug');
+
+  function showError(msg, err){
+    oops.style.display='block';
+    oops.textContent = msg + (err ? ("\n\n" + (err.stack || err)) : "");
+  }
+
+  try{
+    const cat = getHash('cat');   // e.g. halloween
+    const key = getHash('item');  // e.g. pumpkin-charm
+    dbg.textContent = `CAT=${cat} | ITEM=${key}`;
+
+    const item = CATALOG?.[cat]?.items?.[key];
+    if(!cat || !key || !item){
+      document.getElementById('grid').style.display='none';
+      showError('Product not found. Please go back and choose again.');
+      return;
+    }
+
+    const grid   = document.getElementById('grid');
+    const heroEl = document.getElementById('hero');
+    const thumbs = document.getElementById('thumbs');
+    const title  = document.getElementById('title');
+    const price  = document.getElementById('price');
+    const flavourSel = document.getElementById('flavour');
+    const packSel    = document.getElementById('pack');
+    const swatchesEl = document.getElementById('swatches');
+
+    grid.style.display='grid';
+    title.textContent = item.title || 'Untitled';
+    price.textContent = item.price || '';
+
+    flavourSel.innerHTML = (item.flavours||[]).map(f=>`<option>${f}</option>`).join('');
+    packSel.innerHTML    = (item.packs||[]).map(p=>`<option>${p}</option>`).join('');
+
+    // 顏色色票（含漸層/雙色/Random/自訂）
+    const colours = item.colours?.length ? item.colours : ['Random'];
+    const getColour = buildSwatches(swatchesEl, colours);
+
+    // 載入圖片（若有壞圖會略過並顯示佔位）
+    function loadOne(src){ return new Promise(res=>{ const im=new Image(); im.onload=()=>res(src); im.onerror=()=>res(null); im.src=src; }); }
+    Promise.all((item.images||[]).map(loadOne)).then(all=>{
+      const imgs = all.filter(Boolean);
+      if(!imgs.length){
+        imgs.push('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900"><rect width="100%" height="100%" fill="%23f5f0e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23998" font-family="sans-serif" font-size="28">Image coming soon</text></svg>');
+      }
+      let idx=0;
+      const paint=()=>{ heroEl.src=imgs[idx]; [...thumbs.querySelectorAll('img')].forEach((t,i)=>t.setAttribute('aria-current', i===idx)); };
+      thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join('');
+      thumbs.querySelectorAll('img').forEach((t,i)=>t.addEventListener('click',()=>{idx=i; paint();}));
+      document.getElementById('prev').onclick = ()=>{idx=(idx-1+imgs.length)%imgs.length; paint();};
+      document.getElementById('next').onclick = ()=>{idx=(idx+1)%imgs.length; paint();};
+      paint();
+    });
+
+    // 送出（示例）
+    document.getElementById('buy').onsubmit = (e)=>{
+      e.preventDefault();
+      const picked = getColour(); // {label, note}
+      alert(
+        `Added:\n${item.title}\n${flavourSel.value} / ${packSel.value}\n` +
+        `Colour: ${picked.label}${picked.note ? ' ('+picked.note+')' : ''}\n` +
+        `${item.price||''}`
+      );
+    };
+
+  }catch(err){
+    showError('Runtime error. Please screenshot this and send to me.', err);
+  }
+})();
 </script>
 </body>
 </html>
