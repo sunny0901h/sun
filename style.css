@@ -91,3 +91,82 @@ p.lead { font-size: 18px; color: var(--muted); }
 .contact a:hover { text-decoration: underline; }
 
 footer { background: #fff3e0; padding: 16px; text-align:center; font-size: 14px; }
+
+/* ==== Hero (Logo 左、文字右) ==== */
+.hero {
+  background: linear-gradient(180deg, #fff6d9 0%, #fdecc2 100%);
+  border-bottom: 1px solid #efe5c9;
+}
+
+.hero-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+
+.hero-wrap.side {
+  display: flex;
+  align-items: center;
+  gap: 44px;
+  text-align: left;            /* 改成左對齊 */
+}
+
+.hero .logo-col {
+  flex: 0 0 220px;             /* 固定 Logo 欄寬 */
+}
+
+.hero .brandmark {
+  width: 200px;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+.hero .text-col { flex: 1; }
+
+.hero .brandname {
+  margin: 0 0 8px;
+  font-size: 2.75rem;          /* 大標 */
+  line-height: 1.15;
+  font-weight: 900;
+  color: #1f1b14;
+}
+
+.hero .tagline {
+  margin: 0 0 14px;
+  font-size: 1.25rem;          /* Slogan */
+  font-weight: 700;
+  color: #6b5f4a;
+}
+
+.hero .lead {
+  margin: 0 0 18px;
+  color: #574f3e;
+}
+
+.hero .cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* 若你已經有 .btn 樣式，這段可省略 */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none;
+  border: 2px solid #4b3a2b;
+  color: #4b3a2b;
+  background: #fff;
+}
+.btn.primary { background: #fbc02d; border-color:#fbc02d; color:#2a2100; }
+
+/* 手機排版：上下疊 */
+@media (max-width: 860px) {
+  .hero-wrap.side { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .hero .logo-col { flex-basis: auto; }
+  .hero .brandname { font-size: 2.2rem; }
+  .hero .tagline   { font-size: 1.1rem; }
+}
