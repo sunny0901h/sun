@@ -26,22 +26,11 @@
 
   /* 不裁切，等比置中顯示 */
   .stage{
-    position:relative;
-    border:1px solid #f2ecd7;
-    border-radius:14px;
-    background:#f7f4ee;
-    text-align:center;
-    padding:10px;
-    min-height:300px;
-    overflow:hidden;
+    position:relative;border:1px solid #f2ecd7;border-radius:14px;background:#f7f4ee;
+    text-align:center;padding:10px;min-height:300px;overflow:hidden;
   }
   .stage img{
-    max-width:100%;
-    max-height:560px;
-    width:auto;
-    height:auto;
-    object-fit:contain;
-    display:inline-block;
+    max-width:100%;max-height:560px;width:auto;height:auto;object-fit:contain;display:inline-block;
   }
   .nav{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:0;border-radius:50%;width:40px;height:40px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.12)}
   .nav.prev{left:10px}.nav.next{right:10px}
@@ -145,13 +134,14 @@ const CATALOG = {
       images:["images/halloween-pumpkin-charm.jpg","images/halloween-pumpkin-charm-2.jpg","images/halloween-pumpkin-charm-3.jpg"],
       flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
       packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
-      colours:["Orange","Purple","Black","Random","More colours – leave a note"]
+      colours:["lightBlue","Blue","Purple","Black","Random","More colours – leave a note"]
     },
     "pumpkin-men":{ title:"Pumpkin Men", price:"A$ 84.90",
       images:["images/halloween-pumpkin-men.jpg","images/halloween-pumpkin-men-2.jpg","images/halloween-pumpkin-men-3.jpg"],
       flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
       packs:["10 PACK","15 PACK","30 PACK"],
-      colours:["lightBlue","Blue","Green","Purple","Random""More colours – leave a note"]
+      /* 這裡已修正：補上逗點 */
+      colours:["lightBlue","Blue","Green","Purple","Random","More colours – leave a note"]
     },
     "cauldron-cake":{ title:"Cauldron Cake", price:"A$ 84.90",
       images:["images/halloween-cauldron-cake.jpg","images/halloween-cauldron-cake-2.jpg","images/halloween-cauldron-cake-3.jpg"],
@@ -254,12 +244,19 @@ const CATALOG = {
     }
   }}
 };
+
+/* 舊連結別名：避免 item 拼法不同造成 404 */
+const ITEM_ALIASES = {
+  "pumpkinmen":"pumpkin-men",
+  "pumpkin_men":"pumpkin-men",
+  "pumpkin-men ":"pumpkin-men"
+};
 </script>
 
 <script>
-/* ========== 顏色工具：把文字轉成 class / style（不顯示英文標籤） ========== */
+/* ========== 顏色工具 ========== */
 function basicClass(n){
-  n=n.toLowerCase();
+  n=(n||"").toLowerCase();
   if(n.includes("pink")) return "pink";
   if(n.includes("orange")) return "orange";
   if(n.includes("black")) return "black";
@@ -267,16 +264,16 @@ function basicClass(n){
   if(n.includes("gold")) return "gold";
   if(n.includes("red")) return "red";
   if(n.includes("green")) return "green";
-  if(n.includes("blue")) return "blue";
+  if(n.includes("blue")) return "blue";     /* lightBlue 也會命中 */
   if(n.includes("purple")) return "purple";
   if(n.includes("brown")) return "brown";
   if(n.includes("yellow")) return "yellow";
-  if(n.includes("classic")) return "gold";   // 近似映射
-  if(n.includes("pastel"))  return "purple"; // 近似映射
+  if(n.includes("classic")) return "gold";
+  if(n.includes("pastel"))  return "purple";
   return "white";
 }
 function basicColor(n){
-  n=n.toLowerCase();
+  n=(n||"").toLowerCase();
   if(n.includes("blue")) return "#3b82f6";
   if(n.includes("purple")) return "#8b5cf6";
   if(n.includes("green")) return "#10b981";
@@ -287,19 +284,19 @@ function basicColor(n){
   if(n.includes("brown"))  return "#8b5e3c";
   return "#ccc";
 }
-function gradientPair(n){ // 清楚的雙端色（不混色）
-  switch(n){
-    case "blue gradient":          return {g1:"#60a5fa", g2:"#1e3a8a"}; // 淺→深藍
-    case "green gradient":         return {g1:"#86efac", g2:"#065f46"}; // 淺→墨綠
-    case "yellow-green gradient":  return {g1:"#fde047", g2:"#10b981"}; // 黃→綠
+function gradientPair(n){
+  switch((n||"").toLowerCase()){
+    case "blue gradient":          return {g1:"#60a5fa", g2:"#1e3a8a"};
+    case "green gradient":         return {g1:"#86efac", g2:"#065f46"};
+    case "yellow-green gradient":  return {g1:"#fde047", g2:"#10b981"};
     default: return {g1:"#bbb", g2:"#444"};
   }
 }
 function colourChip(label){
   const t=(label||"").toLowerCase().trim();
   if(t.startsWith("random")) return {cls:"swatch random", style:"", title:"", kind:"random"};
-  if(t.includes("more")) return {cls:"swatch more", style:"", title:"+", kind:"more"};
-  if(t.includes("&")){ // 50/50 split: e.g. "Blue & Purple"
+  if(t.includes("more"))   return {cls:"swatch more", style:"", title:"+", kind:"more"};
+  if(t.includes("&")){
     const [a,b]=t.split("&").map(s=>s.trim());
     return {cls:"swatch split", style:`--c1:${basicColor(a)};--c2:${basicColor(b)};`, title:"", kind:"split"};
   }
@@ -311,14 +308,30 @@ function colourChip(label){
 }
 
 /* ========== 渲染 ========== */
-function getHash(name){const m=location.hash.match(new RegExp(name+"=([^&]+)"));return m?decodeURIComponent(m[1]):"";}
+function getHash(name){
+  const m=location.hash.match(new RegExp(name+"=([^&]+)"));
+  return m?decodeURIComponent(m[1]):"";
+}
+function normalizeItemKey(raw){
+  const k=(raw||"").trim().toLowerCase();
+  return ITEM_ALIASES[k] || k;
+}
 
 function render(){
-  const cat=getHash("cat"), key=getHash("item");
+  const cat=getHash("cat");
+  const key=normalizeItemKey(getHash("item"));
   const item=CATALOG?.[cat]?.items?.[key];
-  const grid=document.getElementById("grid"), oops=document.getElementById("oops");
-  if(!item){ grid.style.display="none"; oops.style.display="block"; oops.textContent="Product not found. Please go back and choose again."; return; }
-  oops.style.display="none"; grid.style.display="grid";
+
+  const grid=document.getElementById("grid");
+  const oops=document.getElementById("oops");
+  if(!item){
+    grid.style.display="none";
+    oops.style.display="block";
+    oops.textContent="Product not found. Please go back and choose again.";
+    return;
+  }
+  oops.style.display="none";
+  grid.style.display="grid";
 
   // 文案
   document.getElementById("title").textContent=item.title || "Untitled";
@@ -338,8 +351,7 @@ function render(){
     return `<button type="button" class="${chip.cls}" style="${chip.style}" data-color="${c}"${more} aria-pressed="${i===0}">${chip.title||""}</button>`;
   }).join("");
   let chosen = colours[0];
-  custom.style.display = chosen.toLowerCase().includes("more") ? "block" : "none";
-
+  custom.style.display = (chosen||"").toLowerCase().includes("more") ? "block" : "none";
   sw.querySelectorAll("button").forEach(btn=>{
     btn.onclick=()=>{
       sw.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed","false"));
@@ -350,21 +362,32 @@ function render(){
     };
   });
 
-  // 圖片（維持原始比例）
+  // 圖片（等比顯示 + 載入失敗備援）
   const imgs = (item.images||[]).slice();
-  const hero=document.getElementById("hero"), thumbs=document.getElementById("thumbs");
-  let idx=0;
-  function show(){ hero.src=imgs[idx]; [...thumbs.querySelectorAll("img")].forEach((t,i)=>t.setAttribute("aria-current", i===idx)); }
-  thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join("");
-  thumbs.querySelectorAll("img").forEach((t,i)=>t.onclick=()=>{idx=i;show();});
-  document.getElementById("prev").onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;show();};
-  document.getElementById("next").onclick=()=>{idx=(idx+1)%imgs.length;show();};
-  show();
+  const hero=document.getElementById("hero");
+  const thumbs=document.getElementById("thumbs");
+  const FALLBACK = 'data:image/svg+xml;utf8,'+encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900"><rect width="100%" height="100%" fill="#f5f0e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#999" font-family="sans-serif" font-size="26">Image coming soon</text></svg>'
+  );
+
+  function ok(src){ return new Promise(res=>{ const im=new Image(); im.onload=()=>res(src); im.onerror=()=>res(null); im.src=src; }); }
+  Promise.all(imgs.map(ok)).then(list=>{
+    const good = list.filter(Boolean);
+    if(!good.length) good.push(FALLBACK);
+
+    let idx=0;
+    function show(){ hero.src=good[idx]; [...thumbs.querySelectorAll("img")].forEach((t,i)=>t.setAttribute("aria-current", i===idx)); }
+    thumbs.innerHTML = good.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join("");
+    thumbs.querySelectorAll("img").forEach((t,i)=>t.onclick=()=>{idx=i;show();});
+    document.getElementById("prev").onclick=()=>{idx=(idx-1+good.length+good.length)%good.length;show();};
+    document.getElementById("next").onclick=()=>{idx=(idx+1)%good.length;show();};
+    show();
+  });
 
   // 送出（示範）
   document.getElementById("buy").onsubmit=e=>{
     e.preventDefault();
-    const colourNote = custom.style.display==="block" ? (custom.value || "(no note)") : chosen;
+    const colourNote = (custom.style.display==="block") ? (custom.value || "(no note)") : chosen;
     alert(`Added:\n${item.title}\n${document.getElementById("flavour").value} / ${document.getElementById("pack").value}\nColour: ${colourNote}\n${item.price}`);
   };
 }
