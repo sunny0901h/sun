@@ -4,94 +4,74 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sunny Sugar Art</title>
+<meta name="description" content="Royal icing cookies handcrafted in Melbourne — seasonal collections, custom designs, decorated cakes and creative classes." />
 <style>
   :root{
     --ink:#1f1b14; --muted:#6b5f4a; --line:#efe5c9;
-    --pill:#4b3a2b; --pill-ink:#fff;
-    --brand:#0e3a5a;               /* 深藍標誌色（文字用） */
-    --accent:#fbc02d;              /* Hero 與 Browse 按鈕黃色 */
-    --card:#fff; --shadow:0 10px 28px rgba(0,0,0,.06);
+    --brand:#4b3a2b; --accent:#fbc02d;
+    --card:#fff; --shadow:0 8px 24px rgba(0,0,0,.06);
   }
   *{box-sizing:border-box}
-  body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
+  html,body{margin:0}
+  body{font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
   a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
 
-  /* ===== Masthead（只有一個 Logo：左邊） ===== */
-  .masthead{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #f0ead6}
-  .mastwrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:24px;padding:16px 20px}
-  .brand{display:flex;align-items:center;gap:12px}
-  .brand img{height:64px;width:auto}           /* 讓 Logo 比先前大一些 */
-  .nav{margin-left:auto;display:flex;gap:26px}
-  .nav a{font-weight:700;color:#3b2d1d}
-  .nav a:hover{opacity:.75}
+  /* ====== 顶部導覽（只有連結，避免重覆 Logo） ====== */
+  .topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+  .topwrap{max-width:1200px;margin:0 auto;padding:14px 22px;display:flex;gap:18px;align-items:center;justify-content:flex-end}
+  .nav a{margin-left:26px;font-weight:700;color:#3a2f22;opacity:.85}
+  .nav a:hover{opacity:1;text-decoration:underline}
 
-  /* ===== Hero：沿用你原本的柔和漸層 ===== */
-  .hero{background:linear-gradient(180deg,#fdebc8 0%, #fff4cc 40%, #fffaf0 100%);border-bottom:1px solid var(--line)}
-  .herowrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:28px;padding:48px 20px}
-  /* 注意：Hero 不再放第二顆 Logo，避免重複 */
+  /* ====== Hero：奶油暖色漸層 ====== */
+  .hero{background:linear-gradient(180deg,#fff6df 0%, #f8e5b6 100%);border-bottom:1px solid var(--line)}
+  .herowrap{max-width:1200px;margin:0 auto;padding:48px 22px;display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:center}
+  @media (max-width:820px){.herowrap{grid-template-columns:1fr;gap:18px}}
+  .hero-logo{width:180px;height:auto}
+  .hero h1{margin:0 0 6px;font-size:2.4rem;line-height:1.2}
+  .hero .slogan{margin:0 0 10px;font-weight:800}
+  .hero p.lead{margin:0 0 14px;color:#574f3e}
+  .btn{display:inline-block;background:#fff;border:2px solid var(--brand);color:var(--brand);padding:12px 18px;border-radius:999px;font-weight:900}
+  .btn.accent{background:var(--accent);border-color:var(--accent);color:#2a2100}
+  .btn + .btn{margin-left:10px}
 
-  .title{margin:0;font-size:44px;line-height:1.15;font-weight:900;color:#20160c}
-  .slogan{margin:6px 0 10px;font-size:20px;font-weight:900}   /* 比上一版大一點 */
-  .lead{margin:0 0 18px;color:#574f3e;max-width:62ch}
+  /* ====== 通用包裝 ====== */
+  .wrap{max-width:1200px;margin:0 auto;padding:28px 22px}
 
-  .cta{display:flex;gap:12px;flex-wrap:wrap}
-  .btn{display:inline-block;padding:12px 18px;border-radius:999px;font-weight:900;border:2px solid var(--pill);color:var(--pill);background:#fff}
-  .btn.primary{background:var(--pill);color:var(--pill-ink)}
-  .btn.yellow{background:var(--accent);border-color:var(--accent);color:#2a2100}
+  /* ====== Section 標題 ====== */
+  h2{margin:0 0 16px;font-size:1.6rem}
 
-  /* ===== 區塊通用 ===== */
-  .wrap{max-width:1200px;margin:0 auto;padding:28px 20px}
-  h2.section{margin:0 0 14px;font-size:28px}
+  /* ====== Shop / Gallery 卡片 ====== */
+  .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+  .card{background:var(--card);border:1px solid #f2ecd7;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .card .photo{aspect-ratio:1/1; background:#f7f4ee; position:relative}
+  .card .photo img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
+  /* 正方形不裁切（JS 會自動加 .nocrop） */
+  .card .photo img.nocrop{object-fit:contain; background:#f7f4ee}
+  .card .content{padding:16px}
+  .card .title{margin:0 0 6px;font-weight:900}
+  .card .desc{margin:0 0 10px;color:#594e3d}
+  .card .btn{background:var(--accent);border-color:var(--accent);color:#2a2100;padding:10px 14px;font-weight:800}
 
-  /* ===== 產品卡片（不裁切，但框統一） ===== */
-  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
-  .span-4{grid-column:span 4}
-  @media (max-width:1000px){.span-4{grid-column:span 6}}
-  @media (max-width:640px){.span-4{grid-column:span 12}}
+  /* ====== Classes 小卡 ====== */
+  .class-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:8px}
+  .class-card{border:1px solid #f2ecd7;border-radius:14px;padding:16px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.05)}
+  .class-card h3{margin:0 0 6px}
 
-  .card{background:var(--card);border:1px solid #f2ecd7;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
-  .media{position:relative;aspect-ratio:1/1;background:#faf6ec}
-  .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain} /* 關鍵：contain 不裁切 */
-  .content{padding:16px}
-  .content h3{margin:0 0 6px;font-size:1.05rem;font-weight:900}
-  .price{color:#5a4a37;font-weight:800}
-  .card .btn{align-self:flex-start;margin-top:10px}
-
-  /* ===== Classes 卡片（回復三張） ===== */
-  .classgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;margin-top:14px}
-  .classcard{grid-column:span 4;background:#fff;border:1px solid #f2ecd7;border-radius:16px;padding:16px;box-shadow:var(--shadow)}
-  @media (max-width:1000px){.classcard{grid-column:span 6}}
-  @media (max-width:640px){.classcard{grid-column:span 12}}
-  .classcard h4{margin:0 0 6px;font-size:1.05rem}
-  .classcard p{margin:0;color:#645944}
-
-  /* ===== Gallery：6 張、與產品卡同寬高規格 ===== */
-  .galgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;margin-top:6px}
-  .gal{grid-column:span 4;background:#fff;border:1px solid #f2ecd7;border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
-  .gal .media{aspect-ratio:1/1;background:#faf6ec}
-  .gal .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-
-  /* ===== Footer / Contact：白底 + 咖啡字，滿版延伸 ===== */
-  .contact{background:#fff;border-top:1px solid #eaddc3}
-  .contact .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-  .contact h3{margin:0 0 8px;font-size:22px}
-  .contact p{margin:0;color:#3b2d1d}
-  @media (max-width:800px){.contact .wrap{grid-template-columns:1fr}}
+  /* ====== Footer / Contact ====== */
+  .contact{background:#fff;border-top:1px solid #e9e1c7}
+  .contact .wrap{color:#4b3a2b}
+  .contact a{color:#4b3a2b;font-weight:800}
 </style>
 </head>
 <body>
 
-<!-- ===== Masthead（只有這裡有 Logo） ===== -->
-<header class="masthead">
-  <div class="mastwrap">
-    <div class="brand">
-      <a href="index.html" aria-label="Sunny Sugar Art">
-        <img src="images/logo-sunnysugarart.png" alt="Sunny Sugar Art logo">
-      </a>
-    </div>
+<!-- ====== Top navigation ====== -->
+<header class="topbar">
+  <div class="topwrap">
     <nav class="nav">
       <a href="#about">About</a>
-      <a href="#products">Shop</a>
+      <a href="#shop">Shop</a>
       <a href="#classes">Classes</a>
       <a href="#gallery">Gallery</a>
       <a href="#contact">Contact</a>
@@ -99,140 +79,160 @@
   </div>
 </header>
 
-<!-- ===== Hero（不再放第二顆 Logo） ===== -->
-<section class="hero">
+<!-- ====== HERO ====== -->
+<section class="hero" id="home">
   <div class="herowrap">
-    <div style="width:120px;height:120px;border-radius:20px;background:#fff;border:1px solid #f1e7cd;display:flex;align-items:center;justify-content:center">
-      <img src="images/logo-sunnysugarart.png" alt="Sunny Sugar Art emblem" style="width:88px;height:auto">
-    </div>
+    <!-- Logo 左側（唯一的 Logo） -->
+    <img class="hero-logo" src="images/logo-sunnysugarart.png" alt="Sunny Sugar Art logo">
+
     <div>
-      <h1 class="title">Sunny Sugar Art</h1>
-      <p class="slogan">Cookie in your heart</p>
+      <h1>Sunny Sugar Art</h1>
+      <p class="slogan" style="font-size:1.15rem">Cookie in your heart</p>
       <p class="lead">Royal icing cookies handcrafted in Melbourne — seasonal collections, custom designs, decorated cakes and creative classes.</p>
-      <div class="cta">
-        <a class="btn yellow" href="#products">Shop Cookies</a>
-        <a class="btn" href="#classes">View Classes</a>
+      <div class="ctas">
+        <a href="#shop" class="btn accent">Shop Cookies</a>
+        <a href="#classes" class="btn">View Classes</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== About ===== -->
-<section class="wrap" id="about">
-  <h2 class="section">About</h2>
+<!-- ====== About ====== -->
+<section id="about" class="wrap">
+  <h2>About</h2>
   <p>Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand‑pipe royal icing cookies and cakes for gifts, parties and events, and I teach creative cookie classes.</p>
 </section>
 
-<!-- ===== Shop Cookies（6 張，圖片不裁切，Browse=Hero 黃） ===== -->
-<section class="wrap" id="products">
-  <h2 class="section">Shop Cookies</h2>
-  <div class="grid">
-    <!-- Halloween -->
-    <article class="card span-4">
-      <div class="media"><img src="images/halloween.jpg" alt="Halloween Cookies"></div>
+<!-- ====== Shop Cookies ====== -->
+<section id="shop" class="wrap">
+  <h2>Shop Cookies</h2>
+
+  <div class="grid-cards">
+    <!-- 1 -->
+    <article class="card">
+      <div class="photo"><img data-src="images/halloween-ghosts.jpg" alt="Halloween Cookies"></div>
       <div class="content">
-        <h3>🎃 Halloween Cookies</h3>
-        <div class="price">Moody, stylish designs for October.</div>
-        <a class="btn yellow" href="category.html#cat=halloween">Browse</a>
+        <h3 class="title">🎃 Halloween Cookies</h3>
+        <p class="desc">Moody, stylish designs for October.</p>
+        <a class="btn" href="category.html#cat=halloween">Browse</a>
       </div>
     </article>
-    <!-- Christmas -->
-    <article class="card span-4">
-      <div class="media"><img src="images/christmas.jpg" alt="Christmas Gift Box"></div>
+
+    <!-- 2 -->
+    <article class="card">
+      <div class="photo"><img data-src="images/christmas.jpg" alt="Christmas Gift Box"></div>
       <div class="content">
-        <h3>🎄 Christmas Gift Box</h3>
-        <div class="price">Elegant gifting options in luxe packaging.</div>
-        <a class="btn yellow" href="category.html#cat=christmas">Browse</a>
+        <h3 class="title">🎄 Christmas Gift Box</h3>
+        <p class="desc">Elegant gifting options in luxe packaging.</p>
+        <a class="btn" href="category.html#cat=christmas">Browse</a>
       </div>
     </article>
-    <!-- Custom -->
-    <article class="card span-4">
-      <div class="media"><img src="images/custom.jpg" alt="Custom Cookies"></div>
+
+    <!-- 3 -->
+    <article class="card">
+      <div class="photo"><img data-src="images/custom.jpg" alt="Custom Cookies"></div>
       <div class="content">
-        <h3>✨ Custom Cookies</h3>
-        <div class="price">Personalised designs for weddings & branding.</div>
-        <a class="btn yellow" href="category.html#cat=custom">Browse</a>
+        <h3 class="title">✨ Custom Cookies</h3>
+        <p class="desc">Personalised designs for weddings & branding.</p>
+        <a class="btn" href="mailto:sunnysugarart@gmail.com?subject=Custom%20cookies%20enquiry">Browse</a>
       </div>
     </article>
-    <!-- Baby Shower -->
-    <article class="card span-4">
-      <div class="media"><img src="images/baby.jpg" alt="Baby Shower Cookies"></div>
+
+    <!-- 4 -->
+    <article class="card">
+      <div class="photo"><img data-src="images/baby.jpg" alt="Baby Shower Cookies"></div>
       <div class="content">
-        <h3>🍼 Baby Shower Cookies</h3>
-        <div class="price">Adorable favours to welcome little ones.</div>
-        <a class="btn yellow" href="category.html#cat=baby">Browse</a>
+        <h3 class="title">👶 Baby Shower Cookies</h3>
+        <p class="desc">Adorable favours to welcome little ones.</p>
+        <a class="btn" href="mailto:sunnysugarart@gmail.com?subject=Baby%20shower%20cookies">Browse</a>
       </div>
     </article>
-    <!-- Meringue -->
-    <article class="card span-4">
-      <div class="media"><img src="images/meringue.jpg" alt="Custom Meringue Kisses"></div>
+
+    <!-- 5 -->
+    <article class="card">
+      <div class="photo"><img data-src="images/meringue.jpg" alt="Custom Meringue Kisses"></div>
       <div class="content">
-        <h3>🍭 Custom Meringue Kisses</h3>
-        <div class="price">Light, airy and colour‑matched to your event.</div>
-        <a class="btn yellow" href="category.html#cat=meringue">Browse</a>
+        <h3 class="title">🍭 Custom Meringue Kisses</h3>
+        <p class="desc">Light, airy and colour‑matched to your event.</p>
+        <a class="btn" href="mailto:sunnysugarart@gmail.com?subject=Meringue%20kisses">Browse</a>
       </div>
     </article>
-    <!-- Cakes -->
-    <article class="card span-4">
-      <div class="media"><img src="images/cake.jpg" alt="Decorated Cakes"></div>
+
+    <!-- 6 -->
+    <article class="card">
+      <div class="photo"><img data-src="images/cake.jpg" alt="Decorated Cakes"></div>
       <div class="content">
-        <h3>🍰 Decorated Cakes</h3>
-        <div class="price">Hand‑decorated cakes with royal icing details.</div>
-        <a class="btn yellow" href="category.html#cat=cake">Browse</a>
+        <h3 class="title">🍰 Decorated Cakes</h3>
+        <p class="desc">Hand‑decorated cakes with artistic royal icing details.</p>
+        <a class="btn" href="mailto:sunnysugarart@gmail.com?subject=Cake%20enquiry">Browse</a>
       </div>
     </article>
   </div>
 </section>
 
-<!-- ===== Classes（回復三張） ===== -->
-<section class="wrap" id="classes">
-  <h2 class="section">Classes</h2>
-  <div class="classgrid">
-    <div class="classcard">
-      <h4>Beginner Class</h4>
+<!-- ====== Classes ====== -->
+<section id="classes" class="wrap">
+  <h2>Classes</h2>
+  <p>Beginner to advanced cookie classes — piping basics, colour theory, lettering, and seasonal themes. Enquire for current timetable.</p>
+
+  <div class="class-cards">
+    <div class="class-card">
+      <h3>Beginner Class</h3>
       <p>Piping basics, flooding, neat outlines and simple lettering.</p>
     </div>
-    <div class="classcard">
-      <h4>Family Class</h4>
+    <div class="class-card">
+      <h3>Family Class</h3>
       <p>Kid‑friendly designs — learn and decorate together.</p>
     </div>
-    <div class="classcard">
-      <h4>Master Class</h4>
+    <div class="class-card">
+      <h3>Master Class</h3>
       <p>Advanced textures, fine details, and colour theory.</p>
     </div>
   </div>
-  <div class="cta" style="margin-top:14px">
-    <a class="btn" href="mailto:sunnysugarart@gmail.com">Ask about classes</a>
+
+  <a href="mailto:sunnysugarart@gmail.com?subject=Classes%20enquiry" class="btn" style="margin-top:14px">Ask about classes</a>
+</section>
+
+<!-- ====== Gallery（六張，與 Shop 卡片一致） ====== -->
+<section id="gallery" class="wrap">
+  <h2>Gallery</h2>
+  <div class="grid-cards">
+    <article class="card"><div class="photo"><img data-src="images/gallery-1.jpg" alt=""></div></article>
+    <article class="card"><div class="photo"><img data-src="images/gallery-2.jpg" alt=""></div></article>
+    <article class="card"><div class="photo"><img data-src="images/gallery-3.jpg" alt=""></div></article>
+    <article class="card"><div class="photo"><img data-src="images/gallery-4.jpg" alt=""></div></article>
+    <article class="card"><div class="photo"><img data-src="images/gallery-5.jpg" alt=""></div></article>
+    <article class="card"><div class="photo"><img data-src="images/gallery-6.jpg" alt=""></div></article>
   </div>
 </section>
 
-<!-- ===== Gallery（6 張、規格統一） ===== -->
-<section class="wrap" id="gallery">
-  <h2 class="section">Gallery</h2>
-  <div class="galgrid">
-    <figure class="gal span-4"><div class="media"><img src="images/art1.jpg" alt="Gallery 1"></div></figure>
-    <figure class="gal span-4"><div class="media"><img src="images/art2.jpg" alt="Gallery 2"></div></figure>
-    <figure class="gal span-4"><div class="media"><img src="images/art3.jpg" alt="Gallery 3"></div></figure>
-    <figure class="gal span-4"><div class="media"><img src="images/art4.jpg" alt="Gallery 4"></div></figure>
-    <figure class="gal span-4"><div class="media"><img src="images/art5.jpg" alt="Gallery 5"></div></figure>
-    <figure class="gal span-4"><div class="media"><img src="images/art6.jpg" alt="Gallery 6"></div></figure>
-  </div>
-</section>
-
-<!-- ===== Contact（白底、咖啡字，滿版延伸） ===== -->
-<footer class="contact" id="contact">
+<!-- ====== Footer / Contact（白底、淺灰邊框、咖啡色字） ====== -->
+<footer id="contact" class="contact">
   <div class="wrap">
-    <div>
-      <h3>Contact</h3>
-      <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
-      <p>Pickup in Melbourne CBD by arrangement. Prices in AUD.</p>
-    </div>
-    <div>
-      <h3>Follow</h3>
-      <p>Instagram / Facebook: @sunnysugarart</p>
-    </div>
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
+    <p>Instagram: <a href="https://www.instagram.com/" target="_blank" rel="noopener">@sunnysugarart</a></p>
+    <p style="color:#7a6b56">© Sunny Sugar Art · Hand‑piped in Melbourne</p>
   </div>
 </footer>
 
+<!-- ====== Square 不裁切：載入後自動判斷 ====== -->
+<script>
+(function noCropSquares(){
+  const imgs = document.querySelectorAll('.card .photo img[data-src]');
+  imgs.forEach(img=>{
+    const src = img.getAttribute('data-src');
+    const probe = new Image();
+    probe.onload = () => {
+      img.src = src;
+      if (probe.naturalWidth === probe.naturalHeight) {
+        img.classList.add('nocrop');
+      }
+    };
+    probe.onerror = () => { img.alt = 'Image not found'; };
+    probe.src = src;
+  });
+})();
+</script>
 </body>
 </html>
