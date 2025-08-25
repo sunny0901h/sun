@@ -9,8 +9,8 @@
   *{box-sizing:border-box}
   body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
   a{color:inherit;text-decoration:none}
-  header{padding:18px 20px;border-bottom:1px solid var(--line)}
-  header a{font-weight:900}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  header a{font-weight:900;text-decoration:none}
 
   .wrap{max-width:1200px;margin:0 auto;padding:24px}
   .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
@@ -18,16 +18,15 @@
   h1{margin:0 0 6px}
   .price{font-weight:900;margin:6px 0 18px;font-size:1.2rem}
 
-  /* 圖片區 */
+  /* 圖片區（左：直立縮圖，右：主視覺；不裁切） */
   .gallery{display:grid;grid-template-columns:88px 1fr;gap:12px}
   .thumbs{display:flex;flex-direction:column;gap:8px;max-height:560px;overflow:auto;padding-right:2px}
   .thumbs img{width:88px;height:88px;object-fit:cover;border-radius:10px;border:2px solid transparent;cursor:pointer;display:block;background:#f7f4ee}
   .thumbs img[aria-current="true"]{border-color:#111}
 
-  /* 不裁切，等比置中顯示 */
   .stage{
     position:relative;border:1px solid #f2ecd7;border-radius:14px;background:#f7f4ee;
-    text-align:center;padding:10px;min-height:300px;overflow:hidden;
+    min-height:300px;padding:10px;overflow:hidden;text-align:center;
   }
   .stage img{
     max-width:100%;max-height:560px;width:auto;height:auto;object-fit:contain;display:inline-block;
@@ -44,7 +43,7 @@
   .swatch{width:34px;height:34px;border-radius:10px;border:2px solid transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
   .swatch[aria-pressed="true"]{outline:2px solid #111;outline-offset:2px}
 
-  /* 單色 */
+  /* 單色（含 Light Blue / Dark Blue） */
   .swatch.white{background:#fff;border-color:#e5e1d0}
   .swatch.black{background:#111}
   .swatch.orange{background:#fb923c}
@@ -52,6 +51,8 @@
   .swatch.red{background:#ef4444}
   .swatch.green{background:#10b981}
   .swatch.blue{background:#3b82f6}
+  .swatch.lightblue{background:#93c5fd}
+  .swatch.darkblue{background:#1e3a8a}
   .swatch.purple{background:#8b5cf6}
   .swatch.brown{background:#8b5e3c}
   .swatch.yellow{background:#fde047}
@@ -65,7 +66,7 @@
   /* + 按鈕（More colours） */
   .swatch.more{background:#fff;border:2px dashed #aaa;font-weight:900;font-size:1.2rem;color:#888}
 
-  /* 環形漸層（兩端色清楚，不是過渡混色） */
+  /* 環形漸層（兩端色清楚） */
   .swatch.ring{
     position:relative;width:34px;height:34px;border-radius:10px;
     background:conic-gradient(var(--g1,#60a5fa), var(--g2,#1e3a8a));
@@ -83,7 +84,8 @@
 </head>
 <body>
 <header>
-  <a href="javascript:history.back()">← Back</a> | <a href="index.html">Home</a>
+  <a href="javascript:history.back()">← Back</a>
+  <a href="index.html">Home</a>
 </header>
 
 <div class="wrap">
@@ -127,21 +129,20 @@
 </div>
 
 <script>
-/* ========== 你的完整商品資料（Halloween + Christmas） ========== */
+/* ========== 商品資料（Halloween + Christmas） ========== */
 const CATALOG = {
   halloween:{ items:{
     "pumpkin-charm":{ title:"Pumpkin Charm", price:"A$ 84.90",
       images:["images/halloween-pumpkin-charm.jpg","images/halloween-pumpkin-charm-2.jpg","images/halloween-pumpkin-charm-3.jpg"],
       flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
       packs:["10 PACK","15 PACK","30 PACK","50 PACK"],
-      colours:["lightBlue","Blue","Purple","Black","Random","More colours – leave a note"]
+      colours:["Orange","Purple","Black","Random","More colours – leave a note"]
     },
     "pumpkin-men":{ title:"Pumpkin Men", price:"A$ 84.90",
       images:["images/halloween-pumpkin-men.jpg","images/halloween-pumpkin-men-2.jpg","images/halloween-pumpkin-men-3.jpg"],
       flavours:["Mixture of Vanilla & Chocolate","Signature Chocolate","Vanilla Shortbread"],
       packs:["10 PACK","15 PACK","30 PACK"],
-      /* 這裡已修正：補上逗點 */
-      colours:["lightBlue","Blue","Green","Purple","Random","More colours – leave a note"]
+      colours:["Light Blue","Dark Blue","Green","Purple","Random","More colours – leave a note"]
     },
     "cauldron-cake":{ title:"Cauldron Cake", price:"A$ 84.90",
       images:["images/halloween-cauldron-cake.jpg","images/halloween-cauldron-cake-2.jpg","images/halloween-cauldron-cake-3.jpg"],
@@ -245,18 +246,11 @@ const CATALOG = {
   }}
 };
 
-/* 舊連結別名：避免 item 拼法不同造成 404 */
-const ITEM_ALIASES = {
-  "pumpkinmen":"pumpkin-men",
-  "pumpkin_men":"pumpkin-men",
-  "pumpkin-men ":"pumpkin-men"
-};
-</script>
-
-<script>
-/* ========== 顏色工具 ========== */
+/* ========== 顏色工具：把文字轉成 class / style（不顯示英文標籤） ========== */
 function basicClass(n){
-  n=(n||"").toLowerCase();
+  n = (n||"").toLowerCase();
+  if(n.includes("light blue")) return "lightblue";
+  if(n.includes("dark blue"))  return "darkblue";
   if(n.includes("pink")) return "pink";
   if(n.includes("orange")) return "orange";
   if(n.includes("black")) return "black";
@@ -264,29 +258,32 @@ function basicClass(n){
   if(n.includes("gold")) return "gold";
   if(n.includes("red")) return "red";
   if(n.includes("green")) return "green";
-  if(n.includes("blue")) return "blue";     /* lightBlue 也會命中 */
+  if(n.includes("blue")) return "blue";
   if(n.includes("purple")) return "purple";
   if(n.includes("brown")) return "brown";
   if(n.includes("yellow")) return "yellow";
-  if(n.includes("classic")) return "gold";
-  if(n.includes("pastel"))  return "purple";
+  if(n.includes("classic")) return "gold";   // 近似映射
+  if(n.includes("pastel"))  return "purple"; // 近似映射
   return "white";
 }
 function basicColor(n){
-  n=(n||"").toLowerCase();
-  if(n.includes("blue")) return "#3b82f6";
+  n = (n||"").toLowerCase();
+  if(n.includes("light blue")) return "#93c5fd";
+  if(n.includes("dark blue"))  return "#1e3a8a";
+  if(n.includes("blue"))   return "#3b82f6";
   if(n.includes("purple")) return "#8b5cf6";
-  if(n.includes("green")) return "#10b981";
-  if(n.includes("red")) return "#ef4444";
-  if(n.includes("white")) return "#ffffff";
+  if(n.includes("green"))  return "#10b981";
+  if(n.includes("red"))    return "#ef4444";
+  if(n.includes("white"))  return "#ffffff";
   if(n.includes("orange")) return "#fb923c";
   if(n.includes("yellow")) return "#fde047";
   if(n.includes("brown"))  return "#8b5e3c";
   return "#ccc";
 }
 function gradientPair(n){
-  switch((n||"").toLowerCase()){
-    case "blue gradient":          return {g1:"#60a5fa", g2:"#1e3a8a"};
+  n = (n||"").toLowerCase();
+  switch(n){
+    case "blue gradient":          return {g1:"#bae6fd", g2:"#1e40af"}; // 強對比藍漸層
     case "green gradient":         return {g1:"#86efac", g2:"#065f46"};
     case "yellow-green gradient":  return {g1:"#fde047", g2:"#10b981"};
     default: return {g1:"#bbb", g2:"#444"};
@@ -295,8 +292,8 @@ function gradientPair(n){
 function colourChip(label){
   const t=(label||"").toLowerCase().trim();
   if(t.startsWith("random")) return {cls:"swatch random", style:"", title:"", kind:"random"};
-  if(t.includes("more"))   return {cls:"swatch more", style:"", title:"+", kind:"more"};
-  if(t.includes("&")){
+  if(t.includes("more")) return {cls:"swatch more", style:"", title:"+", kind:"more"};
+  if(t.includes("&")){ // 50/50 split: e.g. "Blue & Purple"
     const [a,b]=t.split("&").map(s=>s.trim());
     return {cls:"swatch split", style:`--c1:${basicColor(a)};--c2:${basicColor(b)};`, title:"", kind:"split"};
   }
@@ -308,30 +305,14 @@ function colourChip(label){
 }
 
 /* ========== 渲染 ========== */
-function getHash(name){
-  const m=location.hash.match(new RegExp(name+"=([^&]+)"));
-  return m?decodeURIComponent(m[1]):"";
-}
-function normalizeItemKey(raw){
-  const k=(raw||"").trim().toLowerCase();
-  return ITEM_ALIASES[k] || k;
-}
+function getHash(name){const m=location.hash.match(new RegExp(name+"=([^&]+)"));return m?decodeURIComponent(m[1]):"";}
 
 function render(){
-  const cat=getHash("cat");
-  const key=normalizeItemKey(getHash("item"));
+  const cat=getHash("cat"), key=getHash("item");
   const item=CATALOG?.[cat]?.items?.[key];
-
-  const grid=document.getElementById("grid");
-  const oops=document.getElementById("oops");
-  if(!item){
-    grid.style.display="none";
-    oops.style.display="block";
-    oops.textContent="Product not found. Please go back and choose again.";
-    return;
-  }
-  oops.style.display="none";
-  grid.style.display="grid";
+  const grid=document.getElementById("grid"), oops=document.getElementById("oops");
+  if(!item){ grid.style.display="none"; oops.style.display="block"; oops.textContent="Product not found. Please go back and choose again."; return; }
+  oops.style.display="none"; grid.style.display="grid";
 
   // 文案
   document.getElementById("title").textContent=item.title || "Untitled";
@@ -351,7 +332,8 @@ function render(){
     return `<button type="button" class="${chip.cls}" style="${chip.style}" data-color="${c}"${more} aria-pressed="${i===0}">${chip.title||""}</button>`;
   }).join("");
   let chosen = colours[0];
-  custom.style.display = (chosen||"").toLowerCase().includes("more") ? "block" : "none";
+  custom.style.display = chosen.toLowerCase().includes("more") ? "block" : "none";
+
   sw.querySelectorAll("button").forEach(btn=>{
     btn.onclick=()=>{
       sw.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed","false"));
@@ -362,32 +344,21 @@ function render(){
     };
   });
 
-  // 圖片（等比顯示 + 載入失敗備援）
+  // 圖片（維持原比例）
   const imgs = (item.images||[]).slice();
-  const hero=document.getElementById("hero");
-  const thumbs=document.getElementById("thumbs");
-  const FALLBACK = 'data:image/svg+xml;utf8,'+encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900"><rect width="100%" height="100%" fill="#f5f0e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#999" font-family="sans-serif" font-size="26">Image coming soon</text></svg>'
-  );
-
-  function ok(src){ return new Promise(res=>{ const im=new Image(); im.onload=()=>res(src); im.onerror=()=>res(null); im.src=src; }); }
-  Promise.all(imgs.map(ok)).then(list=>{
-    const good = list.filter(Boolean);
-    if(!good.length) good.push(FALLBACK);
-
-    let idx=0;
-    function show(){ hero.src=good[idx]; [...thumbs.querySelectorAll("img")].forEach((t,i)=>t.setAttribute("aria-current", i===idx)); }
-    thumbs.innerHTML = good.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join("");
-    thumbs.querySelectorAll("img").forEach((t,i)=>t.onclick=()=>{idx=i;show();});
-    document.getElementById("prev").onclick=()=>{idx=(idx-1+good.length+good.length)%good.length;show();};
-    document.getElementById("next").onclick=()=>{idx=(idx+1)%good.length;show();};
-    show();
-  });
+  const hero=document.getElementById("hero"), thumbs=document.getElementById("thumbs");
+  let idx=0;
+  function show(){ hero.src=imgs[idx]; [...thumbs.querySelectorAll("img")].forEach((t,i)=>t.setAttribute("aria-current", i===idx)); }
+  thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join("");
+  thumbs.querySelectorAll("img").forEach((t,i)=>t.onclick=()=>{idx=i;show();});
+  document.getElementById("prev").onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;show();};
+  document.getElementById("next").onclick=()=>{idx=(idx+1)%imgs.length;show();};
+  show();
 
   // 送出（示範）
   document.getElementById("buy").onsubmit=e=>{
     e.preventDefault();
-    const colourNote = (custom.style.display==="block") ? (custom.value || "(no note)") : chosen;
+    const colourNote = custom.style.display==="block" ? (custom.value || "(no note)") : chosen;
     alert(`Added:\n${item.title}\n${document.getElementById("flavour").value} / ${document.getElementById("pack").value}\nColour: ${colourNote}\n${item.price}`);
   };
 }
