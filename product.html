@@ -11,6 +11,7 @@
   a{color:inherit;text-decoration:none}
   header{padding:18px 20px;border-bottom:1px solid var(--line)}
   header a{font-weight:900}
+
   .wrap{max-width:1200px;margin:0 auto;padding:24px}
   .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
   @media (max-width:980px){.grid{grid-template-columns:1fr}}
@@ -22,8 +23,26 @@
   .thumbs{display:flex;flex-direction:column;gap:8px;max-height:560px;overflow:auto;padding-right:2px}
   .thumbs img{width:88px;height:88px;object-fit:cover;border-radius:10px;border:2px solid transparent;cursor:pointer;display:block;background:#f7f4ee}
   .thumbs img[aria-current="true"]{border-color:#111}
-  .stage{position:relative;border:1px solid #f2ecd7;border-radius:14px;overflow:hidden;background:#f7f4ee;height:560px}
-  .stage img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* 不裁切，等比置中顯示 */
+  .stage{
+    position:relative;
+    border:1px solid #f2ecd7;
+    border-radius:14px;
+    background:#f7f4ee;
+    text-align:center;
+    padding:10px;
+    min-height:300px;
+    overflow:hidden;
+  }
+  .stage img{
+    max-width:100%;
+    max-height:560px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    display:inline-block;
+  }
   .nav{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:0;border-radius:50%;width:40px;height:40px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.12)}
   .nav.prev{left:10px}.nav.next{right:10px}
 
@@ -57,7 +76,7 @@
   /* + 按鈕（More colours） */
   .swatch.more{background:#fff;border:2px dashed #aaa;font-weight:900;font-size:1.2rem;color:#888}
 
-  /* 圓環漸層（Gradient） */
+  /* 環形漸層（兩端色清楚，不是過渡混色） */
   .swatch.ring{
     position:relative;width:34px;height:34px;border-radius:10px;
     background:conic-gradient(var(--g1,#60a5fa), var(--g2,#1e3a8a));
@@ -331,7 +350,7 @@ function render(){
     };
   });
 
-  // 圖片
+  // 圖片（維持原始比例）
   const imgs = (item.images||[]).slice();
   const hero=document.getElementById("hero"), thumbs=document.getElementById("thumbs");
   let idx=0;
