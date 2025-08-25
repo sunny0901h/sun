@@ -1,144 +1,127 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sunny Sugar Art | Royal Icing Cookies in Melbourne</title>
-  <meta name="description" content="Royal icing cookies handcrafted in Melbourne, Australia — Halloween, Christmas, custom cookies, baby shower cookies, meringue kisses, decorated cakes, and classes." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <style>
-    body{margin:0;font:16px/1.7 'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#1f1b14;background:#fff}
-    h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;margin:0 0 1rem}
-    a{text-decoration:none;color:inherit}
-    .container{max-width:1200px;margin:0 auto;padding:40px 20px}
-    nav{background:#fdf5da;border-bottom:1px solid #efe5c9}
-    nav ul{margin:0;padding:0;display:flex;list-style:none;justify-content:center;gap:24px}
-    nav a{display:block;padding:16px 0;font-weight:700}
-    nav a:hover{color:#b85c00}
+    body {margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#1f1b14;background:#fff;}
+
     /* Hero */
-    .hero{background:linear-gradient(180deg,#fff6d9 0%,#fdecc2 100%);border-bottom:1px solid #efe5c9}
-    .hero-wrap{max-width:1100px;margin:0 auto;padding:56px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
-    .hero .brandmark{flex:0 0 160px}
-    .hero .brandmark img{width:100%;height:auto;object-fit:contain;display:block}
-    .hero .text-col{flex:1;min-width:260px}
-    .hero .brandname{margin:0 0 8px;font-size:2.75rem;line-height:1.15;font-weight:900;color:#1f1b14}
-    .hero .tagline{margin:0 0 14px;font-size:1.25rem;font-weight:700;color:#6b5f4a}
-    .hero .lead{margin:0 0 18px;color:#574f3e}
-    .cta{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{display:inline-block;padding:10px 16px;border-radius:999px;font-weight:800;text-decoration:none;border:2px solid #4b3a2b;color:#4b3a2b;background:#fff}
-    .btn.primary{background:#fbc02d;border-color:#fbc02d;color:#2a2100}
-    /* Grid for products/classes/gallery */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px}
-    .card{background:#fff;border:1px solid #f2ecd7;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.06);display:flex;flex-direction:column}
-    .card img{width:100%;height:220px;object-fit:cover}
-    .card .content{padding:16px;flex:1;display:flex;flex-direction:column}
-    .card h3{margin:0 0 6px;font-size:1.1rem;font-weight:700}
-    .card p{flex:1;margin:0 0 12px;color:#555;font-size:.95rem}
-    .card .btn{margin-top:auto;align-self:flex-start}
-    /* About + Contact section bg */
-    #about, #contact{background:#fff9e8}
-    #about p.lead, #contact p{max-width:900px}
-    footer{padding:20px;text-align:center;background:#fdf5da;font-size:.9rem;color:#6b5f4a;margin-top:40px}
-    @media(max-width:860px){
-      .hero .brandname{font-size:2rem}
-      .hero .tagline{font-size:1.1rem}
-    }
+    .hero{padding:40px 20px;background:linear-gradient(135deg,#fff8e1,#fff);}
+    .hero-wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:32px;flex-wrap:wrap;}
+    .hero .brandmark{flex:0 0 220px;} /* 放大 logo */
+    .hero .brandmark img{width:100%;height:auto;object-fit:contain;display:block;}
+    .hero .text-col{flex:1;min-width:260px;}
+    .hero .brandname{font-size:2.5rem;font-weight:800;margin:0;}
+    .hero .tagline{font-size:1.2rem;color:#6b5f4a;margin:.2rem 0 1rem;}
+    .hero .lead{font-size:1rem;color:#444;margin:0 0 1.2rem;}
+    .cta a{display:inline-block;margin-right:12px;padding:12px 18px;border-radius:999px;font-weight:700;text-decoration:none;}
+    .cta .btn.primary{background:#fbc02d;color:#2a2100;}
+    .cta .btn{background:#f3f3f3;color:#111;}
+
+    /* Section */
+    section{padding:60px 20px;max-width:1200px;margin:0 auto;}
+    h2{font-size:2rem;font-weight:800;margin:0 0 1rem;}
+
+    /* Shop / Classes cards */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;}
+    .card{background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.05);display:flex;flex-direction:column;}
+    .card img{width:100%;height:300px;object-fit:cover;} /* 恢復原本較直立比例 */
+    .card .content{padding:1rem;flex:1;display:flex;flex-direction:column;}
+    .card h3{margin:0 0 .5rem;font-size:1.2rem;font-weight:700;}
+    .card p{flex:1;font-size:.95rem;color:#555;}
+    .card .btn{align-self:flex-start;margin-top:.8rem;background:#d4a373;color:#fff;padding:.5rem 1rem;border-radius:6px;text-decoration:none;font-size:.9rem;}
+
+    /* Gallery */
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;}
+    .gallery-item{background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.05);}
+    .gallery-item img{width:100%;height:240px;object-fit:cover;display:block;}
+    .gallery-info{padding:1rem;}
+    .gallery-info h3{margin:0 0 .5rem;font-size:1.1rem;font-weight:700;}
+    .gallery-info p{font-size:.9rem;color:#555;}
+    .gallery-info .btn{display:inline-block;margin-top:.5rem;background:#fbc02d;color:#2a2100;padding:.4rem .9rem;border-radius:6px;text-decoration:none;font-weight:600;}
+
+    /* Contact */
+    .contact{background:#fff8e1;}
+    .contact p{margin:.5rem 0;}
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <header class="hero" role="banner">
-    <div class="hero-wrap">
-      <!-- Logo 左側 -->
-      <div class="brandmark">
-        <img src="images/logo-sunnysugarart.png" alt="Sunny Sugar Art logo">
-      </div>
-      <!-- 文案右側 -->
-      <div class="text-col">
-        <h1 class="brandname">Sunny Sugar Art</h1>
-        <p class="tagline">Cookie in your heart</p>
-        <p class="lead">
-          Royal icing cookies handcrafted in Melbourne — seasonal collections,
-          custom designs, decorated cakes and creative classes.
-        </p>
-        <div class="cta">
-          <a class="btn primary" href="#products">Shop Cookies</a>
-          <a class="btn" href="#classes">View Classes</a>
-        </div>
+<!-- HERO -->
+<header class="hero" role="banner">
+  <div class="hero-wrap">
+    <div class="brandmark">
+      <img src="images/logo-sunnysugarart.png" alt="Sunny Sugar Art logo" />
+    </div>
+    <div class="text-col">
+      <h1 class="brandname">Sunny Sugar Art</h1>
+      <p class="tagline">Cookie in your heart</p>
+      <p class="lead">Royal icing cookies handcrafted in Melbourne — seasonal collections, custom designs, decorated cakes and creative classes.</p>
+      <div class="cta">
+        <a class="btn primary" href="#products">Shop Cookies</a>
+        <a class="btn" href="#classes">View Classes</a>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- NAV -->
-  <nav aria-label="Primary">
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#products">Shop</a></li>
-      <li><a href="#classes">Classes</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<main>
+  <!-- About -->
+  <section id="about">
+    <h2>About</h2>
+    <p class="lead">Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand-pipe royal icing cookies that turn celebrations into keepsakes. Pickup in CBD by arrangement; shipping Australia-wide. Prices in AUD.</p>
+  </section>
 
-  <main class="container" role="main">
+  <!-- Shop Cookies -->
+  <section id="products">
+    <h2>Shop Cookies</h2>
+    <div class="grid">
+      <article class="card"><img src="images/halloween.jpg" alt="Halloween"><div class="content"><h3>🎃 Halloween Cookies</h3><p>Moody, stylish designs for your October events.</p><a class="btn" href="category.html#cat=halloween">Browse</a></div></article>
+      <article class="card"><img src="images/christmas.jpg" alt="Christmas"><div class="content"><h3>🎄 Christmas Gift Box</h3><p>Elegant gifting options in luxe packaging.</p><a class="btn" href="category.html#cat=christmas">Browse</a></div></article>
+      <article class="card"><img src="images/custom.jpg" alt="Custom"><div class="content"><h3>✨ Custom Cookies</h3><p>Personalised designs for weddings, birthdays and branding.</p><a class="btn" href="category.html#cat=custom">Browse</a></div></article>
+      <article class="card"><img src="images/baby.jpg" alt="Baby"><div class="content"><h3>👶 Baby Shower Cookies</h3><p>Adorable favours to welcome little ones.</p><a class="btn" href="category.html#cat=baby">Browse</a></div></article>
+      <article class="card"><img src="images/meringue.jpg" alt="Meringue"><div class="content"><h3>🍬 Custom Meringue Kisses</h3><p>Light, airy and colour-matched to your event.</p><a class="btn" href="category.html#cat=meringue">Browse</a></div></article>
+      <article class="card"><img src="images/cake.jpg" alt="Cake"><div class="content"><h3>🍰 Decorated Cakes</h3><p>Hand-decorated cakes with artistic royal icing details.</p><a class="btn" href="category.html#cat=cake">Browse</a></div></article>
+    </div>
+  </section>
 
-    <!-- About -->
-    <section id="about">
-      <h2>About</h2>
-      <p class="lead">Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand-pipe royal icing cookies that turn celebrations into keepsakes. Pickup in CBD by arrangement; shipping Australia-wide. Prices in AUD.</p>
-    </section>
+  <!-- Classes -->
+  <section id="classes">
+    <h2>Classes & Workshops</h2>
+    <div class="grid">
+      <article class="card"><img src="images/class-family.jpg" alt="Family"><div class="content"><h3>👩‍👩‍👧 Family / Parent-Child</h3><p>Fun, hands-on sessions suitable for kids and families.</p><a class="btn" href="#">Enroll</a></div></article>
+      <article class="card"><img src="images/class-beginner.jpg" alt="Beginner"><div class="content"><h3>🎨 Beginner Workshop</h3><p>Learn piping, flooding and essential decorating skills.</p><a class="btn" href="#">Enroll</a></div></article>
+      <article class="card"><img src="images/class-master.jpg" alt="Masterclass"><div class="content"><h3>🌟 Masterclass</h3><p>Advanced techniques: fine lines, shading and showpiece design.</p><a class="btn" href="#">Enroll</a></div></article>
+    </div>
+  </section>
 
-    <!-- Shop -->
-    <section id="products">
-      <h2>Shop Cookies</h2>
-      <div class="grid">
-        <article class="card"><img src="images/halloween.jpg" alt="Halloween"><div class="content"><h3>🎃 Halloween Cookies</h3><p>Moody, stylish designs for October events.</p><a class="btn" href="category.html#cat=halloween">Browse</a></div></article>
-        <article class="card"><img src="images/christmas.jpg" alt="Christmas"><div class="content"><h3>🎄 Christmas Gift Box</h3><p>Elegant gifting options in luxe packaging.</p><a class="btn" href="category.html#cat=christmas">Browse</a></div></article>
-        <article class="card"><img src="images/custom.jpg" alt="Custom"><div class="content"><h3>✨ Custom Cookies</h3><p>Personalised designs for weddings, birthdays and branding.</p><a class="btn" href="category.html#cat=custom">Browse</a></div></article>
-        <article class="card"><img src="images/baby.jpg" alt="Baby Shower"><div class="content"><h3>👶 Baby Shower Cookies</h3><p>Adorable favours to welcome little ones.</p><a class="btn" href="category.html#cat=baby">Browse</a></div></article>
-        <article class="card"><img src="images/meringue.jpg" alt="Meringue"><div class="content"><h3>🍬 Meringue Kisses</h3><p>Light, airy and colour-matched to your event.</p><a class="btn" href="category.html#cat=meringue">Browse</a></div></article>
-        <article class="card"><img src="images/cake.jpg" alt="Cake"><div class="content"><h3>🍰 Decorated Cakes</h3><p>Hand-decorated cakes with royal icing details.</p><a class="btn" href="category.html#cat=cake">Browse</a></div></article>
-      </div>
-    </section>
+  <!-- Gallery -->
+  <section id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="images/art1.jpg" alt="Art 1"><div class="gallery-info"><h3>Art Piece 1</h3><p>Royal icing piece with intricate floral patterns.</p><a class="btn" href="gallery/art1.html">More</a></div></div>
+      <div class="gallery-item"><img src="images/art2.jpg" alt="Art 2"><div class="gallery-info"><h3>Art Piece 2</h3><p>Minimalist cookie design with gold accents.</p><a class="btn" href="gallery/art2.html">More</a></div></div>
+      <div class="gallery-item"><img src="images/art3.jpg" alt="Art 3"><div class="gallery-info"><h3>Art Piece 3</h3><p>Playful pastel colours for spring collection.</p><a class="btn" href="gallery/art3.html">More</a></div></div>
+      <div class="gallery-item"><img src="images/art4.jpg" alt="Art 4"><div class="gallery-info"><h3>Art Piece 4</h3><p>Classic piping inspired by baroque details.</p><a class="btn" href="gallery/art4.html">More</a></div></div>
+      <div class="gallery-item"><img src="images/art5.jpg" alt="Art 5"><div class="gallery-info"><h3>Art Piece 5</h3><p>Bright, festive theme with holiday touches.</p><a class="btn" href="gallery/art5.html">More</a></div></div>
+      <div class="gallery-item"><img src="images/art6.jpg" alt="Art 6"><div class="gallery-info"><h3>Art Piece 6</h3><p>Refined monochrome set with modern details.</p><a class="btn" href="gallery/art6.html">More</a></div></div>
+    </div>
+  </section>
 
-    <!-- Classes -->
-    <section id="classes">
-      <h2>Classes & Workshops</h2>
-      <div class="grid">
-        <article class="card"><img src="images/class-family.jpg" alt="Family class"><div class="content"><h3>👩‍👩‍👧 Family / Parent-Child</h3><p>Fun, hands-on sessions for kids and families.</p><a class="btn" href="#">Enroll</a></div></article>
-        <article class="card"><img src="images/class-beginner.jpg" alt="Beginner"><div class="content"><h3>🎨 Beginner Workshop</h3><p>Learn piping, flooding and essential decorating skills.</p><a class="btn" href="#">Enroll</a></div></article>
-        <article class="card"><img src="images/class-master.jpg" alt="Masterclass"><div class="content"><h3>🌟 Masterclass</h3><p>Advanced techniques: fine lines, shading and showpieces.</p><a class="btn" href="#">Enroll</a></div></article>
-      </div>
-    </section>
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
+    <p>Instagram: <a href="https://www.instagram.com/sunny_sugar.art" target="_blank">@sunny_sugar.art</a></p>
+  </section>
+</main>
 
-    <!-- Gallery -->
-    <section id="gallery">
-      <h2>Gallery</h2>
-      <div class="grid">
-        <article class="card"><img src="images/art1.jpg" alt="Art 1"><div class="content"><h3>Art Piece 1</h3><p>Royal icing piece with intricate floral patterns.</p></div></article>
-        <article class="card"><img src="images/art2.jpg" alt="Art 2"><div class="content"><h3>Art Piece 2</h3><p>Minimalist cookie design with gold accents.</p></div></article>
-        <article class="card"><img src="images/art3.jpg" alt="Art 3"><div class="content"><h3>Art Piece 3</h3><p>Playful pastel colours for spring collection.</p></div></article>
-        <article class="card"><img src="images/art4.jpg" alt="Art 4"><div class="content"><h3>Art Piece 4</h3><p>Classic piping inspired by baroque details.</p></div></article>
-        <article class="card"><img src="images/art5.jpg" alt="Art 5"><div class="content"><h3>Art Piece 5</h3><p>Bright, festive theme with holiday touches.</p></div></article>
-        <article class="card"><img src="images/art6.jpg" alt="Art 6"><div class="content"><h3>Art Piece 6</h3><p>Refined monochrome set with modern details.</p></div></article>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
-      <p>Instagram: <a href="https://www.instagram.com/sunny_sugar.art" target="_blank">@sunny_sugar.art</a></p>
-    </section>
-
-  </main>
-
-  <footer>
-    © 2025 Sunny Sugar Art | Melbourne, Australia
-  </footer>
+<footer style="text-align:center;padding:20px;color:#555;">
+  © 2025 Sunny Sugar Art | Melbourne, Australia
+</footer>
 
 </body>
 </html>
