@@ -11,6 +11,8 @@
     --brand:#4b3a2b; --accent:#fbc02d;
     --card:#fff; --shadow:0 8px 24px rgba(0,0,0,.06);
   }
+  /* Family Class 要排第一個 ✔ */
+
   *{box-sizing:border-box}
   html,body{margin:0}
   body{font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
@@ -18,39 +20,42 @@
   img{max-width:100%;display:block}
 
   /* 統一卡片圖片比例（Shop / Classes 4:3） */
-.cards .card img{
-  display:block;
-  width:100%;
-  aspect-ratio: 4 / 3;   /* 高度自動跟著比例 */
-  object-fit: cover;     /* 滿版，超出就微裁，不會擠壓變形 */
-  border:0;
-}
+  .cards .card img,
+  .grid-cards .card .photo img { /* 兩種結構都支援 */
+    display:block;
+    width:100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border:0;
+  }
 
-/* Gallery 改成正方形 1:1 */
-#gallery .cards .card img{
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-}
+  /* Gallery 改成正方形 1:1 */
+  #gallery .grid-cards .card .photo img{
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
 
-/* 若圖片載入失敗避免卡片塌陷（保留高度） */
-.cards .card img[alt][src=""],
-.cards .card img:not([src]){
-  background:#f6f6f6;
-}
+  /* 圖片載入失敗避免卡片塌陷 */
+  .cards .card img[alt][src=""],
+  .cards .card img:not([src]),
+  .grid-cards .card .photo img[alt][src=""],
+  .grid-cards .card .photo img:not([src]){
+    background:#f6f6f6;
+  }
 
-  /* ====== 顶部導覽（只有連結，避免重覆 Logo） ====== */
+  /* ====== 頂部導覽 ====== */
   .topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
   .topwrap{max-width:1200px;margin:0 auto;padding:14px 22px;display:flex;gap:18px;align-items:center;justify-content:flex-end}
   .nav a{margin-left:26px;font-weight:700;color:#3a2f22;opacity:.85}
   .nav a:hover{opacity:1;text-decoration:underline}
 
-  /* ====== Hero：奶油暖色漸層 ====== */
+  /* ====== Hero：原本暖色漸層 ====== */
   .hero{background:linear-gradient(180deg,#fff6df 0%, #f8e5b6 100%);border-bottom:1px solid var(--line)}
   .herowrap{max-width:1200px;margin:0 auto;padding:48px 22px;display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:center}
   @media (max-width:820px){.herowrap{grid-template-columns:1fr;gap:18px}}
-  .hero-logo{width:180px;height:auto}
+  .hero-logo{width:200px;height:auto} /* 比原來再大一點點 */
   .hero h1{margin:0 0 6px;font-size:2.4rem;line-height:1.2}
-  .hero .slogan{margin:0 0 10px;font-weight:800}
+  .hero .slogan{margin:0 0 10px;font-weight:800;font-size:1.2rem}
   .hero p.lead{margin:0 0 14px;color:#574f3e}
   .btn{display:inline-block;background:#fff;border:2px solid var(--brand);color:var(--brand);padding:12px 18px;border-radius:999px;font-weight:900}
   .btn.accent{background:var(--accent);border-color:var(--accent);color:#2a2100}
@@ -62,22 +67,24 @@
   /* ====== Section 標題 ====== */
   h2{margin:0 0 16px;font-size:1.6rem}
 
-  /* ====== Shop / Gallery 卡片 ====== */
+  /* ====== 共用卡片 ====== */
   .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
   .card{background:var(--card);border:1px solid #f2ecd7;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
   .card .photo{aspect-ratio:1/1; background:#f7f4ee; position:relative}
   .card .photo img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
-  /* 正方形不裁切（JS 會自動加 .nocrop） */
   .card .photo img.nocrop{object-fit:contain; background:#f7f4ee}
   .card .content{padding:16px}
   .card .title{margin:0 0 6px;font-weight:900}
   .card .desc{margin:0 0 10px;color:#594e3d}
   .card .btn{background:var(--accent);border-color:var(--accent);color:#2a2100;padding:10px 14px;font-weight:800}
 
-  /* ====== Classes 小卡 ====== */
-  .class-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:8px}
-  .class-card{border:1px solid #f2ecd7;border-radius:14px;padding:16px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.05)}
-  .class-card h3{margin:0 0 6px}
+  /* ====== Classes 卡片 ====== */
+  #classes.wrap{padding-top:0}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+  .cards .card{background:#fff;border:1px solid #f2ecd7;border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  .card-body{padding:16px}
+  .card-body h3{margin:0 0 6px}
+  .btn-browse{background:#fff;border:2px solid var(--brand);color:var(--brand);padding:10px 14px;border-radius:999px;font-weight:900;cursor:pointer}
 
   /* ====== Footer / Contact ====== */
   .contact{background:#fff;border-top:1px solid #e9e1c7}
@@ -103,12 +110,10 @@
 <!-- ====== HERO ====== -->
 <section class="hero" id="home">
   <div class="herowrap">
-    <!-- Logo 左側（唯一的 Logo） -->
     <img class="hero-logo" src="images/logo-sunnysugarart.png" alt="Sunny Sugar Art logo">
-
     <div>
       <h1>Sunny Sugar Art</h1>
-      <p class="slogan" style="font-size:1.15rem">Cookie in your heart</p>
+      <p class="slogan">Cookie in your heart</p>
       <p class="lead">Royal icing cookies handcrafted in Melbourne — seasonal collections, custom designs, decorated cakes and creative classes.</p>
       <div class="ctas">
         <a href="#shop" class="btn accent">Shop Cookies</a>
@@ -121,15 +126,13 @@
 <!-- ====== About ====== -->
 <section id="about" class="wrap">
   <h2>About</h2>
-  <p>Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand‑pipe royal icing cookies and cakes for gifts, parties and events, and I teach creative cookie classes.</p>
+  <p>Hi, I’m Sunny — a Taiwanese sugar artist based in Melbourne. I design and hand-pipe royal icing cookies and cakes for gifts, parties and events, and I teach creative cookie classes.</p>
 </section>
 
 <!-- ====== Shop Cookies ====== -->
 <section id="shop" class="wrap">
   <h2>Shop Cookies</h2>
-
   <div class="grid-cards">
-    <!-- 1 -->
     <article class="card">
       <div class="photo"><img data-src="images/halloween-ghosts.jpg" alt="Halloween Cookies"></div>
       <div class="content">
@@ -139,7 +142,6 @@
       </div>
     </article>
 
-    <!-- 2 -->
     <article class="card">
       <div class="photo"><img data-src="images/christmas.jpg" alt="Christmas Gift Box"></div>
       <div class="content">
@@ -149,7 +151,6 @@
       </div>
     </article>
 
-    <!-- 3 -->
     <article class="card">
       <div class="photo"><img data-src="images/custom.jpg" alt="Custom Cookies"></div>
       <div class="content">
@@ -159,7 +160,6 @@
       </div>
     </article>
 
-    <!-- 4 -->
     <article class="card">
       <div class="photo"><img data-src="images/baby.jpg" alt="Baby Shower Cookies"></div>
       <div class="content">
@@ -169,61 +169,62 @@
       </div>
     </article>
 
-    <!-- 5 -->
     <article class="card">
       <div class="photo"><img data-src="images/meringue.jpg" alt="Custom Meringue Kisses"></div>
       <div class="content">
         <h3 class="title">🍭 Custom Meringue Kisses</h3>
-        <p class="desc">Light, airy and colour‑matched to your event.</p>
+        <p class="desc">Light, airy and colour-matched to your event.</p>
         <a class="btn" href="mailto:sunnysugarart@gmail.com?subject=Meringue%20kisses">Browse</a>
       </div>
     </article>
 
-    <!-- 6 -->
     <article class="card">
       <div class="photo"><img data-src="images/cake.jpg" alt="Decorated Cakes"></div>
       <div class="content">
         <h3 class="title">🍰 Decorated Cakes</h3>
-        <p class="desc">Hand‑decorated cakes with artistic royal icing details.</p>
+        <p class="desc">Hand-decorated cakes with artistic royal icing details.</p>
         <a class="btn" href="mailto:sunnysugarart@gmail.com?subject=Cake%20enquiry">Browse</a>
       </div>
     </article>
   </div>
 </section>
-  
- <!-- Classes -->
- <section id="classes">
-    <h2>Classes</h2>
-    <p>Beginner to advanced cookie classes — piping basics, colour theory, lettering, and seasonal themes. Enquire for current timetable.</p>
-    <div class="cards">
-      <article class="card">
-        <img src="images/class-beginner.jpg" alt="Beginner Class">
-        <div class="card-body">
-          <h3>Beginner Class</h3>
-          <p>Piping basics, flooding, neat outlines and simple lettering.</p>
-          <button class="btn-browse">Enquire</button>
-        </div>
-      </article>
-      <article class="card">
-        <img src="images/class-family.jpg" alt="Family Class">
-        <div class="card-body">
-          <h3>Family Class</h3>
-          <p>Kid-friendly designs — learn and decorate together.</p>
-          <button class="btn-browse">Enquire</button>
-        </div>
-      </article>
-      <article class="card">
-        <img src="images/class-master.jpg" alt="Master Class">
-        <div class="card-body">
-          <h3>Master Class</h3>
-          <p>Advanced textures, fine details, and colour theory.</p>
-          <button class="btn-browse">Enquire</button>
-        </div>
-      </article>
-    </div>
-  </section>
 
-<!-- ====== Gallery（六張，與 Shop 卡片一致） ====== -->
+<!-- ====== Classes（Family 放第一） ====== -->
+<section id="classes" class="wrap">
+  <h2>Classes</h2>
+  <p>Beginner to advanced cookie classes — piping basics, colour theory, lettering, and seasonal themes. Enquire for current timetable.</p>
+  <div class="cards">
+    <!-- Family 第一個 -->
+    <article class="card">
+      <img src="images/class-family.jpg" alt="Family Class">
+      <div class="card-body">
+        <h3>Family Class</h3>
+        <p>Kid-friendly designs — learn and decorate together.</p>
+        <button class="btn-browse" onclick="location.href='mailto:sunnysugarart@gmail.com?subject=Family%20Class%20enquiry'">Enquire</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="images/class-beginner.jpg" alt="Beginner Class">
+      <div class="card-body">
+        <h3>Beginner Class</h3>
+        <p>Piping basics, flooding, neat outlines and simple lettering.</p>
+        <button class="btn-browse" onclick="location.href='mailto:sunnysugarart@gmail.com?subject=Beginner%20Class%20enquiry'">Enquire</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="images/class-master.jpg" alt="Master Class">
+      <div class="card-body">
+        <h3>Master Class</h3>
+        <p>Advanced textures, fine details, and colour theory.</p>
+        <button class="btn-browse" onclick="location.href='mailto:sunnysugarart@gmail.com?subject=Master%20Class%20enquiry'">Enquire</button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ====== Gallery ====== -->
 <section id="gallery" class="wrap">
   <h2>Gallery</h2>
   <div class="grid-cards">
@@ -236,13 +237,13 @@
   </div>
 </section>
 
-<!-- ====== Footer / Contact（白底、淺灰邊框、咖啡色字） ====== -->
+<!-- ====== Footer / Contact ====== -->
 <footer id="contact" class="contact">
   <div class="wrap">
     <h2>Contact</h2>
     <p>Email: <a href="mailto:sunnysugarart@gmail.com">sunnysugarart@gmail.com</a></p>
     <p>Instagram: <a href="https://www.instagram.com/" target="_blank" rel="noopener">@sunnysugarart</a></p>
-    <p style="color:#7a6b56">© Sunny Sugar Art · Hand‑piped in Melbourne</p>
+    <p style="color:#7a6b56">© Sunny Sugar Art · Hand-piped in Melbourne</p>
   </div>
 </footer>
 
@@ -256,7 +257,7 @@
     probe.onload = () => {
       img.src = src;
       if (probe.naturalWidth === probe.naturalHeight) {
-        img.classList.add('nocrop');
+        img.classList.add('nocrop'); // 正方形不裁切
       }
     };
     probe.onerror = () => { img.alt = 'Image not found'; };
