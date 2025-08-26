@@ -17,6 +17,27 @@
   a{color:inherit;text-decoration:none}
   img{max-width:100%;display:block}
 
+  /* 統一卡片圖片比例（Shop / Classes 4:3） */
+.cards .card img{
+  display:block;
+  width:100%;
+  aspect-ratio: 4 / 3;   /* 高度自動跟著比例 */
+  object-fit: cover;     /* 滿版，超出就微裁，不會擠壓變形 */
+  border:0;
+}
+
+/* Gallery 改成正方形 1:1 */
+#gallery .cards .card img{
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+/* 若圖片載入失敗避免卡片塌陷（保留高度） */
+.cards .card img[alt][src=""],
+.cards .card img:not([src]){
+  background:#f6f6f6;
+}
+
   /* ====== 顶部導覽（只有連結，避免重覆 Logo） ====== */
   .topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
   .topwrap{max-width:1200px;margin:0 auto;padding:14px 22px;display:flex;gap:18px;align-items:center;justify-content:flex-end}
