@@ -18,7 +18,7 @@
   h1{margin:0 0 6px}
   .price{font-weight:900;margin:6px 0 18px;font-size:1.2rem}
 
-  /* 圖片區（左：縮圖，右：主視覺；主圖不裁切，等比置中） */
+  /* 圖片區（左縮圖、右主圖；主圖不裁切，等比置中） */
   .gallery{display:grid;grid-template-columns:88px 1fr;gap:12px}
   .thumbs{display:flex;flex-direction:column;gap:8px;max-height:560px;overflow:auto;padding-right:2px}
   .thumbs img{width:88px;height:88px;object-fit:cover;border-radius:10px;border:2px solid transparent;cursor:pointer;display:block;background:#f7f4ee}
@@ -65,11 +65,8 @@
 
   /* 「＋」按鈕（More colours / Other）— 深咖啡底，白字，顯眼 */
   .swatch.more{
-    background:#4b3a2b;
-    border:2px solid #2a2100;
-    font-weight:900;
-    font-size:1rem;
-    color:#fff;
+    background:#4b3a2b;border:2px solid #2a2100;color:#fff;
+    font-weight:900;font-size:1rem;
   }
 
   /* 環形漸層（兩端色清楚） */
@@ -126,7 +123,7 @@
 
         <button type="submit" class="btn primary">Add to Cart</button>
         <button type="button" class="btn" onclick="location.href='mailto:sunnysugarart@gmail.com'">Email Us</button>
-        <p class="note">Made to order. Contains egg & gluten. Nut‑free kitchen but traces may exist. Please book ahead for peak seasons.</p>
+        <p class="note">Made to order. Contains egg & gluten. Nut-free kitchen but traces may exist. Please book ahead for peak seasons.</p>
       </form>
     </aside>
   </div>
@@ -199,7 +196,6 @@ const CATALOG = {
       colours:["Orange","Purple","Black","Random","More colours – leave a note"]
     }
   }},
-
   christmas:{ items:{
     "snowflake":{ title:"Snowflake", price:"A$ 10 per cookie",
       images:["images/christmas-snowflake.jpg","images/christmas-snowflake-2.jpg"],
@@ -251,7 +247,6 @@ const CATALOG = {
     }
   }}
 };
-</script>
 
 /* ========== 顏色工具：把文字轉成 class / style（不顯示英文標籤） ========== */
 function basicClass(n){
@@ -290,7 +285,7 @@ function basicColor(n){
 function gradientPair(n){
   n = (n||"").toLowerCase();
   switch(n){
-    case "blue gradient":          return {g1:"#bae6fd", g2:"#1e40af"}; // 更清楚的藍漸層
+    case "blue gradient":          return {g1:"#bae6fd", g2:"#1e40af"};
     case "green gradient":         return {g1:"#86efac", g2:"#065f46"};
     case "yellow-green gradient":  return {g1:"#fde047", g2:"#10b981"};
     default: return {g1:"#bbb", g2:"#444"};
