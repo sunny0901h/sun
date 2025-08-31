@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shopping Cart | Sunny Sugar Art</title>
+  <style>
+    :root {
+      --ink:#1f1b14; --muted:#6b5f4a;
+      --line:#efe5c9; --accent:#fbc02d;
+      --brand:#4b3a2b;
+    }
+    body {
+      margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:#fff; color:var(--ink);
+    }
+    header {
+      padding:16px 22px; border-bottom:1px solid var(--line);
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    header a { text-decoration:none; font-weight:800; color:var(--brand); }
+    .wrap { max-width:1000px; margin:0 auto; padding:24px; }
+    h1 { margin:0 0 20px; }
+    table { width:100%; border-collapse:collapse; margin-bottom:20px; }
+    th, td { padding:12px; border-bottom:1px solid #eee; text-align:left; }
+    th { background:#faf7f0; font-weight:700; }
+    td img { width:60px; border-radius:8px; }
+    .total { text-align:right; font-size:1.2rem; font-weight:900; margin:20px 0; }
+    .btn {
+      display:inline-block; padding:12px 18px; border-radius:999px;
+      font-weight:900; text-align:center; cursor:pointer;
+      text-decoration:none;
+    }
+    .btn.checkout { background:var(--accent); color:#2a2100; border:2px solid var(--accent); }
+    .btn.back { background:#fff; color:var(--brand); border:2px solid var(--brand); margin-right:10px; }
+    .empty { text-align:center; padding:40px; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Continue Shopping</a>
+    <strong>Sunny Sugar Art</strong>
+  </header>
+
+  <div class="wrap">
+    <h1>Your Cart</h1>
+    <div id="cart-contents">
+      <!-- JavaScript 會在這裡生成購物車內容 -->
+      <p class="empty">Your cart is empty.</p>
+    </div>
+    <div class="total" id="cart-total"></div>
+    <div>
+      <a href="index.html" class="btn back">← Back to Shop</a>
+      <a href="checkout.html" class="btn checkout">Checkout</a>
+    </div>
+  </div>
+
+  <script src="js/cart.js"></script>
+</body>
+</html>
