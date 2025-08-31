@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checkout | Sunny Sugar Art</title>
+<style>
+  :root{ --ink:#1f1b14; --muted:#6b5f4a; --line:#efe5c9; --brand:#4b3a2b; --accent:#fbc02d; }
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
+  header{padding:16px 22px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:center}
+  header a{font-weight:800;color:var(--brand);text-decoration:none}
+  .wrap{max-width:1000px;margin:0 auto;padding:24px}
+  h1{margin:0 0 16px}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:24px}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{border:1px solid #f2ecd7;border-radius:14px;overflow:hidden;background:#fff}
+  .card h2{margin:0;padding:14px 16px;border-bottom:1px solid #f5f0e2;font-size:1.1rem}
+  .card .body{padding:16px}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:10px;border-bottom:1px solid #f3efe3;text-align:left;vertical-align:top}
+  th{background:#faf7f0}
+  tfoot td{border-top:2px solid #eadfbe;font-weight:900}
+  .right{text-align:right}
+  .muted{color:var(--muted)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .row > div{display:flex;flex-direction:column}
+  label{font-weight:800;margin:6px 0}
+  input,textarea,select{font:inherit;padding:10px;border:1px solid #e9e1c7;border-radius:10px}
+  textarea{min-height:86px;resize:vertical}
+  .btn{display:inline-block;padding:12px 18px;border-radius:999px;font-weight:900;text-decoration:none;cursor:pointer}
+  .btn.back{background:#fff;border:2px solid var(--brand);color:var(--brand);margin-right:8px}
+  .btn.primary{background:var(--accent);border:2px solid var(--accent);color:#2a2100}
+  .success{padding:18px;border:1px solid #c7f2c2;background:#eafbea;border-radius:12px;margin-bottom:16px;display:none}
+  .error{padding:12px;border:1px solid #ffd1cd;background:#fff3f2;border-radius:10px;margin-bottom:12px;display:none}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html">← Continue Shopping</a>
+  <strong>Sunny Sugar Art</strong>
+</header>
+
+<div class="wrap">
+  <h1>Checkout</h1>
+  <div id="notice-empty" class="error">Your cart is empty. Please add some cookies first.</div>
+  <div id="notice-success" class="success"></div>
+
+  <div class="grid" id="checkout-grid" style="display:none">
+    <!-- Order Summary -->
+    <section class="card">
+      <h2>Order Summary</h2>
+      <div class="body">
+        <table id="summary">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th class="right">Qty</th>
+              <th class="right">Price</th>
+              <th class="right">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="summary-body"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" class="right">Total</td>
+              <td class="right" id="summary-total">A$ 0.00</td>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="muted">Prices are in AUD. Hand-piped to order — please allow lead time during peak seasons.</p>
+      </div>
+    </section>
+
+    <!-- Customer Details / Payment -->
+    <section class="card">
+      <h2>Your Details</h2>
+      <div class="body">
+        <form id="checkout-form">
+          <div class="row">
+            <div>
+              <label for="name">Full name</label>
+              <input id="name" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" type="email" required />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="phone">Phone</label>
+              <input id="phone" type="tel" />
+            </div>
+            <div>
+              <label for="date">Preferred pickup/delivery date</label>
+              <input id="date" type="date" />
+            </div>
+          </div>
+          <div>
+            <label for="address">Address (optional)</label>
+            <textarea id="address" placeholder="Street, suburb, postcode…"></textarea>
+          </div>
+          <div>
+            <label for="notes">Order notes</label>
+            <textarea id="notes" placeholder="Colour notes, allergy info, message on cookie, etc."></textarea>
+          </div>
+
+          <div style="margin:12px 0 16px">
+            <label>Payment</label>
+            <div>
+              <label><input type="radio" name="pay" value="card" checked /> Pay with card (online)</label><br>
+              <label><input type="radio" name="pay" value="bank" /> Bank transfer (manual)</label>
+            </div>
+          </div>
+
+          <div>
+            <a class="btn back" href="cart.html">← Back to Cart</a>
+            <button class="btn primary" type="submit">Pay & Place Order</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+/* -------- helpers -------- */
+const $ = s => document.querySelector(s);
+const fmt = n => 'A$ ' + (Number(n).toFixed(2));
+
+function getCart(){
+  try{ return JSON.parse(localStorage.getItem('ssa_cart')) || {items:[], total:0}; }
+  catch{ return {items:[], total:0}; }
+}
+function setOrders(list){ localStorage.setItem('ssa_orders', JSON.stringify(list)); }
+function getOrders(){ try{ return JSON.parse(localStorage.getItem('ssa_orders')) || []; }catch{ return []; } }
+function clearCart(){ localStorage.removeItem('ssa_cart'); }
+
+/* -------- render summary -------- */
+const cart = getCart();
+if(!cart.items || cart.items.length===0){
+  $('#notice-empty').style.display='block';
+} else {
+  $('#checkout-grid').style.display='grid';
+  const tbody = $('#summary-body');
+  let sum = 0;
+  cart.items.forEach(it=>{
+    const price = Number(it.price);        // 單價
+    const qty   = Number(it.qty||1);
+    const sub   = price * qty;
+    sum += sub;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div style="font-weight:800">${it.title||it.item||'Cookie'}</div>
+        <div class="muted" style="font-size:.9rem">
+          ${it.flavour?`Flavour: ${it.flavour} · `:''}
+          ${it.pack?`Pack: ${it.pack} · `:''}
+          ${it.colour?`Colour: ${it.colour}`:''}
+        </div>
+      </td>
+      <td class="right">${qty}</td>
+      <td class="right">${fmt(price)}</td>
+      <td class="right">${fmt(sub)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  $('#summary-total').textContent = fmt(sum);
+}
+
+/* -------- place order -------- */
+function genOrderId(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const dd= String(d.getDate()).padStart(2,'0');
+  const seq = String(Math.floor(Math.random()*10000)).padStart(4,'0');
+  return `SSA-${y}${m}${dd}-${seq}`;
+}
+
+$('#checkout-form')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  if(!cart.items || cart.items.length===0){ alert('Your cart is empty.'); return; }
+
+  // 如果要串 Stripe，這裡可改成 Stripe.redirectToCheckout(...)
+  const orderId = genOrderId();
+  const order = {
+    id: orderId,
+    createdAt: new Date().toISOString(),
+    total: $('#summary-total').textContent,
+    items: cart.items,
+    customer: {
+      name:  $('#name').value.trim(),
+      email: $('#email').value.trim(),
+      phone: $('#phone').value.trim(),
+      date:  $('#date').value,
+      address: $('#address').value.trim(),
+      notes:   $('#notes').value.trim(),
+      payMethod: (document.querySelector('input[name="pay"]:checked')||{}).value || 'card'
+    },
+    status: 'pending' // 之後你在 orders.html 可改成 paid / fulfilled
+  };
+
+  // 存入“後台”列表（localStorage）
+  const orders = getOrders();
+  orders.unshift(order);
+  setOrders(orders);
+
+  // 清空購物車
+  clearCart();
+
+  // 成功訊息 & 引導
+  const box = $('#notice-success');
+  box.innerHTML = `✅ Order placed! Your order number is <strong>${orderId}</strong>.<br>
+  You can view it in <a href="orders.html">Orders</a>. A confirmation email will be sent by Sunny (manual for now).`;
+  box.style.display='block';
+
+  // 隱藏表單與摘要上的操作
+  $('#checkout-grid').scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
