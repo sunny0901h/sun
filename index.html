@@ -11,6 +11,14 @@
     --brand:#4b3a2b; --accent:#fbc02d;
     --card:#fff; --shadow:0 8px 24px rgba(0,0,0,.06);
   }
+  .cart-link{position:relative;font-weight:800}
+.cart-badge{
+  position:absolute; top:-8px; right:-12px;
+  min-width:18px; height:18px; padding:0 5px;
+  background:#e11d48; color:#fff; border-radius:999px;
+  font-size:12px; line-height:18px; text-align:center;
+  visibility:hidden;
+}
   /* Family Class 要排第一個 ✔ */
 
   *{box-sizing:border-box}
@@ -103,6 +111,7 @@
       <a href="#classes">Classes</a>
       <a href="#gallery">Gallery</a>
       <a href="#contact">Contact</a>
+      <a class="cart-link" href="cart.html">🛒 Cart <span class="cart-badge" data-cart-badge></span></a>
     </nav>
   </div>
 </header>
