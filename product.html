@@ -357,13 +357,46 @@ function render(){
   document.getElementById("next").onclick=()=>{idx=(idx+1)%imgs.length;show();};
   show();
 
-  // 送出（示範）
-  document.getElementById("buy").onsubmit=e=>{
-    e.preventDefault();
-    const colourNote = custom.style.display==="block" ? (custom.value || "(no note)") : chosen;
-    alert(`Added:\n${item.title}\n${document.getElementById("flavour").value} / ${document.getElementById("pack").value}\nColour: ${colourNote}\n${item.price}`);
-  };
+ <script>
+// 解析 pack 選項字串，例如： "10 PACK – A$100"
+function parsePack(val){
+  const m = String(val).match(/(\d+)\s*PACK.*?A\$\s*([\d.]+)/i);
+  if(m){ 
+    const qty = Number(m[1]);
+    const packTotal = Number(m[2]);
+    const unit = packTotal / qty;
+    return { qty, packTotal, unit };
+  }
+  // 如果沒有價錢（例如單顆價），就用 1 件、從 item.price 抓單價
+  const unitFromTitle = (String((item.price||'').match(/([\d.]+)/))||'0').split(',')[0];
+  return { qty: 1, packTotal: Number(unitFromTitle||0), unit: Number(unitFromTitle||0) };
 }
+
+document.getElementById("buy").onsubmit = (e)=>{
+  e.preventDefault();
+
+  const flavour = document.getElementById("flavour").value;
+  const packVal = document.getElementById("pack").value;
+  const colourNote = (custom.style.display==="block") ? (custom.value || "(no note)") : chosen;
+
+  const parsed = parsePack(packVal);
+  // 寫入購物車
+  SSACart.add({
+    id: key,                                // 來自 URL 的 item key（上方 render() 已有）
+    title: item.title,
+    image: (item.images&&item.images[0]) || "",
+    flavour: flavour,
+    pack: packVal,
+    colour: colourNote,
+    qty: parsed.qty,                         // 幾片餅乾
+    price: Number(parsed.unit.toFixed(2))    // 每片單價，cart.html 會自行算 subtotal/total
+  });
+
+  // 更新徽章並導去購物車頁
+  SSACart.updateBadge();
+  location.href = 'cart.html';
+};
+</script>
 
 render();
 window.addEventListener("hashchange", render);
