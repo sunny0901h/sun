@@ -350,57 +350,61 @@ function render(){
   const imgs = (item.images||[]).slice();
   const hero=document.getElementById("hero"), thumbs=document.getElementById("thumbs");
   let idx=0;
-  function show(){ hero.src=imgs[idx]; [...thumbs.querySelectorAll("img")].forEach((t,i)=>t.setAttribute("aria-current", i===idx)); }
+  function show(){ hero.src=imgs[idx]; hero.alt = item.title + ' image ' + (idx+1); [...thumbs.querySelectorAll("img")].forEach((t,i)=>t.setAttribute("aria-current", i===idx)); }
   thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'aria-current="true"':''}>`).join("");
   thumbs.querySelectorAll("img").forEach((t,i)=>t.onclick=()=>{idx=i;show();});
   document.getElementById("prev").onclick=()=>{idx=(idx-1+imgs.length)%imgs.length;show();};
   document.getElementById("next").onclick=()=>{idx=(idx+1)%imgs.length;show();};
   show();
 
- <script>
-// 解析 pack 選項字串，例如： "10 PACK – A$100"
-function parsePack(val){
-  const m = String(val).match(/(\d+)\s*PACK.*?A\$\s*([\d.]+)/i);
-  if(m){ 
-    const qty = Number(m[1]);
-    const packTotal = Number(m[2]);
-    const unit = packTotal / qty;
-    return { qty, packTotal, unit };
+  /* 解析 pack 選項字串，例如： "10 PACK – A$100" */
+  function parsePack(val){
+    const m = String(val).match(/(\d+)\s*PACK.*?A\$\s*([\d.]+)/i);
+    if(m){
+      const qty = Number(m[1]);
+      const packTotal = Number(m[2]);
+      const unit = packTotal / qty;
+      return { qty, packTotal, unit };
+    }
+    // 若沒有價錢（極少見），退回從 item.price 取單價
+    const unitFromTitle = Number((item.price||'').match(/([\d.]+)/)?.[1] || 0);
+    return { qty: 1, packTotal: unitFromTitle, unit: unitFromTitle };
   }
-  // 如果沒有價錢（例如單顆價），就用 1 件、從 item.price 抓單價
-  const unitFromTitle = (String((item.price||'').match(/([\d.]+)/))||'0').split(',')[0];
-  return { qty: 1, packTotal: Number(unitFromTitle||0), unit: Number(unitFromTitle||0) };
+
+  // 表單提交：寫入購物車並跳轉
+  document.getElementById("buy").onsubmit = (e)=>{
+    e.preventDefault();
+    const flavour = document.getElementById("flavour").value;
+    const packVal = document.getElementById("pack").value;
+    const colourNote = (custom.style.display==="block") ? (custom.value || "(no note)") : chosen;
+    const parsed = parsePack(packVal);
+
+    // 需要 js/cart.js 已在其他頁加載 badge；這裡專注寫入
+    if (window.SSACart && typeof SSACart.add === 'function') {
+      SSACart.add({
+        id: key,
+        title: item.title,
+        image: (item.images&&item.images[0]) || "",
+        flavour: flavour,
+        pack: packVal,
+        colour: colourNote,
+        qty: parsed.qty,
+        price: Number(parsed.unit.toFixed(2))  // 單片單價
+      });
+      if (typeof SSACart.updateBadge === 'function') SSACart.updateBadge();
+    } else {
+      console.warn('SSACart not found. Did you include js/cart.js on index/cart pages?');
+    }
+
+    location.href = 'cart.html';
+  };
 }
-
-document.getElementById("buy").onsubmit = (e)=>{
-  e.preventDefault();
-
-  const flavour = document.getElementById("flavour").value;
-  const packVal = document.getElementById("pack").value;
-  const colourNote = (custom.style.display==="block") ? (custom.value || "(no note)") : chosen;
-
-  const parsed = parsePack(packVal);
-  // 寫入購物車
-  SSACart.add({
-    id: key,                                // 來自 URL 的 item key（上方 render() 已有）
-    title: item.title,
-    image: (item.images&&item.images[0]) || "",
-    flavour: flavour,
-    pack: packVal,
-    colour: colourNote,
-    qty: parsed.qty,                         // 幾片餅乾
-    price: Number(parsed.unit.toFixed(2))    // 每片單價，cart.html 會自行算 subtotal/total
-  });
-
-  // 更新徽章並導去購物車頁
-  SSACart.updateBadge();
-  location.href = 'cart.html';
-};
-</script>
 
 render();
 window.addEventListener("hashchange", render);
 </script>
-  <script src="js/cart.js"></script>
+
+<!-- 購物車核心（此頁不必載也可，但保留無妨；cart.html 一定要載） -->
+<script src="js/cart.js"></script>
 </body>
 </html>
