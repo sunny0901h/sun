@@ -37,13 +37,13 @@
 </head>
 <body>
 <header>
-  <a href="index.html">← Continue Shopping</a>
+  <a href="cart.html">← Back to Cart</a>
   <strong>Sunny Sugar Art</strong>
 </header>
 
 <div class="wrap">
   <h1>Checkout</h1>
-  <div id="notice-empty" class="error">Your cart is empty. Please add some cookies first.</div>
+  <div id="notice-empty" class="error" style="display:none">Your cart is empty. Please add some cookies first.</div>
   <div id="notice-success" class="success"></div>
 
   <div class="grid" id="checkout-grid" style="display:none">
@@ -56,7 +56,7 @@
             <tr>
               <th>Item</th>
               <th class="right">Qty</th>
-              <th class="right">Price</th>
+              <th class="right">Unit</th>
               <th class="right">Subtotal</th>
             </tr>
           </thead>
@@ -109,7 +109,7 @@
           <div style="margin:12px 0 16px">
             <label>Payment</label>
             <div>
-              <label><input type="radio" name="pay" value="card" checked /> Pay with card (online)</label><br>
+              <label><input type="radio" name="pay" value="card" checked /> Pay with card (demo)</label><br>
               <label><input type="radio" name="pay" value="bank" /> Bank transfer (manual)</label>
             </div>
           </div>
@@ -124,100 +124,100 @@
   </div>
 </div>
 
+<!-- 必須先載入你的購物車工具 -->
+<script src="js/cart.js"></script>
 <script>
-/* -------- helpers -------- */
-const $ = s => document.querySelector(s);
-const fmt = n => 'A$ ' + (Number(n).toFixed(2));
+/* ===== 讀取購物車（使用 SSA_CART / cents）並渲染摘要 ===== */
+function renderSummary(){
+  const cart = SSA_CART.getCart(); // 陣列：[{title, unitPrice(cents), qty, packLabel, flavour, colourNote, image, id}]
+  if(!cart || cart.length===0){
+    document.getElementById('notice-empty').style.display='block';
+    document.getElementById('checkout-grid').style.display='none';
+    return;
+  }
+  document.getElementById('checkout-grid').style.display='grid';
 
-function getCart(){
-  try{ return JSON.parse(localStorage.getItem('ssa_cart')) || {items:[], total:0}; }
-  catch{ return {items:[], total:0}; }
-}
-function setOrders(list){ localStorage.setItem('ssa_orders', JSON.stringify(list)); }
-function getOrders(){ try{ return JSON.parse(localStorage.getItem('ssa_orders')) || []; }catch{ return []; } }
-function clearCart(){ localStorage.removeItem('ssa_cart'); }
-
-/* -------- render summary -------- */
-const cart = getCart();
-if(!cart.items || cart.items.length===0){
-  $('#notice-empty').style.display='block';
-} else {
-  $('#checkout-grid').style.display='grid';
-  const tbody = $('#summary-body');
-  let sum = 0;
-  cart.items.forEach(it=>{
-    const price = Number(it.price);        // 單價
-    const qty   = Number(it.qty||1);
-    const sub   = price * qty;
-    sum += sub;
+  const tbody = document.getElementById('summary-body');
+  tbody.innerHTML = '';
+  cart.forEach(it=>{
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>
-        <div style="font-weight:800">${it.title||it.item||'Cookie'}</div>
+        <div style="font-weight:800">${it.title||'Cookie'}</div>
         <div class="muted" style="font-size:.9rem">
+          ${it.packLabel?`Pack: ${it.packLabel} · `:''}
           ${it.flavour?`Flavour: ${it.flavour} · `:''}
-          ${it.pack?`Pack: ${it.pack} · `:''}
-          ${it.colour?`Colour: ${it.colour}`:''}
+          ${it.colourNote?`Colour: ${it.colourNote}`:''}
         </div>
       </td>
-      <td class="right">${qty}</td>
-      <td class="right">${fmt(price)}</td>
-      <td class="right">${fmt(sub)}</td>
+      <td class="right">${it.qty||1}</td>
+      <td class="right">${SSA_CART.formatAUD(it.unitPrice||0)}</td>
+      <td class="right">${SSA_CART.formatAUD((it.unitPrice||0)*(it.qty||1))}</td>
     `;
     tbody.appendChild(tr);
   });
-  $('#summary-total').textContent = fmt(sum);
+
+  document.getElementById('summary-total').textContent = SSA_CART.formatAUD(SSA_CART.cartSubtotalCents());
 }
 
-/* -------- place order -------- */
+/* ===== 訂單儲存（localStorage demo 後台） ===== */
+const ORDERS_KEY = 'ssa_orders';
+function loadOrders(){ try{return JSON.parse(localStorage.getItem(ORDERS_KEY))||[];}catch(e){return[];} }
+function saveOrders(list){ localStorage.setItem(ORDERS_KEY, JSON.stringify(list)); }
 function genOrderId(){
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const dd= String(d.getDate()).padStart(2,'0');
-  const seq = String(Math.floor(Math.random()*10000)).padStart(4,'0');
-  return `SSA-${y}${m}${dd}-${seq}`;
+  const d=new Date();
+  const y=String(d.getFullYear()).slice(-2);
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const day=String(d.getDate()).padStart(2,'0');
+  const rand=Math.random().toString(36).slice(2,6).toUpperCase();
+  return `SSA-${y}${m}${day}-${rand}`;
 }
 
-$('#checkout-form')?.addEventListener('submit', async (e)=>{
+/* ===== 送出訂單（demo：不實際刷卡，直接建立訂單記錄） ===== */
+document.getElementById('checkout-form').addEventListener('submit', (e)=>{
   e.preventDefault();
-  if(!cart.items || cart.items.length===0){ alert('Your cart is empty.'); return; }
+  const cart = SSA_CART.getCart();
+  if(!cart.length){ alert('Your cart is empty.'); return; }
 
-  // 如果要串 Stripe，這裡可改成 Stripe.redirectToCheckout(...)
-  const orderId = genOrderId();
   const order = {
-    id: orderId,
+    id: genOrderId(),
     createdAt: new Date().toISOString(),
-    total: $('#summary-total').textContent,
-    items: cart.items,
+    items: cart,                              // 原樣存檔（含 title / unitPrice(cents) / qty / packLabel / flavour / colourNote）
+    totalCents: SSA_CART.cartSubtotalCents(), // 以 cents 存
     customer: {
-      name:  $('#name').value.trim(),
-      email: $('#email').value.trim(),
-      phone: $('#phone').value.trim(),
-      date:  $('#date').value,
-      address: $('#address').value.trim(),
-      notes:   $('#notes').value.trim(),
+      name:  document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      date:  document.getElementById('date').value,
+      address: document.getElementById('address').value.trim(),
+      notes: document.getElementById('notes').value.trim(),
       payMethod: (document.querySelector('input[name="pay"]:checked')||{}).value || 'card'
     },
-    status: 'pending' // 之後你在 orders.html 可改成 paid / fulfilled
+    status: 'paid' // demo：直接設為已付款；若將來串金流，改成 pending -> paid
   };
 
-  // 存入“後台”列表（localStorage）
-  const orders = getOrders();
-  orders.unshift(order);
-  setOrders(orders);
+  const list = loadOrders();
+  list.unshift(order);
+  saveOrders(list);
 
   // 清空購物車
-  clearCart();
+  SSA_CART.clearCart();
 
-  // 成功訊息 & 引導
-  const box = $('#notice-success');
-  box.innerHTML = `✅ Order placed! Your order number is <strong>${orderId}</strong>.<br>
-  You can view it in <a href="orders.html">Orders</a>. A confirmation email will be sent by Sunny (manual for now).`;
-  box.style.display='block';
+  // 完成提示（頁內）
+  const box = document.getElementById('notice-success');
+  box.innerHTML = `✅ Order placed! Your order number is <strong>${order.id}</strong>.<br/>
+  Total: <strong>${SSA_CART.formatAUD(order.totalCents)}</strong> · A confirmation email will be sent by Sunny (manual for now).`;
+  box.style.display = 'block';
 
-  // 隱藏表單與摘要上的操作
-  $('#checkout-grid').scrollIntoView({behavior:'smooth'});
+  // 隱藏主要內容
+  document.getElementById('checkout-grid').style.display = 'none';
+  box.scrollIntoView({behavior:'smooth'});
+});
+
+/* INIT */
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderSummary();
+  SSA_CART.updateCartBadge?.();
 });
 </script>
 </body>
