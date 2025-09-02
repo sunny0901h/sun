@@ -1,60 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Shopping Cart | Sunny Sugar Art</title>
-  <style>
-    :root {
-      --ink:#1f1b14; --muted:#6b5f4a;
-      --line:#efe5c9; --accent:#fbc02d;
-      --brand:#4b3a2b;
-    }
-    body {
-      margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      background:#fff; color:var(--ink);
-    }
-    header {
-      padding:16px 22px; border-bottom:1px solid var(--line);
-      display:flex; justify-content:space-between; align-items:center;
-    }
-    header a { text-decoration:none; font-weight:800; color:var(--brand); }
-    .wrap { max-width:1000px; margin:0 auto; padding:24px; }
-    h1 { margin:0 0 20px; }
-    table { width:100%; border-collapse:collapse; margin-bottom:20px; }
-    th, td { padding:12px; border-bottom:1px solid #eee; text-align:left; }
-    th { background:#faf7f0; font-weight:700; }
-    td img { width:60px; border-radius:8px; }
-    .total { text-align:right; font-size:1.2rem; font-weight:900; margin:20px 0; }
-    .btn {
-      display:inline-block; padding:12px 18px; border-radius:999px;
-      font-weight:900; text-align:center; cursor:pointer;
-      text-decoration:none;
-    }
-    .btn.checkout { background:var(--accent); color:#2a2100; border:2px solid var(--accent); }
-    .btn.back { background:#fff; color:var(--brand); border:2px solid var(--brand); margin-right:10px; }
-    .empty { text-align:center; padding:40px; color:var(--muted); }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Cart | Sunny Sugar Art</title>
+<style>
+  :root{ --ink:#1f1b14; --muted:#6b5f4a; --line:#efe5c9; --brand:#4b3a2b; --accent:#fbc02d; }
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
+  a{color:inherit;text-decoration:none}
+  header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  header a{font-weight:900}
+  .wrap{max-width:1000px;margin:0 auto;padding:24px}
+  h1{margin:0 0 10px}
+  .muted{color:var(--muted)}
+
+  .cart{width:100%;border-collapse:collapse;margin-top:10px}
+  .cart th,.cart td{border-bottom:1px solid #eee;padding:12px;vertical-align:middle}
+  .cart th{text-align:left;background:#faf8f2}
+  .cart .thumb{width:72px;height:72px;border-radius:8px;object-fit:cover;background:#f7f4ee}
+  .qty input{width:64px;padding:6px;border:1px solid #e5e1d0;border-radius:8px;text-align:center}
+  .price{text-align:right;white-space:nowrap}
+  .actions button{background:#fff;border:1px solid #e5e1d0;border-radius:8px;padding:8px 10px;cursor:pointer}
+  .summary{display:flex;justify-content:flex-end;margin-top:16px;gap:18px;align-items:center}
+  .btn{display:inline-block;background:#fff;border:2px solid var(--brand);color:var(--brand);padding:12px 18px;border-radius:999px;font-weight:900}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#2a2100}
+  .empty{border:1px solid #ffe0dc;background:#fff6f5;border-radius:12px;padding:18px;margin-top:12px}
+
+  .cart-link{position:relative;font-weight:800;margin-left:auto}
+  .cart-badge{position:absolute; top:-8px; right:-12px; min-width:18px; height:18px; padding:0 5px; background:#e11d48; color:#fff; border-radius:999px; font-size:12px; line-height:18px; text-align:center; visibility:hidden;}
+</style>
 </head>
 <body>
-  <header>
-    <a href="index.html">← Continue Shopping</a>
-    <strong>Sunny Sugar Art</strong>
-  </header>
+<header>
+  <a href="index.html">Home</a>
+  <strong style="margin-left:8px">/ Cart</strong>
+  <a class="cart-link" href="cart.html" style="margin-left:auto">Cart <span class="cart-badge" data-cart-badge></span></a>
+</header>
 
-  <div class="wrap">
-    <h1>Your Cart</h1>
-    <div id="cart-contents">
-      <!-- JavaScript 會在這裡生成購物車內容 -->
-      <p class="empty">Your cart is empty.</p>
-    </div>
-    <div class="total" id="cart-total"></div>
-    <div>
-      <a href="index.html" class="btn back">← Back to Shop</a>
-      <a href="checkout.html" class="btn checkout">Checkout</a>
-    </div>
+<div class="wrap">
+  <h1>Your Cart</h1>
+  <p class="muted">Review your items before checkout.</p>
+
+  <div id="cartArea"></div>
+
+  <div class="summary" id="summary" style="display:none">
+    <div><strong>Total:</strong> <span id="grandTotal">$0.00</span></div>
+    <a class="btn" href="index.html">Continue shopping</a>
+    <a class="btn primary" href="checkout.html">Checkout</a>
   </div>
+</div>
 
-  <script src="js/cart.js"></script>
+<script src="js/cart.js"></script>
+<script>
+function renderCart(){
+  const area = document.getElementById('cartArea');
+  const summary = document.getElementById('summary');
+  const cart = SSA_CART.getCart();
+
+  if(!cart.length){
+    area.innerHTML = `
+      <div class="empty">
+        Your cart is empty. <a href="index.html#shop" style="font-weight:800">Browse cookies</a>.
+      </div>`;
+    summary.style.display = 'none';
+    SSA_CART.updateCartBadge?.();
+    return;
+  }
+
+  const rows = cart.map((it, i)=>`
+    <tr>
+      <td><img class="thumb" src="${it.image||''}" alt=""></td>
+      <td>
+        <div style="font-weight:900">${it.title}</div>
+        <div class="muted">${it.packLabel || ''}</div>
+        <div class="muted">Flavour: ${it.flavour || '-'}</div>
+        <div class="muted">Colour: ${it.colourNote || '-'}</div>
+      </td>
+      <td class="price">${SSA_CART.formatAUD(it.unitPrice)}</td>
+      <td class="qty">
+        <input type="number" min="1" value="${it.qty}" data-idx="${i}">
+      </td>
+      <td class="price">${SSA_CART.formatAUD(it.unitPrice * it.qty)}</td>
+      <td class="actions"><button data-remove="${i}">Remove</button></td>
+    </tr>
+  `).join('');
+
+  area.innerHTML = `
+    <table class="cart">
+      <thead>
+        <tr>
+          <th>Item</th><th>Details</th><th>Unit</th><th>Qty</th><th>Subtotal</th><th></th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+
+  // 綁定事件：改數量 / 刪除
+  area.querySelectorAll('input[type="number"]').forEach(inp=>{
+    inp.onchange = (e)=>{
+      const idx = Number(e.target.dataset.idx);
+      SSA_CART.setQty(idx, e.target.value);
+      renderCart();
+    };
+  });
+  area.querySelectorAll('button[data-remove]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const idx = Number(btn.dataset.remove);
+      SSA_CART.removeFromCart(idx);
+      renderCart();
+    };
+  });
+
+  // 總計
+  document.getElementById('grandTotal').textContent =
+    SSA_CART.formatAUD( SSA_CART.cartSubtotalCents() );
+
+  summary.style.display = 'flex';
+  SSA_CART.updateCartBadge?.();
+}
+document.addEventListener('DOMContentLoaded', renderCart);
+</script>
 </body>
 </html>
