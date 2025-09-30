@@ -1,0 +1,11 @@
+{
+  "name": "sunnysugarart-netlify",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "stripe": "^14.0.0"
+  },
+  "scripts": {
+    "build": "echo 'no build step'"
+  }
+}

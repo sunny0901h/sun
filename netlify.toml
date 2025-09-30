@@ -1,0 +1,9 @@
+# Netlify configuration
+[build]
+  command = "npm run build"
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["stripe"]
