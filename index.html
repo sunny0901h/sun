@@ -3,59 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sunny Sugar Art </title>
-  <meta name="description" content="Royal icing cookies — Stripe Checkout demo.">
+  <title>Sunny Sugar Art</title>
+  <meta name="description" content="Royal icing cookies in Melbourne — classes and custom orders.">
   <style>
-    body{font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, 'Apple Color Emoji', 'Segoe UI Emoji'; 
+    body{font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, 'Apple Color Emoji', 'Segoe UI Emoji';
          padding:40px; max-width:780px; margin:0 auto; line-height:1.6;}
     .card{border:1px solid #eee; border-radius:16px; padding:24px; box-shadow:0 6px 20px rgba(0,0,0,.06);}
     button{font-size:16px; padding:12px 18px; border-radius:12px; border:0; cursor:pointer}
     .btn{background:black; color:#fff}
-    .row{display:flex; gap:16px; align-items:center}
+    .row{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
     input, select{padding:10px 12px; border-radius:10px; border:1px solid #ddd; min-width:220px}
     small{color:#666}
     code{background:#f7f7f7; padding:2px 6px; border-radius:6px}
   </style>
 </head>
 <body>
-  <h1>Sunny Sugar Art — Stripe Checkout</h1>
-  <p>This is a minimal working demo. Replace the <code>price_XXXX</code> with your real Stripe <strong>Price IDs</strong>, then click the button to open Stripe Checkout.</p>
+  <h1>Sunny Sugar Art</h1>
+  <p>Royal icing cookie art in Melbourne — classes and custom orders.</p>
+
   <div class="card">
     <div class="row">
       <label for="sku">Choose product:</label>
       <select id="sku">
-        <option value="price_XXXX_PUMPKIN">Pumpkin Men — AU$12</option>
-        <option value="price_XXXX_WITCH">Witchy Treat — AU$10</option>
-        <option value="price_XXXX_REINDEER">Reindeer — AU$14</option>
+        <option value="PUMPKIN">Pumpkin Men — AU$12</option>
+        <option value="WITCH">Witchy Treat — AU$10</option>
+        <option value="REINDEER">Reindeer — AU$14</option>
       </select>
+
       <label for="qty">Qty</label>
       <input id="qty" type="number" min="1" value="1"/>
-      <button id="buy" class="btn">Buy with Stripe Checkout</button>
+
+      <button id="buy" class="btn">Buy (Temporarily paused)</button>
     </div>
-    <p><small>Success URL is <code>/success.html</code>; cancel URL is <code>/cancel.html</code>.</small></p>
+
+    <p><small>Checkout is currently paused while the website is being updated.</small></p>
   </div>
 
   <script>
-  async function createCheckout(items){
-    const res = await fetch('/.netlify/functions/create-checkout-session', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ items, metadata: { source: 'demo' } })
+    document.getElementById('buy').addEventListener('click', () => {
+      alert("Checkout is temporarily paused. Please DM @sunny_sugar.art to order 🙂");
     });
-    if(!res.ok){
-      const t = await res.text();
-      alert('Server error: '+t);
-      return;
-    }
-    const data = await res.json();
-    window.location = data.url;
-  }
-
-  document.getElementById('buy').addEventListener('click', () => {
-    const price = document.getElementById('sku').value;
-    const qty = Math.max(1, parseInt(document.getElementById('qty').value || '1', 10));
-    createCheckout([{ price, quantity: qty }]);
-  });
   </script>
 </body>
 </html>
